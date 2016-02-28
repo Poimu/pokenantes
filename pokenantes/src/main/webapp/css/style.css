@@ -1,1 +1,27 @@
-@CHARSET "UTF-8";
+#login {
+	display: flex;
+	flex-direction: row;	
+}
+
+.loginField {
+  	border: 1px solid;
+	padding: 7px;
+	margin-left: 8px;
+	font-size: 11px;
+}
+
+#lockIcon {
+	margin-left: 8px;
+	margin-top: auto;
+	margin-bottom: auto;
+	border-radius: 30px;
+	border: 1px solid;
+	transform: scale(1.3);
+}
+
+#errorLogin {
+	color: red;
+	margin-left: 8px;
+	margin-top: auto;
+	margin-bottom: auto;
+}

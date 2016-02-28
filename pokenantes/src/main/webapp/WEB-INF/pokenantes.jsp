@@ -11,8 +11,6 @@
 </head>
 <body>
 
-Hello gang!
-
 </body>
 
 <script src="js/plugins/jquery.js" type="text/javascript"></script>
