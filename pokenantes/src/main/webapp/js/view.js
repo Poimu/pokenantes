@@ -25,7 +25,7 @@ View.prototype._drawLogin = function() {
 	/* Ajout d'un event click sur le bouton lockIcon */
 	$('#lockIcon').click(function() {
 		//Si un champ est incomplet: ajout d'un message d'erreur
-		if ($('#loginName').val().length <= 1 || $('#loginPass').val().length <= 1) {
+		if ($('#loginName').val().length <= 0 || $('#loginPass').val().length <= 0) {
 			var fieldIncomplete = '<div id="errorLogin" class="animated fadeOut">Complétez tous les champs.</div>';
 			$('#errorLogin').remove();
 			$('#login').append(fieldIncomplete);
