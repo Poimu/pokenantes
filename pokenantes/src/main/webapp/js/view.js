@@ -45,3 +45,9 @@ View.prototype._loginResults = function(data) {
 	
 }
 
+View.prototype._loginSuccess = function(){
+	$('#login').empty();
+	var deconnectButton = '<input id="relogin" type="button"></input>';
+	$('#relogin').append(deconnectButton);
+	$('#relogin').click(this._drawLogin());
+}

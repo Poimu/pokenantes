@@ -2,6 +2,7 @@ function Controller(model, view) {
 	this._model = model;
 	this._view = view;
 	this._tryLogin();
+
 }
 
 Controller.prototype._tryLogin = function() {
@@ -19,8 +20,11 @@ Controller.prototype._tryLogin = function() {
 			}		
 		}).done(function(data) {				//Si la requête reçoit un success.
 			console.log(context);
+			context._view._loginSuccess();
 		}).fail(function( jqXHR, textStatus ) {		//Si la requête ne reçoit pas un success.
 			console.log("Login Refusé");
 		})
 	})
 }
+
+
