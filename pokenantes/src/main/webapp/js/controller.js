@@ -5,6 +5,7 @@ function Controller(model, view) {
 }
 
 Controller.prototype._tryLogin = function() {
+	var context = this;
 	this._view.on('tryLogin', function() {
 		var name = $('#loginName').val();
 		var password = $('#loginPass').val();
@@ -16,8 +17,8 @@ Controller.prototype._tryLogin = function() {
 				utilisateur: name,
 				motdepasse: password
 			}		
-		}).done(function(data) {					//Si la requête reçoit un success.
-			
+		}).done(function(data) {				//Si la requête reçoit un success.
+			console.log(context);
 		}).fail(function( jqXHR, textStatus ) {		//Si la requête ne reçoit pas un success.
 			console.log("Login Refusé");
 		})

@@ -41,3 +41,7 @@ View.prototype._checkLogin = function () {
 	}
 }
 
+View.prototype._loginResults = function(data) {
+	
+}
+
