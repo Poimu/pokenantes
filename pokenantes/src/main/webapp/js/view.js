@@ -3,6 +3,8 @@ function View(model) {
 	this._drawLogin();
 }
 
+View.prototype = new EventEmitter();
+
 View.prototype._drawLogin = function() {
 	/* Initialisation des variables champs */
 	var loginDiv = '<div id="login"></div>';
@@ -23,18 +25,19 @@ View.prototype._drawLogin = function() {
 			);
 	
 	/* Ajout d'un event click sur le bouton lockIcon */
-	$('#lockIcon').click(function() {
-		//Si un champ est incomplet: ajout d'un message d'erreur
-		if ($('#loginName').val().length <= 0 || $('#loginPass').val().length <= 0) {
-			var fieldIncomplete = '<div id="errorLogin" class="animated fadeOut">Complétez tous les champs.</div>';
-			$('#errorLogin').remove();
-			$('#login').append(fieldIncomplete);
-		}
-		//Sinon: appel de la fonction de vérification du nom/mdp dans le controlleur
-		else {
-			checkLogin();
-		}
-	});
-	
-	
+	$('#lockIcon').click(this._checkLogin.bind(this));
 }
+
+View.prototype._checkLogin = function () {
+	//Si un champ est incomplet: ajout d'un message d'erreur
+	if ($('#loginName').val().length <= 0 || $('#loginPass').val().length <= 0) {
+		var fieldIncomplete = '<div id="errorLogin" class="animated fadeOut">Complétez tous les champs.</div>';
+		$('#errorLogin').remove();
+		$('#login').append(fieldIncomplete);
+	}
+	//Sinon: appel de la fonction de vérification du nom/mdp dans le controlleur
+	else {
+		this.emit('tryLogin');
+	}
+}
+

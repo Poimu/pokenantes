@@ -14,15 +14,36 @@
 </body>
 
 <script src="js/plugins/jquery.js" type="text/javascript"></script>
+<script src="js/plugins/eventEmitter.js" type="text/javascript"></script>
 <script src="js/plugins/jquery-ui.js" type="text/javascript"></script>
 <script src="js/model.js" type="text/javascript"></script>
 <script src="js/view.js" type="text/javascript"></script>
 <script src="js/controller.js" type="text/javascript"></script>
 
 <script>
-  var model = new Model();
-  var view = new View(model);
-  var controller = new Controller(view, model);
+
+var model;
+var view;
+var controller;
+
+function createMVC(createModel, createView, createController) {
+	createModel();
+	createView();
+	createController();
+}
+function createModel() {
+	model = new Model();
+}
+function createView() {
+	view = new View(model);
+}
+function createController() {
+	controller = new Controller(model, view);
+}
+
+/* CALLBACK : On instancie le model puis la vue puis le controlleur */
+createMVC(createModel, createView, createController);
+
 </script>
 
 </html>
