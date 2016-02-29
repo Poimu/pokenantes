@@ -14,9 +14,22 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 
+import com.pokenantes.dao.Dao;
+import com.pokenantes.dtos.Utilisateur;
+
 @Configuration
 @ComponentScan("com.pokenantes")
 public class ApplicationContextConfig {
+
+	@Bean(name = "dao")
+	public Dao getDao() {
+		return new Dao();
+	}
+
+	@Bean(name = "utilisateur")
+	public Utilisateur getUser() {
+		return new Utilisateur();
+	}
 
 	@Bean
 	public DataSource dataSource() {

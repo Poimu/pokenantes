@@ -17,8 +17,7 @@ Controller.prototype._tryLogin = function() {
 				motdepasse: password
 			}		
 		}).done(function(data) {					//Si la requête reçoit un success.
-			console.log(data.msg);					//Pour l'exemple, on log les deux messages issues de l'action
-			console.log(data.msg2);
+			
 		}).fail(function( jqXHR, textStatus ) {		//Si la requête ne reçoit pas un success.
 			console.log("Login Refusé");
 		})
