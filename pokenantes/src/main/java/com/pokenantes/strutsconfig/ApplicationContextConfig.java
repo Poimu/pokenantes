@@ -15,6 +15,8 @@ import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 
 import com.pokenantes.dao.Dao;
+import com.pokenantes.dtos.Article;
+import com.pokenantes.dtos.Fournisseur;
 import com.pokenantes.dtos.Utilisateur;
 
 @Configuration
@@ -29,6 +31,16 @@ public class ApplicationContextConfig {
 	@Bean(name = "utilisateur")
 	public Utilisateur getUser() {
 		return new Utilisateur();
+	}
+
+	@Bean(name = "article")
+	public Article getArticle() {
+		return new Article();
+	}
+
+	@Bean(name = "fournisseur")
+	public Fournisseur getFournisseur() {
+		return new Fournisseur();
 	}
 
 	@Bean

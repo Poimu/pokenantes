@@ -1,11 +1,15 @@
 package com.pokenantes.dao;
 
+import java.util.ArrayList;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.pokenantes.dtos.Article;
 
 /* @Repository indique qu'il s'agit d'un objet ayant pour vocation la gestion des données : Un DAO. */
 @Repository
@@ -35,6 +39,13 @@ public class Dao {
 		}
 		return false;
 
+	}
+
+	@SuppressWarnings("unchecked")
+	public ArrayList<Article> fetchProducts() {
+		Session session = sessionFactory.openSession();
+		Query query = session.createQuery("FROM Article");
+		return (ArrayList<Article>) query.list();
 	}
 
 }

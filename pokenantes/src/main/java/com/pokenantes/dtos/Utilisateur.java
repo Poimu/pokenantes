@@ -20,17 +20,17 @@ public class Utilisateur {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idUtilisateur;
 	@Column(name = "NOMUTILISATEUR")
-	private String login;
+	private String nomutilisateur;
 	@Column(name = "MOTDEPASSEUTILISATEUR")
-	private String password;
+	private String motdepasseutilisateur;
 
 	/* Un constructeur vide & un qui prend les attributs noms/password */
 	public Utilisateur() {
 	}
 
 	public Utilisateur(String name, String password) {
-		this.login = name;
-		this.password = password;
+		this.nomutilisateur = name;
+		this.motdepasseutilisateur = password;
 	}
 
 }
