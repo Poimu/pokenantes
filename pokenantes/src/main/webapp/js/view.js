@@ -81,7 +81,19 @@ View.prototype._drawBoard = function() {
 	
 	$('#board').append(boardProducts)
 	for (var i = 0; i < productsList.length; i++) {
-	    
+	    $('#boardProducts').append(productLine);
 	}
 	
+}
+
+View.prototype._loginSuccess = function(){
+	var context = this;
+	$('body').empty();
+	var deconnectButton = '<button id="relogin" type="button" name="deconnexion">Déconnection</button>';
+	$('body').append(deconnectButton);
+	$('#relogin').click(function(){
+		$('#relogin').remove();
+		$('#login').remove();
+		context._drawLogin();
+	});
 }
