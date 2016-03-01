@@ -25,3 +25,53 @@
 	margin-top: auto;
 	margin-bottom: auto;
 }
+
+#boardProducts, #board {
+	display: flex;
+	flex-direction: column;
+}
+
+.productLine, .supplierLine, #boardHeader {
+	display: flex;
+	flex-direction: row;
+}
+
+.headerField, .blockField {
+	width: 11%;
+	text-align: center;
+}
+
+#boardHeader {
+	margin-top: 30px;
+	margin-bot: 30px;
+	border-top: solid 1px;
+	border-bottom: solid 1px;
+	font-weight: bold;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	font-size: 12px;
+	
+}
+
+.productLine {
+	margin-top: 15px;
+	margin-bottom: 15px;
+	font-size: 10px;
+}
+
+.supplierLine {
+	justify-content : center;
+	background-color: grey;
+}
+
+#addProductButton {
+	width: 20%;
+	margin-top: 25px;
+	margin-left: auto;
+	margin-right: auto;
+	border: solid 1px;
+	font-size: 12px;
+	padding: 7px;
+	font-weight: bold;
+	text-align: center;
+}

@@ -36,7 +36,7 @@ Controller.prototype._TESTreturnBoard =  function() {
 		data.productsList.forEach(function(product) {
 			context._model._productsList.push(product);
 		});
-		console.log(context._model._productsList);
+		context._view._drawBoard();
 	}).fail(function( jqXHR, textStatus ) {		//Si la requête ne reçoit pas un success.
 		console.log("Login Refusé : " + textStatus);
 	})

@@ -42,30 +42,39 @@ View.prototype._checkLogin = function () {
 }
 
 View.prototype._drawBoard = function() {
+    	var context	    = this;
+    
 	var board 	    = '<div id="board"></div>';
 	var boardHeader     = '<div id="boardHeader"></div>';
 	var boardProducts   = '<div id="boardProducts"></div>';
+	var productLine     = '<div class="productLine"></div>';
+	var supplierLine    = '<div class="supplierLine"></div>';
+	var addProductButton= '<div id="addProductButton">Ajouter un produit</div>'
 	//Les variables du header.
 	var headerId 	    = '<div id="headerId" class="headerField">Identifiant</div>';
 	var headerName      = '<div id="headerName" class="headerField">Nom</div>';
 	var headerStock     = '<div id="headerStock" class="headerField">Stock</div>';
 	var headerCondition = '<div id="headerCondition" class="headerField">État</div>';
 	var headerOrigin    = '<div id="headerOrigin" class="headerField">Provenance</div>';
-	var headerColor     = '<div id="headerColor"  class="headerField">Couleur dominante</div>';
+	var headerColor     = '<div id="headerColor"  class="headerField">Couleur</div>';
 	var headerSize      = '<div id="headerSize" class="headerField">Taille</div>';
 	var headerKind      = '<div id="headerKind" class="headerField">Type</div>';
 	var headerPic       = '<div id="headerPic" class="headerField">Photo</div>';
 	//Les variables pour chaque produit.
-	var productLine     = '<div class="productLine"></div>';
-	var productId	    = '<div class="productId"></div>';
-	var productName     = '<div class="productName"></div>';
-	var productStock    = '<div class="productStock"></div>';
-	var productCondition= '<div class="productCondition"></div>';
-	var productOrigin   = '<div class="productOrigin"></div>';
-	var productColor    = '<div class="productColor"></div>';
-	var productSize     = '<div class="productSize"></div>';
-	var productKind     = '<div class="productKind"></div>';
-	var productPic      = '<div class="productPic"></div>';
+	var productCode	    = '<div class="productCode blockField"></div>';
+	var productName     = '<div class="productName blockField"></div>';
+	var productStock    = '<div class="productStock blockField"></div>';
+	var productCondition= '<div class="productCondition blockField"></div>';
+	var productOrigin   = '<div class="productOrigin blockField"></div>';
+	var productColor    = '<div class="productColor blockField"></div>';
+	var productSize     = '<div class="productSize blockField"></div>';
+	var productKind     = '<div class="productKind blockField"></div>';
+	var productPic      = '<div class="productPic blockField"></div>';
+	//Les variables pour chaque fournisseur.
+	var supplierName    = '<div class="supplierName blockField"></div>';
+	var supplierType    = '<div class="supplierType blockField"></div>';
+	var supplierPhone   = '<div class="supplierPhone blockField"></div>';
+	var supplierAddress = '<div class="supplierAddress blockField"></div>';
 	
 	$('body').append(board);
 	$('#board').append(boardHeader);
@@ -80,9 +89,56 @@ View.prototype._drawBoard = function() {
 	$('#boardHeader').append(headerPic);
 	
 	$('#board').append(boardProducts)
-	for (var i = 0; i < productsList.length; i++) {
-	    $('#boardProducts').append(productLine);
+	for (var i = 0; i < context._model._productsList.length; i++) {
+	    var productBlock       = '<div data-id="' + i + '" class="productBlock"></div>';
+	    var currentBlock       = '[data-id="' + i + '"]';
+	    var currentProductDiv  = '.productLine:last';
+	    var currentSupplierDiv = '.supplierLine:last';
+	    var product            = context._model._productsList[i];
+	    	    
+	    $('#boardProducts').append(productBlock);
+	    $(currentBlock).append(productLine);
+	    	    
+	    $(currentProductDiv).append(productCode);
+	    $('.productCode:last').append(product.codearticle);
+	    $(currentProductDiv).append(productName);
+	    $('.productName:last').append(product.nomarticle);
+	    $(currentProductDiv).append(productStock);
+	    $('.productStock:last').append(product.quantitearticle);
+	    $(currentProductDiv).append(productCondition);
+	    $('.productCondition:last').append(product.etatarticle);
+	    $(currentProductDiv).append(productOrigin);
+	    $('.productOrigin:last').append(product.provenancearticle);
+	    $(currentProductDiv).append(productColor);
+	    $('.productColor:last').append(product.couleurarticle);
+	    $(currentProductDiv).append(productSize);
+	    $('.productSize:last').append(product.taillearticle);
+	    $(currentProductDiv).append(productKind);
+	    $('.productKind:last').append(product.typearticle);
+	    $(currentProductDiv).append(productPic);
+	    $('.productPic:last').append(product.photoarticle);
+	    
+	    $(currentBlock).click(function() {
+		var supplier = context._model._productsList[$(this).data('id')].clefournisseur;
+		
+		if ($(this).find('.supplierLine').length) {
+		    $('.supplierLine').remove();
+		}
+		else {
+		    $('.supplierLine').remove();
+		    $(this).append(supplierLine);
+		    $(currentSupplierDiv).append(supplierName);
+		    $('.supplierName:last').append(supplier.nomfournisseur);
+		    $(currentSupplierDiv).append(supplierType);
+		    $('.supplierType:last').append(supplier.typefournisseur);
+		    $(currentSupplierDiv).append(supplierPhone);
+		    $('.supplierPhone:last').append(supplier.numtelfournisseur);
+		    $(currentSupplierDiv).append(supplierAddress);
+		    $('.supplierAddress:last').append(supplier.nomadressefournisseur);
+		}
+	    });
 	}
+	$('#board').append(addProductButton);
 	
 }
 
@@ -96,4 +152,5 @@ View.prototype._loginSuccess = function(){
 		$('#login').remove();
 		context._drawLogin();
 	});
+	context._drawBoard();
 }
