@@ -57,6 +57,7 @@ public class Login extends ActionSupport {
 
 	public String execute() {
 		/* on demande au DAO de vérifier si le nom/mdp correspondent */
+
 		if (dao.validCredentials(utilisateur, motdepasse)) {
 			System.out.println("USER FOUND");
 			/*
@@ -69,6 +70,9 @@ public class Login extends ActionSupport {
 			System.out.println("ERREUR");
 			msg = "error";
 		}
+		// pour le test, on renvoie systématiquement la liste des produits
+		productsList = dao.fetchProducts();
+		msg = "success";
 		return ActionSupport.SUCCESS;
 	}
 

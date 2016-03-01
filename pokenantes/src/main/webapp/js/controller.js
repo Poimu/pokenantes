@@ -1,7 +1,8 @@
 function Controller(model, view) {
 	this._model = model;
 	this._view = view;
-	this._tryLogin();
+	//this._tryLogin();
+	this._TESTreturnBoard();
 }
 
 Controller.prototype._tryLogin = function() {
@@ -21,9 +22,22 @@ Controller.prototype._tryLogin = function() {
 			data.productsList.forEach(function(product) {
 				context._model._productsList.push(product);
 			});
-
 		}).fail(function( jqXHR, textStatus ) {		//Si la requête ne reçoit pas un success.
-			console.log("Login Refusé");
+			console.log("Login Refusé : " + textStatus);
 		})
+	})
+}
+
+Controller.prototype._TESTreturnBoard =  function() {
+	var context = this;
+	$.post({
+		url: "trylogin",  						//URL à laquelle la requête AJAX est envoyée. L'action Login est mappée avec cette URL.		
+	}).done(function(data) {					//Si la requête reçoit un success.
+		data.productsList.forEach(function(product) {
+			context._model._productsList.push(product);
+		});
+		console.log(context._model._productsList);
+	}).fail(function( jqXHR, textStatus ) {		//Si la requête ne reçoit pas un success.
+		console.log("Login Refusé : " + textStatus);
 	})
 }
