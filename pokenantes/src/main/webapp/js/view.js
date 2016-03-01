@@ -47,8 +47,12 @@ View.prototype._loginResults = function(data) {
 
 View.prototype._loginSuccess = function(){
 	$('#login').empty();
-	var deconnectButton = '<button id="relogin" type="button name=deconnexion">Deconnexion</button>';
+	var context = this;
+	var deconnectButton = '<button id="relogin" type="button" name="deconnexion">Deconnexion</button>';
 	$('body').append(deconnectButton);
-	console.log(this);
-	$('#relogin').click(this._drawLogin());
+	$('#relogin').click(function(){
+		$('#relogin').remove();
+		$('#login').remove();
+		context._drawLogin();
+	});
 }
