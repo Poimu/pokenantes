@@ -99,11 +99,40 @@ View.prototype._loginSuccess = function(){
 }
 
 View.prototype._drawAddForm = function(){
-	var addFormButton = '<button id="addForm" type="button" name="addForm">add</button>'; 
-	var formu = '<input type="radio" name="etat" value="commercialisable" placeholder="commercialisable">';
-	$('body').append(AddFormButton);
-	$('#addForm').click(function(){
-		$('body').append(formu);
-	});
+	var formuArticle = '<form id ="formu"></form>';
+	var idArticle = '<input id="idArticle" type="text" placeholder="Id article">';
+	var nameArticle = '<input id="nameArticle" type="text" placeholder="Nom article">';
+	var colorArticle = '<input id="colorArticle" type="text" placeholder="Couleur article">';
+	var sizeArticle = '<input id="sizeArticle" type="text" placeholder="Taille article">';
+	var originArticle = '<input id="originArticle" type="text" placeholder="Provenance article">';
+	var qtyArticle = '<input id="qtyArticle" type="number">';
+	var comStateArticle = '<input id="comState" type="radio" name="etat" value="commercialisable">Commercialisable';
+	var defectiveStateArticle = '<input id="defectiveState" type="radio" name="etat" value="defective">Défectueux';
+	var selectTypeArticle = '<select id="selectTypeArticle">';
+	var tshirtArticle = '<option id="tshirt" value="Tshirt">Tshirt</option>';
+	var bookArticle = '<option id="book" value="Livre">Livre</option>';
+	var cdArticle = '<option id="cd" value="CD">CD</option>';
+	var returnLine = '<br>';
+	
+	$('body').append(formuArticle);
+	$('#formu').append(idArticle);
+	$('#formu').append(returnLine);
+	$('#formu').append(nameArticle);
+	$('#formu').append(returnLine);
+	$('#formu').append(colorArticle);
+	$('#formu').append(returnLine);
+	$('#formu').append(sizeArticle);
+	$('#formu').append(returnLine);
+	$('#formu').append(originArticle);
+	$('#formu').append(returnLine);
+	$('#formu').append(qtyArticle);
+	$('#formu').append(returnLine);
+	$('#formu').append(comStateArticle);
+	$('#formu').append(defectiveStateArticle);
+	$('#formu').append(returnLine);
+	$('#formu').append(selectTypeArticle);
+	$('#selectTypeArticle').append(tshirtArticle);
+	$('#selectTypeArticle').append(bookArticle);
+	$('#selectTypeArticle').append(cdArticle);
 	
 }
