@@ -16,16 +16,35 @@ import com.pokenantes.dtos.Article;
 // Gère les données reçues comme un objet JSON
 @ParentPackage("json-default")
 // Le renvoie sera un objet JSON et non pas une réorientation vers une page web.
-@Result(type = "json", params = { "includeProperties", "msg, productsList" })
+@Result(type = "json", params = { "includeProperties",
+		"msg, " // Renvoie de la liste des produits
+				+ "productsList\\[\\d+\\]\\,"
+				+ "productsList.idarticle,"
+				+ "productsList.nomarticle"
+				+ "productsList.couleurarticle,"
+				+ "productsList.taillearticle,"
+				+ "productsList.provenancearticle,"
+				+ "productsList.etatarticle,"
+				+ "productsList.typearticle,"
+				+ "productsList.quantitearitcle,"
+				+ "productsList.photoarticle,"
+				+ "productsList.codearticle,"
+				// Renvoie des détails fournisseurs
+				+ "productsList\\[\\d+\\]\\.clefournisseur\\[\\d+\\]\\,"
+				+ "productsList.clefournisseur.idfournisseur,"
+				+ "productsList.clefournisseur.nomadressefournisseur,"
+				+ "productsList.clefournisseur.typefournisseur,"
+				+ "productsList.clefournisseur.numtelfournisseur,"
+				+ "productsList.clefournisseur.nomfournisseur" })
 public class Login extends ActionSupport {
 
 	private static final long serialVersionUID = 1L;
 	private String utilisateur;
 	private String motdepasse;
+	private ArrayList<Article> productsList;
 
 	/* Les variables que l'on va renvoyer */
 	private String msg;
-	private ArrayList<Article> productsList = new ArrayList<Article>();
 
 	/*
 	 * Rappel : Le DAO dans le modèle MVC correspond au modèle : c'est lui qui

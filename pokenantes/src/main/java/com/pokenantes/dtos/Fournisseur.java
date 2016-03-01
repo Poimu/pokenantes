@@ -25,4 +25,24 @@ public class Fournisseur {
 	public Fournisseur() {
 	}
 
+	public Integer getIdfournisseur() {
+		return idfournisseur;
+	}
+
+	public String getNomadressefournisseur() {
+		return nomadressefournisseur;
+	}
+
+	public String getTypefournisseur() {
+		return typefournisseur;
+	}
+
+	public String getNumtelfournisseur() {
+		return numtelfournisseur;
+	}
+
+	public String getNomfournisseur() {
+		return nomfournisseur;
+	}
+
 }

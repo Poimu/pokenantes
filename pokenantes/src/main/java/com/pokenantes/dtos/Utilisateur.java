@@ -33,4 +33,16 @@ public class Utilisateur {
 		this.motdepasseutilisateur = password;
 	}
 
+	public Integer getIdUtilisateur() {
+		return idUtilisateur;
+	}
+
+	public String getNomutilisateur() {
+		return nomutilisateur;
+	}
+
+	public String getMotdepasseutilisateur() {
+		return motdepasseutilisateur;
+	}
+
 }

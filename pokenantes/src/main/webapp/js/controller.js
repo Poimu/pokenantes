@@ -17,8 +17,11 @@ Controller.prototype._tryLogin = function() {
 				utilisateur: name,
 				motdepasse: password
 			}		
-		}).done(function(data) {				//Si la requête reçoit un success.
-			console.log(context);
+		}).done(function(data) {					//Si la requête reçoit un success.
+			data.productsList.forEach(function(product) {
+				context._model._productsList.push(product);
+			});
+
 		}).fail(function( jqXHR, textStatus ) {		//Si la requête ne reçoit pas un success.
 			console.log("Login Refusé");
 		})

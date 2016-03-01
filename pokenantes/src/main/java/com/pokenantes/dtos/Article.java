@@ -24,7 +24,7 @@ public class Article {
 	@Column(name = "COULEURARTICLE")
 	private String couleurarticle;
 	@Column(name = "TAILLEARTICLE")
-	private boolean taillearticle;
+	private String taillearticle;
 	@Column(name = "PROVENANCEARTICLE")
 	private String provenancearticle;
 	@Column(name = "ETATARTICLE")
@@ -40,4 +40,49 @@ public class Article {
 
 	public Article() {
 	}
+
+	public int getIdarticle() {
+		return idarticle;
+	}
+
+	public Fournisseur getClefournisseur() {
+		return clefournisseur;
+	}
+
+	public String getNomarticle() {
+		return nomarticle;
+	}
+
+	public String getCouleurarticle() {
+		return couleurarticle;
+	}
+
+	public String getTaillearticle() {
+		return taillearticle;
+	}
+
+	public String getProvenancearticle() {
+		return provenancearticle;
+	}
+
+	public String getEtatarticle() {
+		return etatarticle;
+	}
+
+	public String getTypearticle() {
+		return typearticle;
+	}
+
+	public int getQuantitearticle() {
+		return quantitearticle;
+	}
+
+	public String getPhotoarticle() {
+		return photoarticle;
+	}
+
+	public String getCodearticle() {
+		return codearticle;
+	}
+
 }
