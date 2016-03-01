@@ -89,11 +89,21 @@ View.prototype._drawBoard = function() {
 View.prototype._loginSuccess = function(){
 	var context = this;
 	$('body').empty();
-	var deconnectButton = '<button id="relogin" type="button" name="deconnexion">Déconnection</button>';
+	var deconnectButton = '<button id="relogin" type="button" name="deconnexion">Déconnexion</button>';
 	$('body').append(deconnectButton);
 	$('#relogin').click(function(){
 		$('#relogin').remove();
 		$('#login').remove();
 		context._drawLogin();
 	});
+}
+
+View.prototype._drawAddForm = function(){
+	var addFormButton = '<button id="addForm" type="button" name="addForm">add</button>'; 
+	var formu = '<input type="radio" name="etat" value="commercialisable" placeholder="commercialisable">';
+	$('body').append(AddFormButton);
+	$('#addForm').click(function(){
+		$('body').append(formu);
+	});
+	
 }
