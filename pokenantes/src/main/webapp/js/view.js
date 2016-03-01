@@ -7,9 +7,9 @@ View.prototype = new EventEmitter();
 
 View.prototype._drawLogin = function() {
 	/* Initialisation des variables champs */
-	var loginDiv = '<div id="login"></div>';
-	var nameField = '<input class="loginField" id="loginName" type="text" placeholder="Utilisateur">';
-	var passField = '<input class="loginField" id="loginPass" type="password" placeholder="Mot de passe">';
+	var loginDiv 	 = '<div id="login"></div>';
+	var nameField 	 = '<input class="loginField" id="loginName" type="text" placeholder="Utilisateur">';
+	var passField 	 = '<input class="loginField" id="loginPass" type="password" placeholder="Mot de passe">';
 	var submitButton = '<span id="lockIcon" class="ui-icon ui-icon-locked"></span>';
 	
 	/* Ajout des champs à pokenantes.jsp */
@@ -41,7 +41,47 @@ View.prototype._checkLogin = function () {
 	}
 }
 
-View.prototype._loginResults = function(data) {
+View.prototype._drawBoard = function() {
+	var board 	    = '<div id="board"></div>';
+	var boardHeader     = '<div id="boardHeader"></div>';
+	var boardProducts   = '<div id="boardProducts"></div>';
+	//Les variables du header.
+	var headerId 	    = '<div id="headerId" class="headerField">Identifiant</div>';
+	var headerName      = '<div id="headerName" class="headerField">Nom</div>';
+	var headerStock     = '<div id="headerStock" class="headerField">Stock</div>';
+	var headerCondition = '<div id="headerCondition" class="headerField">État</div>';
+	var headerOrigin    = '<div id="headerOrigin" class="headerField">Provenance</div>';
+	var headerColor     = '<div id="headerColor"  class="headerField">Couleur dominante</div>';
+	var headerSize      = '<div id="headerSize" class="headerField">Taille</div>';
+	var headerKind      = '<div id="headerKind" class="headerField">Type</div>';
+	var headerPic       = '<div id="headerPic" class="headerField">Photo</div>';
+	//Les variables pour chaque produit.
+	var productLine     = '<div class="productLine"></div>';
+	var productId	    = '<div class="productId"></div>';
+	var productName     = '<div class="productName"></div>';
+	var productStock    = '<div class="productStock"></div>';
+	var productCondition= '<div class="productCondition"></div>';
+	var productOrigin   = '<div class="productOrigin"></div>';
+	var productColor    = '<div class="productColor"></div>';
+	var productSize     = '<div class="productSize"></div>';
+	var productKind     = '<div class="productKind"></div>';
+	var productPic      = '<div class="productPic"></div>';
+	
+	$('body').append(board);
+	$('#board').append(boardHeader);
+	$('#boardHeader').append(headerId);
+	$('#boardHeader').append(headerName);
+	$('#boardHeader').append(headerStock);
+	$('#boardHeader').append(headerCondition);
+	$('#boardHeader').append(headerOrigin);
+	$('#boardHeader').append(headerColor);
+	$('#boardHeader').append(headerSize);
+	$('#boardHeader').append(headerKind);
+	$('#boardHeader').append(headerPic);
+	
+	$('#board').append(boardProducts)
+	for (var i = 0; i < productsList.length; i++) {
+	    
+	}
 	
 }
-
