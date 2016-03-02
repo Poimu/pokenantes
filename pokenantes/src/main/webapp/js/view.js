@@ -47,8 +47,6 @@ View.prototype._drawBoard = function() {
 	var board 	    = '<div id="board"></div>';
 	var boardHeader     = '<div id="boardHeader"></div>';
 	var boardProducts   = '<div id="boardProducts"></div>';
-	var productLine     = '<div class="productLine"></div>';
-	var supplierLine    = '<div class="supplierLine"></div>';
 	var addProductButton= '<div id="addProductButton">Ajouter un produit</div>'
 	//Les variables du header.
 	var headerId 	    = '<div id="headerId" class="headerField">Identifiant</div>';
@@ -61,6 +59,7 @@ View.prototype._drawBoard = function() {
 	var headerKind      = '<div id="headerKind" class="headerField">Type</div>';
 	var headerPic       = '<div id="headerPic" class="headerField">Photo</div>';
 	//Les variables pour chaque produit.
+	var productLine     = '<div class="productLine"></div>';
 	var productCode	    = '<div class="productCode blockField"></div>';
 	var productName     = '<div class="productName blockField"></div>';
 	var productStock    = '<div class="productStock blockField"></div>';
@@ -71,10 +70,11 @@ View.prototype._drawBoard = function() {
 	var productKind     = '<div class="productKind blockField"></div>';
 	var productPic      = '<div class="productPic blockField"></div>';
 	//Les variables pour chaque fournisseur.
-	var supplierName    = '<div class="supplierName blockField"></div>';
-	var supplierType    = '<div class="supplierType blockField"></div>';
-	var supplierPhone   = '<div class="supplierPhone blockField"></div>';
-	var supplierAddress = '<div class="supplierAddress blockField"></div>';
+	var supplierLine    = '<div class="supplierLine" style="display: none;"></div>';
+	var supplierName    = '<div class="supplierName supplierField"><b>Nom du fournisseur :&nbsp</b></div>';
+	var supplierType    = '<div class="supplierType supplierField"><b>Type de fournisseur :&nbsp</b></div>';
+	var supplierPhone   = '<div class="supplierPhone supplierField"><b>Téléphone du fournisseur :&nbsp</b></div>';
+	var supplierAddress = '<div class="supplierAddress supplierField"><b>Adresse du fournisseur :&nbsp</b></div>';
 	
 	$('body').append(board);
 	$('#board').append(boardHeader);
@@ -135,6 +135,7 @@ View.prototype._drawBoard = function() {
 		    $('.supplierPhone:last').append(supplier.numtelfournisseur);
 		    $(currentSupplierDiv).append(supplierAddress);
 		    $('.supplierAddress:last').append(supplier.nomadressefournisseur);
+		    $(currentSupplierDiv).show('slow');
 		}
 	    });
 	}
