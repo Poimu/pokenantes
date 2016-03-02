@@ -35,8 +35,10 @@ public class Dao {
 		query.setParameter("name", name);
 		query.setParameter("password", password);
 		if (query.uniqueResult() != null) {
+			session.close();
 			return true;
 		}
+		session.close();
 		return false;
 
 	}
@@ -45,7 +47,9 @@ public class Dao {
 	public ArrayList<Article> fetchProducts() {
 		Session session = sessionFactory.openSession();
 		Query query = session.createQuery("FROM Article");
-		return (ArrayList<Article>) query.list();
+		ArrayList<Article> productsList = (ArrayList<Article>) query.list();
+		session.close();
+		return productsList;
 	}
 
 	@Transactional(readOnly = false)
@@ -57,6 +61,7 @@ public class Dao {
 		if (result > 0) {
 			System.out.println("Product removed");
 		}
+		session.close();
 	}
 
 }

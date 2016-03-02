@@ -194,18 +194,41 @@ View.prototype._loginSuccess = function(){
 }
 
 View.prototype._drawAddForm = function(context) {
-    var suppliers = [];
+    var suppliers 	   = [];
+    var addProductForm     = '<form id="addProductForm"></form>';
+    var addProductLine    = '<div class="addProductLine"><div class="addProductTypo"></div></div>';
+    
+    var selectSupplier     = '<select id="selectSupplier"></select>';
+    var addSupplierName    = '<input id="supplierName" type="text" placeholder="Nom fournisseur"></input>';
+    var addSupplierType    = '<div id="supplierType"></div>';
+    var supplierTypePro    = '<div class="supplierRadio"><input name="supplierType" type="radio" value="Professionnel"><div class="supplierRadioTypo">Professionnel</div></div>';
+    var supplierTypeCas    = '<div class="supplierRadio"><input name="supplierType" type="radio" value="Particulier"><div class="supplierRadioTypo">Particulier</div></div>';
+    var addSupplierAddress = '<input id="supplierAddress" type="text" placeholder="Adresse fournisseur"></input>';
+    var addSupplierPhone   = '<input id="supplierPhone" type="text" placeholder="Téléphone fournisseur"></input>';
+    
+    //Charge la liste des fournisseurs
     context._model._productsList.forEach(function(product) {
 	if (context._supplierUnique(context, suppliers, product)) {
-	    console.log(context._supplierUnique(context, suppliers, product));
 	    suppliers.push(product.clefournisseur);
 	}
-    })
+    })    
+    
+    $('#boardProducts').append(addProductForm);
+    $('#addProductForm').append(addProductLine);
+    $('.addProductTypo:last').append('Sélectionnez un fournisseur');
+    $('.addProductLine:last').append(selectSupplier);
+    suppliers.forEach(function(supplier) {
+	$('#selectSupplier').append('<option value="' + supplier.idfournisseur + '">' + supplier.nomfournisseur + '</option>');
+    });
+    $('#selectSupplier').append('<option value="newSupplier"> Nouveau fournisseur </option>');
 }
 
 View.prototype._supplierUnique = function(context, suppliers, product) {
+    var unique = true;
     suppliers.forEach(function(supplier) {
-	if (supplier.idfournisseur == product.clefournisseur.idfournisseur) return false;
+	if (supplier.idfournisseur === product.clefournisseur.idfournisseur) {
+	    unique = false;
+	}
     })
-    return true;
+    return unique;
 }
