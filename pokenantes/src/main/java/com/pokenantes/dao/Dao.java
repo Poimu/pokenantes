@@ -47,5 +47,23 @@ public class Dao {
 		Query query = session.createQuery("FROM Article");
 		return (ArrayList<Article>) query.list();
 	}
+	
+	public Article findById(int id){
+		Session session = sessionFactory.openSession();
+		Query query = session
+				.createQuery("FROM Article where idarticle= :id");
+		query.setParameter("id", id);
+		Article a =null;
+		if (query.uniqueResult() != null) {
+			a= (Article)query.uniqueResult();
+			return a;
+		}else{return a;}
+	}
+	
+	public void deleteArticle(int id ){
+		Session session = sessionFactory.openSession();
+		Query query = session.createQuery("delete article  where idarticle = : idarticle");
+		query.setParameter("idarticle", id);
+	}
 
 }

@@ -31,7 +31,10 @@ Controller.prototype._tryLogin = function() {
 Controller.prototype._TESTreturnBoard =  function() {
 	var context = this;
 	$.post({
-		url: "trylogin",  						//URL à laquelle la requête AJAX est envoyée. L'action Login est mappée avec cette URL.		
+		url: "deleteProduct",  
+		data :{
+			id: 2
+		} //URL à laquelle la requête AJAX est envoyée. L'action Login est mappée avec cette URL.		
 	}).done(function(data) {					//Si la requête reçoit un success : un remplit la liste des produits dans notre modèle.
 		data.productsList.forEach(function(product) {
 			context._model._productsList.push(product);
