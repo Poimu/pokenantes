@@ -38,7 +38,7 @@ Controller.prototype._deleteProduct = function() {
 		idarticle: deleteData.idarticle
 	    }
 	}).done(function(data) {
-	    console.log("success");
+	    console.log("Removed product id : " + data.idarticle);
 	}).fail(function(jqXHR, textStatus) {
 	    console.log("product not deleted");
 	})

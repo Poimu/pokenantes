@@ -10,7 +10,7 @@ import com.pokenantes.dao.Dao;
 
 @Action("/deleteProduct")
 @ParentPackage("json-default")
-@Result(type = "json", params = { "includeproperties", "msg" })
+@Result(type = "json", params = { "includeproperties", "msg, idarticle" })
 public class DeleteProduct extends ActionSupport {
 
 	private static final long serialVersionUID = 1L;
@@ -29,6 +29,10 @@ public class DeleteProduct extends ActionSupport {
 
 	public void setIdarticle(int idarticle) {
 		this.idarticle = idarticle;
+	}
+
+	public int getIdarticle() {
+		return idarticle;
 	}
 
 	public String getMsg() {
