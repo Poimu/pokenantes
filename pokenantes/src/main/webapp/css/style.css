@@ -64,12 +64,9 @@ body {
 }
 
 .supplierLine {
-	margin-left: auto;
-	margin-right: auto;
-	justify-content: center;
-	font-size: 10px;
+	margin-left: 22%;
+	font-size: 08px;
 	margin-bottom: 10px;
-	max-width: 35%;
 }
 
 #addProductButton {
@@ -96,4 +93,8 @@ body {
 	-moz-box-shadow: inset #B3B3B3 0 -1px 0 1px;
 	-webkit-box-shadow: inset #B3B3B3 0 -1px 0 1px;
 	box-shadow: inset #B3B3B3 0 -1px 0 1px;
+}
+
+.error {
+	color: red;
 }

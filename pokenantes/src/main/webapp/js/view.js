@@ -105,6 +105,7 @@ View.prototype._drawBoard = function() {
 	    $('.productName:last').append(product.nomarticle);
 	    $(currentProductDiv).append(productStock);
 	    $('.productStock:last').append(product.quantitearticle);
+	    if (product.quantitearticle <= 0) $('.productStock:last').addClass('error');
 	    $(currentProductDiv).append(productCondition);
 	    $('.productCondition:last').append(product.etatarticle);
 	    $(currentProductDiv).append(productOrigin);
