@@ -3,6 +3,16 @@
 	flex-direction: row;	
 }
 
+#addProductForm {
+	display : flex;
+	flex-direction : column;
+}
+
+.addFormField{
+	width : 300px;
+	
+}
+
 .loginField {
   	border: 1px solid;
 	padding: 7px;
