@@ -95,8 +95,9 @@ View.prototype._drawBoard = function() {
 	$('#boardHeader').append(headerKind);
 	$('#boardHeader').append(headerPic);
 	$('#boardHeader').append(headerDelete);
-	
 	$('#board').append(boardProducts)
+	
+	/* Ajout des détails de chaque produit */
 	for (var i = 0; i < context._model._productsList.length; i++) {
 	    var productBlock       = '<div data-id="' + i + '" class="productBlock"></div>';
 	    var currentBlock       = '[data-id="' + i + '"]';
@@ -106,7 +107,6 @@ View.prototype._drawBoard = function() {
 	    	    
 	    $('#boardProducts').append(productBlock);
 	    $(currentBlock).append(productLine);
-	    	    
 	    $(currentProductDiv).append(productCode);
 	    $('.productCode:last').append(product.codearticle);
 	    $(currentProductDiv).append(productName);
@@ -115,15 +115,11 @@ View.prototype._drawBoard = function() {
 	    $(currentProductDiv).append(productStock);
 	    $('.productStock:last').append(stockValue);
 	    $('.stockValue:last').append(product.quantitearticle);
+	    if (product.quantitearticle <= 0) $('.stockValue:last').addClass('error');
 	    $('.productStock:last').append(stockInput);
 	    $('.productStock:last').append(stockButtons);
 	    $('.stockButtons:last').append(stockAdd);
 	    $('.stockButtons:last').append(stockRemove);
-	    
-	    /*
-	    $('.productStock:last').append(product.quantitearticle);
-	    if (product.quantitearticle <= 0) $('.productStock:last').addClass('error');
-	    */
 	    
 	    $(currentProductDiv).append(productCondition);
 	    $('.productCondition:last').append(product.etatarticle);
@@ -141,19 +137,20 @@ View.prototype._drawBoard = function() {
 	    
 	    
 	    /* Gestion des clicks sur le tableau de bord */
-	    $(currentBlock).click(function(div) {
-		if ($(div.target).is('.deleteProduct')) { 
-		    console.log ("hello gang");
+	    $(currentBlock).click(function(event) {
+		var supplier  = context._model._productsList[$(this).data('id')].clefournisseur;
+		var productId = context._model._productsList[$(this).data('id')].idarticle;
+		
+		if ($(event.target).is('.deleteProduct')) { 
+		    context.emit('deleteProduct', {idarticle: productId});
 		    return
 		}
 		
-		if ($(div.target).is('.productStock')) {
+		if ($(event.target).is('.stockInput') || $(event.target).is('.stockAdd') || $(event.target).is('.stockRemove')) {
 		    console.log("Ajout stock");
 		    return
 		}
 		
-		
-		var supplier = context._model._productsList[$(this).data('id')].clefournisseur;
 		if ($(this).find('.supplierLine').length) {
 		    $('.supplierLine').remove();
 		}

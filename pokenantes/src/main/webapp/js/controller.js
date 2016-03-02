@@ -2,12 +2,13 @@ function Controller(model, view) {
 	this._model = model;
 	this._view = view;
 	//this._tryLogin();
+	this._deleteProduct();
 	this._TESTreturnBoard();
 }
 
 Controller.prototype._tryLogin = function() {
 	var context = this;
-	this._view.on('tryLogin', function() {
+	context._view.on('tryLogin', function() {
 		var name = $('#loginName').val();
 		var password = $('#loginPass').val();
 		
@@ -26,6 +27,22 @@ Controller.prototype._tryLogin = function() {
 			console.log("Login Refusé : " + textStatus);
 		})
 	})
+}
+
+Controller.prototype._deleteProduct = function() {
+    var context = this;
+    context._view.on('deleteProduct', function(data) {
+	$.post({
+	    url: "deleteProduct",
+	    data: {
+		idarticle: data.idarticle
+	    }
+	}).done(function(data) {
+	    console.log("success");
+	}).fail(function(jqXHR, textStatus) {
+	    console.log("product not deleted");
+	})
+    })
 }
 
 Controller.prototype._TESTreturnBoard =  function() {

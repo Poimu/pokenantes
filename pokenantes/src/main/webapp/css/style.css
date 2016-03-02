@@ -40,8 +40,8 @@ body {
 	flex-direction: row;
 }
 
-.productStock {
-	justify-content: center;
+.stockValue {
+	margin-left: auto;
 }
 
 .headerField, .blockField {
@@ -50,8 +50,8 @@ body {
 }
 
 .stockInput {
-	width: 40%;
-	height: 50%;
+	width: 50%;
+	height: 20px;
 	font-size: 08px;
 	border: solid 1px;
 }
@@ -65,6 +65,10 @@ body {
 	border: solid 1px;
 	border-radius: 30px;
 	transform: scale(0.7);
+}
+
+.stockValue {
+	margin-right: 5px;
 }
 
 
