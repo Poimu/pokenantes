@@ -29,7 +29,7 @@ public class ApplicationContextConfig {
 	}
 
 	@Bean(name = "utilisateur")
-	public Utilisateur getUser() {
+	public Utilisateur getUtilisateur() {
 		return new Utilisateur();
 	}
 
