@@ -61,6 +61,10 @@ body {
 	margin-bottom: auto;
 }
 
+.deleteProduct:hover {
+	transform: scale(1.5);
+}
+
 .stockAdd, .stockRemove {
 	border: solid 1px;
 	border-radius: 30px;

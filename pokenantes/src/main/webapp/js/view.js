@@ -1,6 +1,9 @@
 function View(model) {
 	this._model = model;
 	this._drawLogin();
+	this._checkLogin;
+	this._drawBoard;
+	this._loginSuccess;
 }
 
 View.prototype = new EventEmitter();
@@ -172,6 +175,7 @@ View.prototype._drawBoard = function() {
 
 	    
 	}
+	context._drawAddForm(context);
 	$('#board').append(addProductButton);
 	
 }
@@ -187,4 +191,8 @@ View.prototype._loginSuccess = function(){
 		context._drawLogin();
 	});
 	context._drawBoard();
+}
+
+View.prototype._drawAddForm = function(context) {
+    
 }
