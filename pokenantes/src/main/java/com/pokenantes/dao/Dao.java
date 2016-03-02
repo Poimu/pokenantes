@@ -48,4 +48,15 @@ public class Dao {
 		return (ArrayList<Article>) query.list();
 	}
 
+	@Transactional(readOnly = false)
+	public void deleteProduct(int productId) {
+		Session session = sessionFactory.openSession();
+		Query query = session.createQuery("delete Article where idarticle = :productId");
+		query.setParameter("productId", productId);
+		int result = query.executeUpdate();
+		if (result > 0) {
+			System.out.println("Product removed");
+		}
+	}
+
 }

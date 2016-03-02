@@ -143,6 +143,7 @@ View.prototype._drawBoard = function() {
 		
 		if ($(event.target).is('.deleteProduct')) { 
 		    context.emit('deleteProduct', {idarticle: productId});
+		    $(this).remove();
 		    return
 		}
 		
