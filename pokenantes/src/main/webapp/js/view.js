@@ -194,5 +194,18 @@ View.prototype._loginSuccess = function(){
 }
 
 View.prototype._drawAddForm = function(context) {
-    
+    var suppliers = [];
+    context._model._productsList.forEach(function(product) {
+	if (context._supplierUnique(context, suppliers, product)) {
+	    console.log(context._supplierUnique(context, suppliers, product));
+	    suppliers.push(product.clefournisseur);
+	}
+    })
+}
+
+View.prototype._supplierUnique = function(context, suppliers, product) {
+    suppliers.forEach(function(supplier) {
+	if (supplier.idfournisseur == product.clefournisseur.idfournisseur) return false;
+    })
+    return true;
 }
