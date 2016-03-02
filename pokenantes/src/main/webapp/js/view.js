@@ -58,17 +58,24 @@ View.prototype._drawBoard = function() {
 	var headerSize      = '<div id="headerSize" class="headerField">Taille</div>';
 	var headerKind      = '<div id="headerKind" class="headerField">Type</div>';
 	var headerPic       = '<div id="headerPic" class="headerField">Photo</div>';
+	var headerDelete    = '<div class="deleteButtonHeader"></div>'
 	//Les variables pour chaque produit.
 	var productLine     = '<div class="productLine"></div>';
 	var productCode	    = '<div class="productCode blockField"></div>';
 	var productName     = '<div class="productName blockField"></div>';
 	var productStock    = '<div class="productStock blockField"></div>';
+	var stockValue	    = '<div class="stockValue"></div>';
+	var stockInput	    = '<input type="text" class="stockInput" placeholder="Quantité">';
+	var stockButtons    = '<div class="stockButtons"></div>'
+	var stockAdd  	    = '<div class="stockAdd ui-icon ui-icon-plus"></div>';
+	var stockRemove	    = '<div class="stockRemove ui-icon ui-icon-minus"></div>';
 	var productCondition= '<div class="productCondition blockField"></div>';
 	var productOrigin   = '<div class="productOrigin blockField"></div>';
 	var productColor    = '<div class="productColor blockField"></div>';
 	var productSize     = '<div class="productSize blockField"></div>';
 	var productKind     = '<div class="productKind blockField"></div>';
 	var productPic      = '<div class="productPic blockField"></div>';
+	var productDelete   = '<div class="deleteProduct ui-icon ui-icon-trash">deleteProduct</div>'
 	//Les variables pour chaque fournisseur.
 	var supplierLine    = '<div class="supplierLine" style="display: none;"></div>';
 	var supplierName    = '<div class="supplierName supplierField"><b>Nom du fournisseur :&nbsp</b></div>';
@@ -87,6 +94,7 @@ View.prototype._drawBoard = function() {
 	$('#boardHeader').append(headerSize);
 	$('#boardHeader').append(headerKind);
 	$('#boardHeader').append(headerPic);
+	$('#boardHeader').append(headerDelete);
 	
 	$('#board').append(boardProducts)
 	for (var i = 0; i < context._model._productsList.length; i++) {
@@ -103,9 +111,20 @@ View.prototype._drawBoard = function() {
 	    $('.productCode:last').append(product.codearticle);
 	    $(currentProductDiv).append(productName);
 	    $('.productName:last').append(product.nomarticle);
+	    
 	    $(currentProductDiv).append(productStock);
+	    $('.productStock:last').append(stockValue);
+	    $('.stockValue:last').append(product.quantitearticle);
+	    $('.productStock:last').append(stockInput);
+	    $('.productStock:last').append(stockButtons);
+	    $('.stockButtons:last').append(stockAdd);
+	    $('.stockButtons:last').append(stockRemove);
+	    
+	    /*
 	    $('.productStock:last').append(product.quantitearticle);
 	    if (product.quantitearticle <= 0) $('.productStock:last').addClass('error');
+	    */
+	    
 	    $(currentProductDiv).append(productCondition);
 	    $('.productCondition:last').append(product.etatarticle);
 	    $(currentProductDiv).append(productOrigin);
@@ -118,10 +137,23 @@ View.prototype._drawBoard = function() {
 	    $('.productKind:last').append(product.typearticle);
 	    $(currentProductDiv).append(productPic);
 	    $('.productPic:last').append(product.photoarticle);
+	    $(currentProductDiv).append(productDelete);
 	    
-	    $(currentBlock).click(function() {
-		var supplier = context._model._productsList[$(this).data('id')].clefournisseur;
+	    
+	    /* Gestion des clicks sur le tableau de bord */
+	    $(currentBlock).click(function(div) {
+		if ($(div.target).is('.deleteProduct')) { 
+		    console.log ("hello gang");
+		    return
+		}
 		
+		if ($(div.target).is('.productStock')) {
+		    console.log("Ajout stock");
+		    return
+		}
+		
+		
+		var supplier = context._model._productsList[$(this).data('id')].clefournisseur;
 		if ($(this).find('.supplierLine').length) {
 		    $('.supplierLine').remove();
 		}
@@ -139,6 +171,8 @@ View.prototype._drawBoard = function() {
 		    $(currentSupplierDiv).show('slow');
 		}
 	    });
+
+	    
 	}
 	$('#board').append(addProductButton);
 	
