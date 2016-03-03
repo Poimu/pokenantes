@@ -107,6 +107,9 @@ View.prototype._drawAddForm = function(){
 	var formArticle 	 	  = '<form id ="addProductForm"></form>';
 	// les variables des div contenues dans le formulaire Article
 	var divSupplierArticle    = '<div id="divSupplierArticle" class="addFormDiv"> </div>';
+	// div à l'intérieur de la div SupplierArticle
+	var divSupplierArticleIn  = '<div id="divSupplierArticleIn" class="addFormDiv"> </div>';
+	// div des champs de l'article
 	var divCodeArticle        = '<div id="divCodeArticle" class="addFormDiv"> </div>';
 	var divNameArticle        = '<div id="divNameArticle" class="addFormDiv"> </div>';
 	var divColorArticle       = '<div id="divColorArticle" class="addFormDiv"> </div>';
@@ -132,7 +135,6 @@ View.prototype._drawAddForm = function(){
 	var descPhotoArticle      = '<div class="addFormDescription"> Sélectionnez une photo Article </div>';
 	
 	// les champs input d'un Article
-	
 	var codeArticle 		  = '<input id="codeArticle" type="text" placeholder="Code article">';
 	var nameArticle 	  	  = '<input id="nameArticle" type="text" placeholder="Nom article">';
 	var colorArticle 	  	  = '<input id="colorArticle" type="text" placeholder="Couleur article">';
@@ -146,9 +148,10 @@ View.prototype._drawAddForm = function(){
 	var photoArticle          = '<input class="input-file" id="photo" type="file">';
 	var selectSupplierArticle = '<select id="selectSupplierArticle" class="addFormField"></select>';
 	var NewSupplierArticle    = '<option value="newSupplier"> Nouveau fournisseur </option>';
-
-	$('body').append(formArticle);
 	
+	//ajout du formulaire article au body
+	$('body').append(formArticle);
+	//ajout des divs des champs de l'article au formulaire
 	$('#addProductForm').append(divSupplierArticle);
 	$('#addProductForm').append(divCodeArticle);
 	$('#addProductForm').append(divNameArticle);
@@ -160,7 +163,7 @@ View.prototype._drawAddForm = function(){
 	$('#addProductForm').append(divSelectTypeArticle);
 	$('#addProductForm').append(divPhotoArticle);
 	
-	$('#divSupplierArticle').append(descSupplierArticle);
+
 	$('#divCodeArticle').append(descCodeArticle);
 	$('#divNameArticle').append(descNameArticle);
 	$('#divColorArticle').append(descColorArticle);
@@ -181,21 +184,22 @@ View.prototype._drawAddForm = function(){
 	$('#divStateArticle').append(defectiveStateArticle);
 	$('#divSelectTypeArticle').append(selectTypeArticle);
 	$('#divPhotoArticle').append(photoArticle);
-	$('#descSupplierArticle').append(selectSupplierArticle);
-
-	//ajout de la div de création fournisseur à la div fournisseur
-	$('#divSupplierArticle').append(divCreateNewSupplier);
-	
-	suppliers.forEach(function(supplier) {
-		var supplierArticle = '<option value="' + supplier.idfournisseur + '">' + supplier.nomfournisseur + '</option>';
-		$('#selectSupplierArticle').append(supplierArticle);
-	});
 	
 	articleTypesList.forEach(function(articleType){
 		var articleType = '<option value="' + articleType + '">' + articleType + '</option>'; 
 		$('#selectTypeArticle').append(articleType);
 	});
 	
+	$('#divSupplierArticle').append(divSupplierArticleIn);
+	$('#divSupplierArticleIn').append(descSupplierArticle);
+	$('#divSupplierArticleIn').append(selectSupplierArticle);
+	//ajout de la div de création fournisseur à la div fournisseur
+	$('#divSupplierArticle').append(divCreateNewSupplier);
+
+	suppliers.forEach(function(supplier) {
+		var supplierArticle = '<option value="' + supplier.idfournisseur + '">' + supplier.nomfournisseur + '</option>';
+		$('#selectSupplierArticle').append(supplierArticle);
+	});	
 	$('#selectSupplierArticle').append(NewSupplierArticle);
 	
 	//affichage d'un formulaire pour créer un nouveau fournisseur
@@ -215,6 +219,7 @@ View.prototype._drawAddForm = function(){
 		var divTypeSupplier       = '<div id="divTypeSupplier" class="addFormDiv"></div>';
 		
 		if($(this).val() == "newSupplier"){
+			//on créé un "Nouveau fournisseur"
 			$('#divCreateNewSupplier').append(divNameSupplier);
 			$('#divCreateNewSupplier').append(divAddressSupplier);
 			$('#divCreateNewSupplier').append(divPhoneSupplier);
@@ -233,9 +238,6 @@ View.prototype._drawAddForm = function(){
 			//on vide la div new supplier à chaque nouveau select différent de "Nouveau fournisseur"
 			$('#divCreateNewSupplier').empty();
 		}
-		
-		
-
 	});
 
 }

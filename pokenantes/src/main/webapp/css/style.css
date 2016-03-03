@@ -15,10 +15,11 @@
 #divSupplierArticle{
 	display:flex;
 	flex-direction:column;
+	margin-left:0px;
 }
 
-#descSupplierArticle{
-	width:650px;
+#divCreateNewSupplier{
+	margin-left:20px;
 }
 
 .addFormField{
