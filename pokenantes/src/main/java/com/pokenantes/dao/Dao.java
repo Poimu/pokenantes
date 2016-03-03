@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pokenantes.dtos.Article;
+import com.pokenantes.dtos.Fournisseur;
 
 /* @Repository indique qu'il s'agit d'un objet ayant pour vocation la gestion des données : Un DAO. */
 @Repository
@@ -73,6 +74,30 @@ public class Dao {
 		query.setParameter("stockValue", stockValue);
 		query.executeUpdate();
 		session.close();
+	}
+
+	@Transactional(readOnly = false)
+	public Fournisseur addSupplier(Fournisseur fournisseur) {
+		Session session = sessionFactory.openSession();
+		fournisseur.setIdfournisseur(null);
+		session.save(fournisseur);
+		session.close();
+		return fournisseur;
+	}
+
+	@Transactional(readOnly = false)
+	public Article addProduct(Article article) {
+		Session session = sessionFactory.openSession();
+		session.save(article);
+		session.close();
+		return article;
+	}
+
+	public Fournisseur getSupplier(int idfournisseur) {
+		Session session = sessionFactory.openSession();
+		Query query = session.createQuery("FROM Fournisseur where idfournisseur = :idfournisseur");
+		query.setParameter("idfournisseur", idfournisseur);
+		return (Fournisseur) query.uniqueResult();
 	}
 
 }

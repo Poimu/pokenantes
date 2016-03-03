@@ -179,19 +179,20 @@ View.prototype._drawBoard = function() {
 		    $('.supplierPhone:last').append(supplier.numtelfournisseur);
 		    $(currentSupplierDiv).append(supplierAddress);
 		    $('.supplierAddress:last').append(supplier.nomadressefournisseur);
-		    $(currentSupplierDiv).show('slow');
+		    $(currentSupplierDiv).show('fast');
 		}
 	    });
-
-	    
 	}
 	context._drawAddSupplier(context);
 	$('#board').append(addProductButton);
 	$('#addProductButton').click(function() {
-	    $('#addProductForm').show('fast');
-	    $('#addProductButton').off();
-	    $('#addProductButton').html('Envoyer le formulaire');
-	    
+	    if ($('#addProductButton').html() == 'Envoyer le formulaire') {
+		context.emit('sendProductForm');
+	    }
+	    else {
+		$('#addProductForm').show('fast');
+		$('#addProductButton').html('Envoyer le formulaire');
+	    }	    
 	})
 	
 }
@@ -211,16 +212,16 @@ View.prototype._loginSuccess = function(){
 
 View.prototype._drawAddSupplier = function(context) {
     var suppliers 	   = context._model._suppliersList; 
-    var addProductForm     = '<form id="addProductForm" style="display: none;"></form>';
+    var addProductForm     = '<form id="addProductForm" method="post" style="display: none;" enctype="multipart/form-data"></form>';
     var addProductLine     = '<div class="addProductLine"><div class="addProductTypo"></div></div>';
     var addSupplier        = '<div id="addSupplier"></div>'    
-    var selectSupplier     = '<select id="selectSupplier"></select>';
-    var addSupplierName    = '<input id="addSupplierName" type="text" placeholder="Nom fournisseur"></input>';
+    var selectSupplier     = '<select id="selectSupplier" name="idfournisseur"></select>';
+    var addSupplierName    = '<input id="addSupplierName" name="nomfournisseur" type="text" placeholder="Nom fournisseur"></input>';
     var addSupplierType    = '<div id="addSupplierType"></div>';
-    var supplierTypePro    = '<div class="addSupplierRadio"><input name="typeRadio" type="radio" value="Professionnel"><div class="supplierRadioTypo">Professionnel</div></div>';
-    var supplierTypeCas    = '<div class="addSupplierRadio"><input name="typeRadio" type="radio" value="Particulier"><div class="supplierRadioTypo">Particulier</div></div>';
-    var addSupplierAddress = '<input id="addSupplierAddress" type="text" placeholder="Adresse fournisseur"></input>';
-    var addSupplierPhone   = '<input id="addSupplierPhone" type="text" placeholder="Téléphone fournisseur"></input>';
+    var supplierTypePro    = '<div class="addSupplierRadio"><input name="typefournisseur" type="radio" value="Professionnel"><div class="supplierRadioTypo">Professionnel</div></div>';
+    var supplierTypeCas    = '<div class="addSupplierRadio"><input name="typefournisseur" type="radio" value="Particulier"><div class="supplierRadioTypo">Particulier</div></div>';
+    var addSupplierAddress = '<input id="addSupplierAddress" name="nomadressefournisseur" type="text" placeholder="Adresse fournisseur"></input>';
+    var addSupplierPhone   = '<input id="addSupplierPhone" name="numtelfournisseur" type="text" placeholder="Téléphone fournisseur"></input>';
     
     $('#boardProducts').append(addProductForm);
     $('#addProductForm').append(addProductLine);
@@ -231,9 +232,9 @@ View.prototype._drawAddSupplier = function(context) {
 	var option = '<option value="' + supplier.idfournisseur + '">' + supplier.nomfournisseur + '</option>';
 	$('#selectSupplier').append(option);
     });
-    $('#selectSupplier').append('<option value="newSupplier"> Nouveau fournisseur </option>');
+    $('#selectSupplier').append('<option value="0"> Nouveau fournisseur </option>');
     $('#selectSupplier').change(function() {
-	if ($(this).val() == "newSupplier") {
+	if ($(this).val() == "0") {
 	    $('#addSupplier').remove();
 	    $('#addProduct').remove();
 	    $('#addProductForm').append(addSupplier);
@@ -269,17 +270,17 @@ View.prototype._drawAddSupplier = function(context) {
 View.prototype._drawAddProduct = function(context, addProductLine) {
     var productTypesList    = ['Vêtement', 'High-Tech', 'Culturel', 'Figurine', 'Carte', 'Autre'];
     var addProduct     	    = '<div id="addProduct"></div>';
-    var addProductName 	    = '<input id="addProductName" type="text" placeholder="Nom fournisseur"></input>';
-    var addProductCode 	    = '<input id="addProductName" type="text" placeholder="Code produit"></input>';
-    var addProductStock	    = '<input id="addProductStock" type="text" placeholder="Stock initial"></input>';
+    var addProductName 	    = '<input id="addProductName" name="nomarticle" type="text" placeholder="Nom produit"></input>';
+    var addProductCode 	    = '<input id="addProductCode" name="codearticle" type="text" placeholder="Code produit"></input>';
+    var addProductStock	    = '<input id="addProductStock" name="quantitearticle" type="text" placeholder="Stock initial"></input>';
     var addProductCondition = '<div id="addProductCondition"></div>';
-    var conditionRadioBroken= '<div class="productConditionRadio"><input name="conditionRadio" type="radio" value="Commercialisable"><div class="supplierRadioTypo">Commercialisable</div></div>';
-    var conditionRadioFine  = '<div class="productConditionRadio"><input name="conditionRadio" type="radio" value="Défectueux"><div class="supplierRadioTypo">Défectueux</div></div>';
-    var addProductOrigin    = '<input id="addProductOrigin" type="text" placeholder="Provenance">';
-    var addProductColor     = '<input id="addProductColor" type="text" placeholder="Couleur produit">';
-    var addProductSize      = '<input id="addProductSize" type="text" placeholder="Taille produit">';
-    var selectProductType   = '<select id="selectProductType"></supplier>';
-    var addProductPic       = '<input id="addProductPic" type="file" placeholder="Photographie produit">';
+    var conditionRadioBroken= '<div class="productConditionRadio"><input name="etatarticle" type="radio" value="Commercialisable"><div class="supplierRadioTypo">Commercialisable</div></div>';
+    var conditionRadioFine  = '<div class="productConditionRadio"><input name="etatarticle" type="radio" value="Défectueux"><div class="supplierRadioTypo">Défectueux</div></div>';
+    var addProductOrigin    = '<input id="addProductOrigin" name="provenancearticle" type="text" placeholder="Provenance">';
+    var addProductColor     = '<input id="addProductColor" name="couleurarticle" type="text" placeholder="Couleur produit">';
+    var addProductSize      = '<input id="addProductSize" name="taillearticle" type="text" placeholder="Taille produit">';
+    var selectProductType   = '<select id="selectProductType" name="typearticle"></supplier>';
+    var addProductPic       = '<input id="addProductPic" name="photoarticle" type="file" placeholder="Photographie produit">';
     
     $('#addProductForm').append(addProduct);
     

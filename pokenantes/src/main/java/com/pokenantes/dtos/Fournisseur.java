@@ -25,6 +25,14 @@ public class Fournisseur {
 	public Fournisseur() {
 	}
 
+	public Fournisseur(String nomadressefournisseur, String typefournisseur, String numtelfournisseur,
+			String nomfournisseur) {
+		this.nomadressefournisseur = nomadressefournisseur;
+		this.typefournisseur = typefournisseur;
+		this.numtelfournisseur = numtelfournisseur;
+		this.nomfournisseur = nomfournisseur;
+	}
+
 	public Integer getIdfournisseur() {
 		return idfournisseur;
 	}
@@ -43,6 +51,26 @@ public class Fournisseur {
 
 	public String getNomfournisseur() {
 		return nomfournisseur;
+	}
+
+	public void setIdfournisseur(Integer idfournisseur) {
+		this.idfournisseur = idfournisseur;
+	}
+
+	public void setNomadressefournisseur(String nomadressefournisseur) {
+		this.nomadressefournisseur = nomadressefournisseur;
+	}
+
+	public void setTypefournisseur(String typefournisseur) {
+		this.typefournisseur = typefournisseur;
+	}
+
+	public void setNumtelfournisseur(String numtelfournisseur) {
+		this.numtelfournisseur = numtelfournisseur;
+	}
+
+	public void setNomfournisseur(String nomfournisseur) {
+		this.nomfournisseur = nomfournisseur;
 	}
 
 }

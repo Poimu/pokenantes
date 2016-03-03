@@ -4,6 +4,7 @@ function Controller(model, view) {
 	//this._tryLogin();
 	this._deleteProduct();
 	this._addQuantity();
+	this._sendProductForm();
 	this._TESTreturnBoard();
 
 }
@@ -63,6 +64,25 @@ Controller.prototype._addQuantity = function() {
 			console.log("Product not edited");
 		})
 	})
+}
+
+Controller.prototype._sendProductForm = function() {
+    var context = this;
+    context._view.on('sendProductForm', function() {
+	var form = $('#addProductForm');
+	var formdata = new FormData(form[0]);
+	var data = (formdata !== null) ? formdata : form.serialize();
+	$.post({
+	    url: 'addProduct',
+	    contentType: false,
+	    processData: false,
+	    data: data,
+	}).done(function() {
+	    console.log("Bien envoyé");
+	}).fail(function() {
+	    console.log("Pas envoyé");
+	})
+    });
 }
 
 Controller.prototype._TESTreturnBoard =  function() {

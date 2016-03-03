@@ -41,6 +41,21 @@ public class Article {
 	public Article() {
 	}
 
+	public Article(Fournisseur clefournisseur, String nomarticle, String couleurarticle, String taillearticle,
+			String provenancearticle, String etatarticle, String typearticle, int quantitearticle, String photoarticle,
+			String codearticle) {
+		this.clefournisseur = clefournisseur;
+		this.nomarticle = nomarticle;
+		this.couleurarticle = couleurarticle;
+		this.taillearticle = taillearticle;
+		this.provenancearticle = provenancearticle;
+		this.etatarticle = etatarticle;
+		this.typearticle = typearticle;
+		this.quantitearticle = quantitearticle;
+		this.photoarticle = photoarticle;
+		this.codearticle = codearticle;
+	}
+
 	public int getIdarticle() {
 		return idarticle;
 	}
