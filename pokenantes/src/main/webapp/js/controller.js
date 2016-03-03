@@ -22,6 +22,7 @@ Controller.prototype._tryLogin = function() {
 		}).done(function(data) {					//Si la requête reçoit un success.
 			data.productsList.forEach(function(product) {
 				context._model._productsList.push(product);
+				context._model._pushSupplier(product);
 			});
 		}).fail(function( jqXHR, textStatus ) {				//Si la requête ne reçoit pas un success.
 			console.log("Login Refusé : " + textStatus);
@@ -52,6 +53,7 @@ Controller.prototype._TESTreturnBoard =  function() {
 	}).done(function(data) {					//Si la requête reçoit un success : un remplit la liste des produits dans notre modèle.
 		data.productsList.forEach(function(product) {
 			context._model._productsList.push(product);
+			context._model._pushSupplier(product);
 		});
 		context._view._drawBoard();
 	}).fail(function( jqXHR, textStatus ) {				//Si la requête ne reçoit pas un success.

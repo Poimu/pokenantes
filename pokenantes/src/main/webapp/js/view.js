@@ -102,8 +102,8 @@ View.prototype._drawBoard = function() {
 	
 	/* Ajout des détails de chaque produit */
 	for (var i = 0; i < context._model._productsList.length; i++) {
-	    var productBlock       = '<div data-id="' + i + '" class="productBlock"></div>';
-	    var currentBlock       = '[data-id="' + i + '"]';
+	    var productBlock       = '<div data-id="' + context._model._productsList[i].idarticle + '" class="productBlock"></div>';
+	    var currentBlock       = '[data-id="' + context._model._productsList[i].idarticle + '"]';
 	    var currentProductDiv  = '.productLine:last';
 	    var currentSupplierDiv = '.supplierLine:last';
 	    var product            = context._model._productsList[i];
@@ -141,8 +141,8 @@ View.prototype._drawBoard = function() {
 	    
 	    /* Gestion des clicks sur le tableau de bord */
 	    $(currentBlock).click(function(event) {
-		var supplier  = context._model._productsList[$(this).data('id')].clefournisseur;
-		var productId = context._model._productsList[$(this).data('id')].idarticle;
+		var supplier  = context._model._getSupplier($(this).data('id'));
+		var productId = $(this).data('id');
 		
 		if ($(event.target).is('.deleteProduct')) { 
 		    context.emit('deleteProduct', {idarticle: productId});
@@ -194,7 +194,8 @@ View.prototype._loginSuccess = function(){
 }
 
 View.prototype._drawAddForm = function(context) {
-    var suppliers 	   = [];
+    var suppliers 	   = context._model._suppliersList;
+    
     var addProductForm     = '<form id="addProductForm"></form>';
     var addProductLine    = '<div class="addProductLine"><div class="addProductTypo"></div></div>';
     
@@ -206,13 +207,6 @@ View.prototype._drawAddForm = function(context) {
     var addSupplierAddress = '<input id="supplierAddress" type="text" placeholder="Adresse fournisseur"></input>';
     var addSupplierPhone   = '<input id="supplierPhone" type="text" placeholder="Téléphone fournisseur"></input>';
     
-    //Charge la liste des fournisseurs
-    context._model._productsList.forEach(function(product) {
-	if (context._supplierUnique(context, suppliers, product)) {
-	    suppliers.push(product.clefournisseur);
-	}
-    })    
-    
     $('#boardProducts').append(addProductForm);
     $('#addProductForm').append(addProductLine);
     $('.addProductTypo:last').append('Sélectionnez un fournisseur');
@@ -223,12 +217,4 @@ View.prototype._drawAddForm = function(context) {
     $('#selectSupplier').append('<option value="newSupplier"> Nouveau fournisseur </option>');
 }
 
-View.prototype._supplierUnique = function(context, suppliers, product) {
-    var unique = true;
-    suppliers.forEach(function(supplier) {
-	if (supplier.idfournisseur === product.clefournisseur.idfournisseur) {
-	    unique = false;
-	}
-    })
-    return unique;
-}
+
