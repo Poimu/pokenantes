@@ -35,8 +35,10 @@ Controller.prototype._TESTreturnBoard =  function() {
 	}).done(function(data) {					//Si la requête reçoit un success : un remplit la liste des produits dans notre modèle.
 		data.productsList.forEach(function(product) {
 			context._model._productsList.push(product);
+			context._model._pushSupplier(product);
 		});
 		context._view._drawAddForm();
+
 		console.log(context._model._productsList);
 	}).fail(function( jqXHR, textStatus ) {		//Si la requête ne reçoit pas un success.
 		console.log("Login Refusé : " + textStatus);

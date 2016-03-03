@@ -12,6 +12,11 @@
 	border-style: ridge;
 }
 
+#divSupplierArticle{
+	display:flex;
+	flex-direction:column;
+}
+
 .addFormField{
 	width : 172px;
 	
