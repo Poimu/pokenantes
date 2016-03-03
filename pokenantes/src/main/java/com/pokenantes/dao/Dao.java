@@ -10,6 +10,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pokenantes.dtos.Article;
+import com.pokenantes.dtos.Fournisseur;
+
+
 
 /* @Repository indique qu'il s'agit d'un objet ayant pour vocation la gestion des données : Un DAO. */
 @Repository
@@ -25,7 +28,7 @@ public class Dao {
 	 * ouvre la porte de la base de données en ouvrant la sessionFactory.
 	 */
 	@Autowired
-	private SessionFactory sessionFactory;
+	private static SessionFactory sessionFactory;
 
 	/* Fonction de validation du nom & du mot de passe */
 	public boolean validCredentials(String name, String password) {
@@ -51,6 +54,37 @@ public class Dao {
 		session.close();
 		return productsList;
 	}
+	
+	public Article addArticle(Article a,Fournisseur f) {
+		AddFournisseur(f);
+		Session session=sessionFactory.openSession();
+		Query query =session.createQuery("From Article where idarticle =: id").setParameter("id", a.getIdarticle());
+		
+		if(query.uniqueResult()==null){
+			 session.save(a);
+			 return(a);
+		
+		 }else {
+			 return ((Article)query.uniqueResult());
+		 }			
+		
+	}
+	 public static Fournisseur AddFournisseur(Fournisseur F)
+	 {
+		 Session session = sessionFactory.openSession();
+		 Query query=session.createQuery("From Fournisseur where idfournisseur=: id ");
+		 query.setParameter("id", F.getIdfournisseur());
+		 if(query.uniqueResult()!=null)
+		 {
+			 return ((Fournisseur)query.uniqueResult());
+		 }
+		 else {
+			 session.save(F);
+			 session.close();
+			 return(F);
+			 
+		 }
+	 }
 
 	@Transactional(readOnly = false)
 	public void deleteProduct(int productId) {
@@ -63,5 +97,6 @@ public class Dao {
 		}
 		session.close();
 	}
+	
 
 }

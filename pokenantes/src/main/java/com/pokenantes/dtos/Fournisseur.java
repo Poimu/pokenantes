@@ -24,6 +24,12 @@ public class Fournisseur {
 
 	public Fournisseur() {
 	}
+	public Fournisseur(int id, String adr, String type, String tel, String nom ){
+		this.idfournisseur=id;
+		this.nomadressefournisseur=adr;
+		this.typefournisseur= type;
+		this.nomfournisseur= nom;
+	}
 
 	public Integer getIdfournisseur() {
 		return idfournisseur;
