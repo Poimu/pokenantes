@@ -100,12 +100,14 @@ View.prototype._loginSuccess = function(){
 
 View.prototype._drawAddForm = function(){
 	var context = this;
-	var suppliers 	          = context._model._suppliersList;
+	var suppliers = context._model._suppliersList;
+	var articleTypesList = ['Vêtements toutes tailles','Déguisements manga','Jeux vidéos','Livres','DVDs','CDs','Figurines','Cartes de collection'];
+	
 	// le formulaire Article
 	var formArticle 	 	  = '<form id ="addProductForm"></form>';
 	// les variables des div contenues dans le formulaire Article
 	var divSupplierArticle    = '<div id="divSupplierArticle" class="addFormDiv"> </div>';
-	var divIdArticle          = '<div id="divIdArticle" class="addFormDiv"> </div>';
+	var divCodeArticle        = '<div id="divCodeArticle" class="addFormDiv"> </div>';
 	var divNameArticle        = '<div id="divNameArticle" class="addFormDiv"> </div>';
 	var divColorArticle       = '<div id="divColorArticle" class="addFormDiv"> </div>';
 	var divSizeArticle        = '<div id="divSizeArticle" class="addFormDiv"> </div>';
@@ -118,8 +120,8 @@ View.prototype._drawAddForm = function(){
 
 	
 	// les champs descriptions d'un Article
-	var descSupplierArticle       = '<div class="addFormDescription"> Sélectionnez un fournisseur </div>';
-	var descIdArticle         = '<div class="addFormDescription"> Id Article </div>';
+	var descSupplierArticle   = '<div id="descSupplierArticle" class="addFormDescription"> Sélectionnez un fournisseur </div>';
+	var descCodeArticle       = '<div class="addFormDescription"> Code Article </div>';
 	var descNameArticle       = '<div class="addFormDescription"> Nom Article </div>';
 	var descColorArticle      = '<div class="addFormDescription"> Couleur Article </div>';
 	var descSizeArticle       = '<div class="addFormDescription"> Taille Article </div>';
@@ -131,7 +133,7 @@ View.prototype._drawAddForm = function(){
 	
 	// les champs input d'un Article
 	
-	var idArticle 		  	  = '<input id="idArticle" type="text" placeholder="Id article">';
+	var codeArticle 		  = '<input id="codeArticle" type="text" placeholder="Code article">';
 	var nameArticle 	  	  = '<input id="nameArticle" type="text" placeholder="Nom article">';
 	var colorArticle 	  	  = '<input id="colorArticle" type="text" placeholder="Couleur article">';
 	var sizeArticle 	  	  = '<input id="sizeArticle" type="text" placeholder="Taille article">';
@@ -140,17 +142,15 @@ View.prototype._drawAddForm = function(){
 	var comStateArticle 	  = '<input id="comState" type="radio" name="etat" value="commercialisable">Commercialisable';
 	var defectiveStateArticle = '<input id="defectiveState" type="radio" name="etat" value="defective">Défectueux';
 	var selectTypeArticle 	  = '<select id="selectTypeArticle" class="addFormField"></select>';
-	var vetArticle 	  		  = '<option id="vet" value="Vet">Vêtements</option>';
-	var bookArticle 	 	  = '<option id="book" value="Livre">Livre</option>';
-	var cdArticle 		  	  = '<option id="cd" value="CD">CD</option>';
+
 	var photoArticle          = '<input class="input-file" id="photo" type="file">';
-	var selectSupplierArticle = '<select id="selectSupplierArticle" class="addFormField"></select>'
+	var selectSupplierArticle = '<select id="selectSupplierArticle" class="addFormField"></select>';
 	var NewSupplierArticle    = '<option value="newSupplier"> Nouveau fournisseur </option>';
 
 	$('body').append(formArticle);
 	
 	$('#addProductForm').append(divSupplierArticle);
-	$('#addProductForm').append(divIdArticle);
+	$('#addProductForm').append(divCodeArticle);
 	$('#addProductForm').append(divNameArticle);
 	$('#addProductForm').append(divColorArticle);
 	$('#addProductForm').append(divSizeArticle);
@@ -161,7 +161,7 @@ View.prototype._drawAddForm = function(){
 	$('#addProductForm').append(divPhotoArticle);
 	
 	$('#divSupplierArticle').append(descSupplierArticle);
-	$('#divIdArticle').append(descIdArticle);
+	$('#divCodeArticle').append(descCodeArticle);
 	$('#divNameArticle').append(descNameArticle);
 	$('#divColorArticle').append(descColorArticle);
 	$('#divSizeArticle').append(descSizeArticle);
@@ -171,7 +171,7 @@ View.prototype._drawAddForm = function(){
 	$('#divSelectTypeArticle').append(descSelectTypeArticle);
 	$('#divPhotoArticle').append(descPhotoArticle);
 	
-	$('#divIdArticle').append(idArticle);
+	$('#divCodeArticle').append(codeArticle);
 	$('#divNameArticle').append(nameArticle);
 	$('#divColorArticle').append(colorArticle);
 	$('#divSizeArticle').append(sizeArticle);
@@ -180,45 +180,62 @@ View.prototype._drawAddForm = function(){
 	$('#divStateArticle').append(comStateArticle);
 	$('#divStateArticle').append(defectiveStateArticle);
 	$('#divSelectTypeArticle').append(selectTypeArticle);
-	$('#selectTypeArticle').append(vetArticle);
-	$('#selectTypeArticle').append(bookArticle);
-	$('#selectTypeArticle').append(cdArticle);
 	$('#divPhotoArticle').append(photoArticle);
-	$('#divSupplierArticle').append(selectSupplierArticle);
+	$('#descSupplierArticle').append(selectSupplierArticle);
 
-	$('#selectSupplierArticle').append(NewSupplierArticle);
-	
 	//ajout de la div de création fournisseur à la div fournisseur
 	$('#divSupplierArticle').append(divCreateNewSupplier);
 	
 	suppliers.forEach(function(supplier) {
-		var supplierArticle   = '<option value="' + supplier.idfournisseur + '">' + supplier.nomfournisseur + '</option>';
+		var supplierArticle = '<option value="' + supplier.idfournisseur + '">' + supplier.nomfournisseur + '</option>';
 		$('#selectSupplierArticle').append(supplierArticle);
 	});
 	
-	$('#selectSupplierArticle').change(function(){
-		var descNameSupplier      = '<div> Nom du Fournisseur </div>';
-		var descAddressSupplier   = '<div> Adresse du Fournisseur </div>';
-		var descPhoneSupplier     = '<div> Numéro de téléphone du Fournisseur </div>';
-		var descTypeSupplier      = '<div> Type du Fournisseur </div>';
+	articleTypesList.forEach(function(articleType){
+		var articleType = '<option value="' + articleType + '">' + articleType + '</option>'; 
+		$('#selectTypeArticle').append(articleType);
+	});
+	
+	$('#selectSupplierArticle').append(NewSupplierArticle);
+	
+	//affichage d'un formulaire pour créer un nouveau fournisseur
+	$('#selectSupplierArticle').change(function(supplier){
+		var descNameSupplier      = '<div class="addSupplierDescription"> Nom du Fournisseur </div>';
+		var descAddressSupplier   = '<div class="addSupplierDescription"> Adresse du Fournisseur </div>';
+		var descPhoneSupplier     = '<div class="addSupplierDescription"> N° de téléphone du Fournisseur </div>';
+		var descTypeSupplier      = '<div class="addSupplierDescription"> Type du Fournisseur </div>';
 		var nameSupplier          = '<input id="nameSupplier" type="text" placeholder="Nom fournisseur">';
 		var addressSupplier       = '<input id="addressSupplier" type="text" placeholder="Adresse fournisseur">';
-		var phoneSupplier         = '<input id="phoneSupplier" type="text" placeholder="Numéro de téléphone fournisseur">';
-		var typeSupplier          = '<select id="typeSupplier" class="addFormField"></select>';
+		var phoneSupplier         = '<input id="phoneSupplier" type="text" placeholder="N° de téléphone fournisseur">';
+		var enterpriseSupplier    = '<input id="enterpriseSupplier" type="radio" name="supplier" value="enterprise">Entreprise';
+		var particularSupplier    = '<input id="particularSupplier" type="radio" name="supplier" value="particular">Particulier';
+		var divNameSupplier       = '<div id="divNameSupplier" class="addFormDiv"></div>';
+		var divAddressSupplier    = '<div id="divAddressSupplier" class="addFormDiv"></div>';
+		var divPhoneSupplier      = '<div id="divPhoneSupplier" class="addFormDiv"></div>';
+		var divTypeSupplier       = '<div id="divTypeSupplier" class="addFormDiv"></div>';
+		
 		if($(this).val() == "newSupplier"){
-			$('#divCreateNewSupplier').append(descNameSupplier);
-			$('#divCreateNewSupplier').append(descAddressSupplier);
-			$('#divCreateNewSupplier').append(descPhoneSupplier);
-			$('#divCreateNewSupplier').append(descTypeSupplier);
-			$('#divCreateNewSupplier').append(nameSupplier);
-			$('#divCreateNewSupplier').append(addressSupplier);
-			$('#divCreateNewSupplier').append(phoneSupplier);
-			$('#divCreateNewSupplier').append(typeSupplier);
+			$('#divCreateNewSupplier').append(divNameSupplier);
+			$('#divCreateNewSupplier').append(divAddressSupplier);
+			$('#divCreateNewSupplier').append(divPhoneSupplier);
+			$('#divCreateNewSupplier').append(divTypeSupplier);
+			$('#divNameSupplier').append(descNameSupplier);
+			$('#divAddressSupplier').append(descAddressSupplier);
+			$('#divPhoneSupplier').append(descPhoneSupplier);
+			$('#divTypeSupplier').append(descTypeSupplier);
+			$('#divNameSupplier').append(nameSupplier);
+			$('#divAddressSupplier').append(addressSupplier);
+			$('#divPhoneSupplier').append(phoneSupplier);
+			$('#divTypeSupplier').append(enterpriseSupplier);
+			$('#divTypeSupplier').append(particularSupplier);
 		}
 		else{
-			//on supprime la div new supplier
-			divCreateNewSupplier.remove;
+			//on vide la div new supplier à chaque nouveau select différent de "Nouveau fournisseur"
+			$('#divCreateNewSupplier').empty();
 		}
+		
+		
+
 	});
 
 }

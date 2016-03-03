@@ -17,6 +17,10 @@
 	flex-direction:column;
 }
 
+#descSupplierArticle{
+	width:650px;
+}
+
 .addFormField{
 	width : 172px;
 	
@@ -31,8 +35,15 @@
 
 .addFormDescription{
 	font-weight:bold;
-	width:190px;
+	width:210px;
 	font-size: 15px;
+	margin-top:auto;
+	margin-bottom:auto;
+}
+
+.addSupplierDescription{
+	width:190px;
+	font-size: 12px;
 	margin-top:auto;
 	margin-bottom:auto;
 }

@@ -26,7 +26,7 @@ Controller.prototype._tryLogin = function() {
 			console.log("Login Refusé : " + textStatus);
 		})
 	})
-}
+};
 
 Controller.prototype._TESTreturnBoard =  function() {
 	var context = this;
@@ -43,4 +43,9 @@ Controller.prototype._TESTreturnBoard =  function() {
 	}).fail(function( jqXHR, textStatus ) {		//Si la requête ne reçoit pas un success.
 		console.log("Login Refusé : " + textStatus);
 	})
-}
+};
+
+Controller.prototype._sendNewForm = function(){
+	this._view.on('sendAddForm', function(data) {
+	})
+};
