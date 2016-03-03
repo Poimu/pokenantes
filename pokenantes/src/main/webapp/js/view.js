@@ -4,6 +4,7 @@ function View(model) {
 	this._checkLogin;
 	this._drawBoard;
 	this._loginSuccess;
+	this._updateQty();
 }
 
 View.prototype = new EventEmitter();
@@ -151,23 +152,20 @@ View.prototype._drawBoard = function() {
 		    return
 		}
 		
-		if ( $(event.target).is('.stockAdd') || $(event.target).is('.stockRemove')) {
-			if ($(event.target).is('.stockRemove')){
-				removeQty = ($('.stockInput').val()) ;
-				console.log(removeQty);
-				context._model._setQty(productId,removeQty);
-			}else {
-				context._model._setQty(productId,$('.stockInput').val());
-			}
-			
+		if ($(event.target).is('.stockRemove')){
+			removeQty = ($(this).find($('.stockInput')).val()*(-1)) ;
+			context._model._setQty(productId,removeQty);
 			context.emit('addQuantity', {idarticle: productId});
-		    return
+			return
 		}
-		
+			
+		if ($(event.target).is('.stockAdd')){
+			removeQty = ($(this).find($('.stockInput')).val()*1) ;
+			context._model._setQty(productId,removeQty);
+			context.emit('addQuantity', {idarticle: productId});
+			return
+		}
 
-		
-
-		
 		if ($(this).find('.supplierLine').length) {
 		    $('.supplierLine').remove();
 		}
@@ -229,5 +227,25 @@ View.prototype._drawAddForm = function(context) {
     });
     $('#selectSupplier').append('<option value="newSupplier"> Nouveau fournisseur </option>');
 }
+
+View.prototype._updateQty = function(){
+	var context = this;
+	context._model.on('updatedQty',function(data){
+		$('[data-id="' + data.idarticle + '"]').find($('.stockValue')).html(data.qtearticle);
+		id = data.idarticle;
+		qty = data.qtearticle;
+		context.emit('editQty', {
+			newQty: data.qtearticle,
+			idarticle: data.idarticle
+		});
+//		if (($('.stockValue').val()) == 0 ) {
+//			var errorQty = '<div id="errorQty" class="animated fadeOut">Quantité à 0.</div>';
+//			$('#errorQty').remove();
+//			$('.stockValue').append(errorQty);
+//		}
+	})
+};
+
+
 
 

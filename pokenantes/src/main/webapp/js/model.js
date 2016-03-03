@@ -7,6 +7,8 @@ function Model() {
 	this._supplierUnique;
 }
 
+Model.prototype = new EventEmitter();
+
 Model.prototype._getProduct = function(idarticle) {
 	var product;
 	this._productsList.forEach(function (prod){
@@ -18,9 +20,18 @@ Model.prototype._getQty = function(idarticle) {
 	return this._getProduct(idarticle).quantitearticle;
 }
 Model.prototype._setQty = function(idarticle,stockValue) {
+	
 	var newQty = stockValue + (this._getQty(idarticle));
+	if (newQty < 0){
+		return
+	}
 	this._getProduct(idarticle).quantitearticle = newQty;
-    console.log(this._getProduct(idarticle).quantitearticle);
+	console.log(idarticle);
+	console.log(newQty);
+	this.emit("updatedQty",{
+		idarticle: idarticle,
+		qtearticle: newQty
+	});
 }
 
 Model.prototype._getSupplier = function(id) {

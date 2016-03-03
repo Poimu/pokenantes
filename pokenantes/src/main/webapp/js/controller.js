@@ -4,6 +4,7 @@ function Controller(model, view) {
 	//this._tryLogin();
 	this._deleteProduct();
 	this._TESTreturnBoard();
+	this._addQuantity();
 }
 
 Controller.prototype._tryLogin = function() {
@@ -63,21 +64,17 @@ Controller.prototype._TESTreturnBoard =  function() {
 
 Controller.prototype._addQuantity = function() {
 	var context = this;
-	context._view.on('addQuantity', function() {
-		var qtyInit = $('#stockValue').val();
-		var qtyPlus = $('#stockInput').val();
-		
-		/* AJAX POST des données contenues dans les champs loginName & loginPass */
+	context._view.on('editQty', function(data) {	
 		$.post({
-			url: "addQuantity",  					//URL à laquelle la requête AJAX est envoyée. L'action Login est mappée avec cette URL.
-			data: {							//Données envoyées. On envoie une variable utilisateur & une variable motdepasse.	
-				qteInit: qtyInit,
-				qtePlus: qtyPlus
+			url: "editQty",  					//URL à laquelle la requête AJAX est envoyée. L'action Login est mappée avec cette URL.
+			data: {							//Données envoyées.
+				updatedQty: data.newQty,
+				idarticle: data.idarticle
 			}		
 		}).done(function(data) {					//Si la requête reçoit un success.
-			console.log("Product edited : " + data.qtyInit);
+			console.log("Product edited ");
 		}).fail(function( jqXHR, textStatus ) {				//Si la requête ne reçoit pas un success.
-			console.log("product not edited");
+			console.log("Product not edited");
 		})
 	})
 }
