@@ -60,3 +60,24 @@ Controller.prototype._TESTreturnBoard =  function() {
 		console.log("Login Refusé : " + textStatus);
 	})
 }
+
+Controller.prototype._addQuantity = function() {
+	var context = this;
+	context._view.on('addQuantity', function() {
+		var qtyInit = $('#stockValue').val();
+		var qtyPlus = $('#stockInput').val();
+		
+		/* AJAX POST des données contenues dans les champs loginName & loginPass */
+		$.post({
+			url: "addQuantity",  					//URL à laquelle la requête AJAX est envoyée. L'action Login est mappée avec cette URL.
+			data: {							//Données envoyées. On envoie une variable utilisateur & une variable motdepasse.	
+				qteInit: qtyInit,
+				qtePlus: qtyPlus
+			}		
+		}).done(function(data) {					//Si la requête reçoit un success.
+			console.log("Product edited : " + data.qtyInit);
+		}).fail(function( jqXHR, textStatus ) {				//Si la requête ne reçoit pas un success.
+			console.log("product not edited");
+		})
+	})
+}

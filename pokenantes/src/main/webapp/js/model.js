@@ -8,7 +8,19 @@ function Model() {
 }
 
 Model.prototype._getProduct = function(idarticle) {
+	var product;
+	this._productsList.forEach(function (prod){
+		if (prod.idarticle == idarticle) {product=prod};
+	})
     return product;
+}
+Model.prototype._getQty = function(idarticle) {
+	return this._getProduct(idarticle).quantitearticle;
+}
+Model.prototype._setQty = function(idarticle,stockValue) {
+	var newQty = stockValue + (this._getQty(idarticle));
+	this._getProduct(idarticle).quantitearticle = newQty;
+    console.log(this._getProduct(idarticle).quantitearticle);
 }
 
 Model.prototype._getSupplier = function(id) {

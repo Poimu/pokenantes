@@ -143,6 +143,7 @@ View.prototype._drawBoard = function() {
 	    $(currentBlock).click(function(event) {
 		var supplier  = context._model._getSupplier($(this).data('id'));
 		var productId = $(this).data('id');
+		var product   = context._model._getProduct($(this).data('id'));
 		
 		if ($(event.target).is('.deleteProduct')) { 
 		    context.emit('deleteProduct', {idarticle: productId});
@@ -150,10 +151,22 @@ View.prototype._drawBoard = function() {
 		    return
 		}
 		
-		if ($(event.target).is('.stockInput') || $(event.target).is('.stockAdd') || $(event.target).is('.stockRemove')) {
-		    console.log("Ajout stock");
+		if ( $(event.target).is('.stockAdd') || $(event.target).is('.stockRemove')) {
+			if ($(event.target).is('.stockRemove')){
+				removeQty = ($('.stockInput').val()) ;
+				console.log(removeQty);
+				context._model._setQty(productId,removeQty);
+			}else {
+				context._model._setQty(productId,$('.stockInput').val());
+			}
+			
+			context.emit('addQuantity', {idarticle: productId});
 		    return
 		}
+		
+
+		
+
 		
 		if ($(this).find('.supplierLine').length) {
 		    $('.supplierLine').remove();

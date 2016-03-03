@@ -63,5 +63,15 @@ public class Dao {
 		}
 		session.close();
 	}
+	
+	@Transactional(readOnly = false)
+	public void addQuantity (int stockValue, int productId) {
+		Session session = sessionFactory.openSession();
+		Query query = session.createQuery("update Article set quantitearticle = :stockValue where idarticle = :productId ");
+		query.setParameter("productId", productId);
+		query.setParameter("stockValue", stockValue);
+		query.executeUpdate();
+		session.close();
+	}
 
 }
