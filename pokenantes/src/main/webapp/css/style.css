@@ -30,14 +30,33 @@ body {
 	margin-bottom: auto;
 }
 
-#boardProducts, #board, .supplierLine {
+#boardProducts, #board, .supplierLine, #addProductForm {
 	display: flex;
 	flex-direction: column;
 }
 
-.productLine, #boardHeader, .supplierField, .productStock {
+.productLine, #boardHeader, .supplierField, .productStock, .addProductLine, #addSupplierType, .addSupplierRadio, #addProductCondition, .productConditionRadio{
 	display: flex;
 	flex-direction: row;
+}
+
+#addProductForm {
+	margin-top: 30px;
+	-webkit-box-shadow: -2px 2px 7px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: -2px 2px 7px 0px rgba(0,0,0,0.75);
+	box-shadow: -2px 2px 7px 0px rgba(0,0,0,0.75);
+	width: 550px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 10px;
+}
+
+input[type='file'] {
+  color: transparent;
+}
+
+.addProductTypo {
+	width: 50%;
 }
 
 .stockValue {

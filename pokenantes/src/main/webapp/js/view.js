@@ -175,8 +175,14 @@ View.prototype._drawBoard = function() {
 
 	    
 	}
-	context._drawAddForm(context);
+	context._drawAddSupplier(context);
 	$('#board').append(addProductButton);
+	$('#addProductButton').click(function() {
+	    $('#addProductForm').show('slow');
+	    $('#addProductButton').off();
+	    $('#addProductButton').html('Envoyer le formulaire');
+	    
+	})
 	
 }
 
@@ -193,28 +199,122 @@ View.prototype._loginSuccess = function(){
 	context._drawBoard();
 }
 
-View.prototype._drawAddForm = function(context) {
-    var suppliers 	   = context._model._suppliersList;
-    
-    var addProductForm     = '<form id="addProductForm"></form>';
-    var addProductLine    = '<div class="addProductLine"><div class="addProductTypo"></div></div>';
-    
+View.prototype._drawAddSupplier = function(context) {
+    var suppliers 	   = context._model._suppliersList; 
+    var addProductForm     = '<form id="addProductForm" style="display: none;"></form>';
+    var addProductLine     = '<div class="addProductLine"><div class="addProductTypo"></div></div>';
+    var addSupplier        = '<div id="addSupplier"></div>'    
     var selectSupplier     = '<select id="selectSupplier"></select>';
-    var addSupplierName    = '<input id="supplierName" type="text" placeholder="Nom fournisseur"></input>';
-    var addSupplierType    = '<div id="supplierType"></div>';
-    var supplierTypePro    = '<div class="supplierRadio"><input name="supplierType" type="radio" value="Professionnel"><div class="supplierRadioTypo">Professionnel</div></div>';
-    var supplierTypeCas    = '<div class="supplierRadio"><input name="supplierType" type="radio" value="Particulier"><div class="supplierRadioTypo">Particulier</div></div>';
-    var addSupplierAddress = '<input id="supplierAddress" type="text" placeholder="Adresse fournisseur"></input>';
-    var addSupplierPhone   = '<input id="supplierPhone" type="text" placeholder="Téléphone fournisseur"></input>';
+    var addSupplierName    = '<input id="addSupplierName" type="text" placeholder="Nom fournisseur"></input>';
+    var addSupplierType    = '<div id="addSupplierType"></div>';
+    var supplierTypePro    = '<div class="addSupplierRadio"><input name="typeRadio" type="radio" value="Professionnel"><div class="supplierRadioTypo">Professionnel</div></div>';
+    var supplierTypeCas    = '<div class="addSupplierRadio"><input name="typeRadio" type="radio" value="Particulier"><div class="supplierRadioTypo">Particulier</div></div>';
+    var addSupplierAddress = '<input id="addSupplierAddress" type="text" placeholder="Adresse fournisseur"></input>';
+    var addSupplierPhone   = '<input id="addSupplierPhone" type="text" placeholder="Téléphone fournisseur"></input>';
     
     $('#boardProducts').append(addProductForm);
     $('#addProductForm').append(addProductLine);
     $('.addProductTypo:last').append('Sélectionnez un fournisseur');
     $('.addProductLine:last').append(selectSupplier);
+    $('#selectSupplier').append('<option class="supplier-option" value="" disabled selected>Renseignez un fournisseur</option>')
     suppliers.forEach(function(supplier) {
-	$('#selectSupplier').append('<option value="' + supplier.idfournisseur + '">' + supplier.nomfournisseur + '</option>');
+	var option = '<option value="' + supplier.idfournisseur + '">' + supplier.nomfournisseur + '</option>';
+	$('#selectSupplier').append(option);
     });
     $('#selectSupplier').append('<option value="newSupplier"> Nouveau fournisseur </option>');
+    $('#selectSupplier').change(function() {
+	if ($(this).val() == "newSupplier") {
+	    $('#addSupplier').remove();
+	    $('#addProduct').remove();
+	    $('#addProductForm').append(addSupplier);
+	    
+	    $('#addSupplier').append(addProductLine);
+	    $('.addProductTypo:last').append('Nom du fournisseur');
+	    $('.addProductLine:last').append(addSupplierName);
+	    
+	    $('#addSupplier').append(addProductLine);
+	    $('.addProductTypo:last').append('Type de fournisseur');
+	    $('.addProductLine:last').append(addSupplierType);
+	    $('#addSupplierType').append(supplierTypePro);
+	    $('#addSupplierType').append(supplierTypeCas);
+	    
+	    $('#addSupplier').append(addProductLine);
+	    $('.addProductTypo:last').append('Adresse du fournisseur');
+	    $('.addProductLine:last').append(addSupplierAddress);
+	    
+	    $('#addSupplier').append(addProductLine);
+	    $('.addProductTypo:last').append('Téléphone du fournisseur');
+	    $('.addProductLine:last').append(addSupplierPhone);
+	    
+	    context._drawAddProduct(context, addProductLine);
+	}
+	else {
+	    $('#addSupplier').remove();
+	    $('#addProduct').remove();
+	    context._drawAddProduct(context, addProductLine);
+	}
+    })
+}
+
+View.prototype._drawAddProduct = function(context, addProductLine) {
+    var productTypesList    = ['Vêtement', 'High-Tech', 'Culturel', 'Figurine', 'Carte', 'Autre'];
+    var addProduct     	    = '<div id="addProduct"></div>';
+    var addProductName 	    = '<input id="addProductName" type="text" placeholder="Nom fournisseur"></input>';
+    var addProductCode 	    = '<input id="addProductName" type="text" placeholder="Code produit"></input>';
+    var addProductStock	    = '<input id="addProductStock" type="text" placeholder="Stock initial"></input>';
+    var addProductCondition = '<div id="addProductCondition"></div>';
+    var conditionRadioBroken= '<div class="productConditionRadio"><input name="conditionRadio" type="radio" value="Commercialisable"><div class="supplierRadioTypo">Commercialisable</div></div>';
+    var conditionRadioFine  = '<div class="productConditionRadio"><input name="conditionRadio" type="radio" value="Défectueux"><div class="supplierRadioTypo">Défectueux</div></div>';
+    var addProductOrigin    = '<input id="addProductOrigin" type="text" placeholder="Provenance">';
+    var addProductColor     = '<input id="addProductColor" type="text" placeholder="Couleur produit">';
+    var addProductSize      = '<input id="addProductSize" type="text" placeholder="Taille produit">';
+    var selectProductType   = '<select id="selectProductType"></supplier>';
+    var addProductPic       = '<input id="addProductPic" type="file" placeholder="Photographie produit">';
+    
+    $('#addProductForm').append(addProduct);
+    
+    $('#addProduct').append(addProductLine);
+    $('.addProductTypo:last').append('Nom article');
+    $('.addProductLine:last').append(addProductName);
+    
+    $('#addProduct').append(addProductLine);
+    $('.addProductTypo:last').append('Code article');
+    $('.addProductLine:last').append(addProductCode);
+    
+    $('#addProduct').append(addProductLine);
+    $('.addProductTypo:last').append('Stock initial');
+    $('.addProductLine:last').append(addProductStock);
+    
+    $('#addProduct').append(addProductLine);
+    $('.addProductTypo:last').append('Etat du produit');
+    $('.addProductLine:last').append(addProductCondition);
+    $('#addProductCondition').append(conditionRadioBroken);
+    $('#addProductCondition').append(conditionRadioFine);
+    
+    $('#addProduct').append(addProductLine);
+    $('.addProductTypo:last').append('Provenance du produit');
+    $('.addProductLine:last').append(addProductOrigin);
+    
+    $('#addProduct').append(addProductLine);
+    $('.addProductTypo:last').append('Couleur produit');
+    $('.addProductLine:last').append(addProductColor);
+    
+    $('#addProduct').append(addProductLine);
+    $('.addProductTypo:last').append('Taille produit');
+    $('.addProductLine:last').append(addProductSize);
+    
+    $('#addProduct').append(addProductLine);
+    $('.addProductTypo:last').append('Type article');
+    $('.addProductLine:last').append(selectProductType);
+    productTypesList.forEach(function(type) {
+	var option = '<option value="' + type + '">' + type + '</option>';
+	$('#selectProductType').append(option);
+    });
+    
+    $('#addProduct').append(addProductLine);
+    $('.addProductTypo:last').append('Photo article');
+    $('.addProductLine:last').append(addProductPic);
+
 }
 
 
