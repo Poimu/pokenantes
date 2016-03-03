@@ -178,7 +178,7 @@ View.prototype._drawBoard = function() {
 	context._drawAddSupplier(context);
 	$('#board').append(addProductButton);
 	$('#addProductButton').click(function() {
-	    $('#addProductForm').show('slow');
+	    $('#addProductForm').show('fast');
 	    $('#addProductButton').off();
 	    $('#addProductButton').html('Envoyer le formulaire');
 	    
