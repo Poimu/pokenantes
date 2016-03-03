@@ -147,6 +147,15 @@ View.prototype._drawBoard = function() {
 		    return
 		}
 		
+		if ($(div.target).is('.stockAdd')){
+			console.log("++");
+			return
+		}
+		if ($(div.target).is('.stockRemove')){
+			console.log("--");
+			return
+		}
+		
 		if ($(div.target).is('.productStock')) {
 		    console.log("Ajout stock");
 		    return

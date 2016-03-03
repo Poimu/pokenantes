@@ -11,11 +11,11 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.pokenantes.dao.Dao;
 import com.pokenantes.dtos.Article;
 
-//RÃ©ceptionne le POST trylogin
+//Réceptionne le POST trylogin
 @Action("/trylogin")
-// GÃ¨re les donnÃ©es reÃ§ues comme un objet JSON
+// Gère les donnèes reçues comme un objet JSON
 @ParentPackage("json-default")
-// Le renvoie sera un objet JSON et non pas une rÃ©orientation vers une page web.
+// Le renvoie sera un objet JSON et non pas une réorientation vers une page web.
 @Result(type = "json", params = { "includeProperties",
 		"msg, " // Renvoie de la liste des produits
 				+ "productsList\\[\\d+\\]\\,"
@@ -29,7 +29,7 @@ import com.pokenantes.dtos.Article;
 				+ "productsList.quantitearitcle,"
 				+ "productsList.photoarticle,"
 				+ "productsList.codearticle,"
-				// Renvoie des dÃ©tails fournisseurs
+				// Renvoie des détails fournisseurs
 				+ "productsList\\[\\d+\\]\\.clefournisseur\\[\\d+\\]\\,"
 				+ "productsList.clefournisseur.idfournisseur,"
 				+ "productsList.clefournisseur.nomadressefournisseur,"

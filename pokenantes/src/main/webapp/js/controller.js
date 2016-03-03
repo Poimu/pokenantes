@@ -41,3 +41,25 @@ Controller.prototype._TESTreturnBoard =  function() {
 		console.log("Login Refusé : " + textStatus);
 	})
 }
+
+Controller.prototype._addQuantity = function(){
+	var context = this;
+	this._view.on('addQuantity',function(){
+		var qty = $('.stockInput').val();
+		var qtyPlus = $('.stockAdd').val();
+		
+		
+		$.post({
+			url: "addQuantity",  						
+			data: {										
+				qteInit: qty,
+				qtePlus: qtyPlus
+			}		
+		}).done(function(data) {					//Si la requête reçoit un success.
+			
+		}).fail(function( jqXHR, textStatus ) {		//Si la requête ne reçoit pas un success.
+			
+		})
+	})
+	
+}
