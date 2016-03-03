@@ -4,6 +4,7 @@ function View(model) {
 	this._checkLogin;
 	this._drawBoard;
 	this._loginSuccess;
+	this._updateQty();
 }
 
 View.prototype = new EventEmitter();
@@ -150,9 +151,18 @@ View.prototype._drawBoard = function() {
 		    return
 		}
 		
-		if ($(event.target).is('.stockInput') || $(event.target).is('.stockAdd') || $(event.target).is('.stockRemove')) {
-		    console.log("Ajout stock");
-		    return
+		if ($(event.target).is('.stockRemove')){
+			removeQty = ($(this).find($('.stockInput')).val()*(-1)) ;
+			context._model._setQty(productId,removeQty);
+			context.emit('addQuantity', {idarticle: productId});
+			return
+		}
+			
+		if ($(event.target).is('.stockAdd')){
+			removeQty = ($(this).find($('.stockInput')).val()*1) ;
+			context._model._setQty(productId,removeQty);
+			context.emit('addQuantity', {idarticle: productId});
+			return
 		}
 		
 		if ($(this).find('.supplierLine').length) {
@@ -316,5 +326,18 @@ View.prototype._drawAddProduct = function(context, addProductLine) {
     $('.addProductLine:last').append(addProductPic);
 
 }
+
+View.prototype._updateQty = function(){
+	var context = this;
+	context._model.on('updatedQty',function(data){
+		$('[data-id="' + data.idarticle + '"]').find($('.stockValue')).html(data.qtearticle);
+		id = data.idarticle;
+		qty = data.qtearticle;
+		context.emit('editQty', {
+			newQty: data.qtearticle,
+			idarticle: data.idarticle
+		});
+	})
+};
 
 
