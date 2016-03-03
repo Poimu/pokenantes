@@ -99,37 +99,79 @@ View.prototype._loginSuccess = function(){
 }
 
 View.prototype._drawAddForm = function(){
+	// le formulaire Article
 	var formArticle 	 	  = '<form id ="addProductForm"></form>';
-	var divIdArticle          = '<div id="divIdArticle"> </div>';
-	var divNameArticle        = '<div id="divNameArticle"> </div>';
-	var divColorArticle       = '<div id="divColorArticle"> </div>';
+	// les variables des div contenues dans le formulaire Article
+	var divIdArticle          = '<div id="divIdArticle" class="addFormDiv"> </div>';
+	var divNameArticle        = '<div id="divNameArticle" class="addFormDiv"> </div>';
+	var divColorArticle       = '<div id="divColorArticle" class="addFormDiv"> </div>';
+	var divSizeArticle        = '<div id="divSizeArticle" class="addFormDiv"> </div>';
+	var divOriginArticle      = '<div id="divOriginArticle" class="addFormDiv"> </div>';
+	var divQtyArticle         = '<div id="divQtyArticle" class="addFormDiv"> </div>';
+	var divStateArticle       = '<div id="divStateArticle" class="addFormDiv"> </div>';
+	var divSelectTypeArticle  = '<div id="divSelectTypeArticle" class="addFormDiv"> </div>';
+	var divPhotoArticle       = '<div id="divPhotoArticle" class="addFormDiv"> </div>';
 	
+	// les champs descriptions d'un Article
+	var descIdArticle         = '<div class="addFormDescription"> Id Article </div>';
+	var descNameArticle       = '<div class="addFormDescription"> Nom Article </div>';
+	var descColorArticle      = '<div class="addFormDescription"> Couleur Article </div>';
+	var descSizeArticle       = '<div class="addFormDescription"> Taille Article </div>';
+	var descOriginArticle     = '<div class="addFormDescription"> Provenance Article </div>';
+	var descQtyArticle        = '<div class="addFormDescription"> Quantité Article </div>';
+	var descStateArticle      = '<div class="addFormDescription"> Etat Article </div>';
+	var descSelectTypeArticle = '<div class="addFormDescription"> Type Article </div>';
+	var descPhotoArticle      = '<div class="addFormDescription"> Sélectionner Photo Article </div>';
 	
-	
-	var idArticle 		  	  = '<input id="idArticle" class="addFormField" type="text" placeholder="Id article">';
-	var nameArticle 	  	  = '<input id="nameArticle" class="addFormField" type="text" placeholder="Nom article">';
-	var colorArticle 	  	  = '<input id="colorArticle" class="addFormField" type="text" placeholder="Couleur article">';
-	var sizeArticle 	  	  = '<input id="sizeArticle" class="addFormField" type="text" placeholder="Taille article">';
-	var originArticle 	 	  = '<input id="originArticle" class="addFormField" type="text" placeholder="Provenance article">';
-	var qtyArticle 		  	  = '<input id="qtyArticle" class="addFormField" type="number">';
+	// les champs input d'un Article
+	var idArticle 		  	  = '<input id="idArticle" type="text" placeholder="Id article">';
+	var nameArticle 	  	  = '<input id="nameArticle" type="text" placeholder="Nom article">';
+	var colorArticle 	  	  = '<input id="colorArticle" type="text" placeholder="Couleur article">';
+	var sizeArticle 	  	  = '<input id="sizeArticle" type="text" placeholder="Taille article">';
+	var originArticle 	 	  = '<input id="originArticle" type="text" placeholder="Provenance article">';
+	var qtyArticle 		  	  = '<input id="qtyArticle" type="number">';
 	var comStateArticle 	  = '<input id="comState" type="radio" name="etat" value="commercialisable">Commercialisable';
 	var defectiveStateArticle = '<input id="defectiveState" type="radio" name="etat" value="defective">Défectueux';
 	var selectTypeArticle 	  = '<select id="selectTypeArticle" class="addFormField"></select>';
 	var vetArticle 	  		  = '<option id="vet" value="Vet">Vêtements</option>';
 	var bookArticle 	 	  = '<option id="book" value="Livre">Livre</option>';
 	var cdArticle 		  	  = '<option id="cd" value="CD">CD</option>';
+	var photoArticle          = '<input class="input-file" id="photo" type="file">';
 	
 	$('body').append(formArticle);
+	
+	$('#addProductForm').append(divIdArticle);
+	$('#addProductForm').append(divNameArticle);
+	$('#addProductForm').append(divColorArticle);
+	$('#addProductForm').append(divSizeArticle);
+	$('#addProductForm').append(divOriginArticle);
+	$('#addProductForm').append(divQtyArticle);
+	$('#addProductForm').append(divStateArticle);
+	$('#addProductForm').append(divSelectTypeArticle);
+	$('#addProductForm').append(divPhotoArticle);
+	
+	$('#divIdArticle').append(descIdArticle);
+	$('#divNameArticle').append(descNameArticle);
+	$('#divColorArticle').append(descColorArticle);
+	$('#divSizeArticle').append(descSizeArticle);
+	$('#divOriginArticle').append(descOriginArticle);
+	$('#divQtyArticle').append(descQtyArticle);
+	$('#divStateArticle').append(descStateArticle);
+	$('#divSelectTypeArticle').append(descSelectTypeArticle);
+	$('#divPhotoArticle').append(descPhotoArticle);
+	
 	$('#divIdArticle').append(idArticle);
 	$('#divNameArticle').append(nameArticle);
-	$('#divArticle').append(colorArticle);
-	$('#divArticle').append(sizeArticle);
-	$('#divArticle').append(originArticle);
-	$('#divArticle').append(qtyArticle);
-	$('#divArticle').append(comStateArticle);
-	$('#divArticle').append(defectiveStateArticle);
-	$('#divArticle').append(selectTypeArticle);
+	$('#divColorArticle').append(colorArticle);
+	$('#divSizeArticle').append(sizeArticle);
+	$('#divOriginArticle').append(originArticle);
+	$('#divQtyArticle').append(qtyArticle);
+	$('#divStateArticle').append(comStateArticle);
+	$('#divStateArticle').append(defectiveStateArticle);
+	$('#divSelectTypeArticle').append(selectTypeArticle);
 	$('#selectTypeArticle').append(vetArticle);
 	$('#selectTypeArticle').append(bookArticle);
 	$('#selectTypeArticle').append(cdArticle);
+	$('#divPhotoArticle').append(photoArticle);
+
 }

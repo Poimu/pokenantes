@@ -6,11 +6,30 @@
 #addProductForm {
 	display : flex;
 	flex-direction : column;
+	width:50%;
+	margin:auto;
+	margin-top:30px!important;
+	border-style: ridge;
 }
 
 .addFormField{
-	width : 300px;
+	width : 172px;
 	
+}
+
+.addFormDiv{
+	display : flex;
+	flex-direction : row;
+	margin:8px;
+	width:650px;
+}
+
+.addFormDescription{
+	font-weight:bold;
+	width:190px;
+	font-size: 15px;
+	margin-top:auto;
+	margin-bottom:auto;
 }
 
 .loginField {
