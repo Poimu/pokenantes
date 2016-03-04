@@ -7,7 +7,34 @@ function Model() {
 	this._supplierUnique;
 }
 
+
 Model.prototype = new EventEmitter();
+
+Model.prototype.filter= function(typeProd){
+	var filterList= [];
+	this._productsList.forEach(function (prod){
+		if(prod.etatarticle=="defectueux")
+			filterList.push(prod);	
+		});
+	
+	filterList.forEach(function(prod){
+		this.emit('addedProduct',{product: product});
+
+	});
+}
+
+Model.prototype.trier= function(tab,parametre){
+	if(parametre=="quantite")
+	{
+		tab.sort(function(a,b){
+			return (b.quantite) > (a.quantite);
+			
+			
+		});
+	
+	}
+	return tab;
+}
 
 Model.prototype._getProduct = function(idarticle) {
 	var product;
