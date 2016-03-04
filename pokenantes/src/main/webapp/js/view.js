@@ -105,6 +105,7 @@ View.prototype._drawAddForm = function(){
 	
 	// le formulaire Article
 	var formArticle 	 	  = '<form id ="addProductForm"></form>';
+	var closeFormArticle      = '<div id="closeFormArticle">x</div>';
 	// les variables des div contenues dans le formulaire Article
 	var divSupplierArticle    = '<div id="divSupplierArticle" class="addFormDiv"> </div>';
 	// div à l'intérieur de la div SupplierArticle
@@ -152,6 +153,7 @@ View.prototype._drawAddForm = function(){
 	//ajout du formulaire article au body
 	$('body').append(formArticle);
 	//ajout des divs des champs de l'article au formulaire
+	$('#addProductForm').append(closeFormArticle);
 	$('#addProductForm').append(divSupplierArticle);
 	$('#addProductForm').append(divCodeArticle);
 	$('#addProductForm').append(divNameArticle);
