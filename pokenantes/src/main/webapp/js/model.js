@@ -7,16 +7,32 @@ function Model() {
 	this._supplierUnique;
 }
 
-
 Model.prototype = new EventEmitter();
 
 Model.prototype.filter= function(typeProd){
 	var filterList= [];
-	this._productsList.forEach(function (prod){
-		if(prod.etatarticle=="defectueux")
-			filterList.push(prod);	
-		});
 	
+	if(typeProd=="defectueux"){
+	this._productsList.forEach(function (prod){
+		
+		if(prod.etatarticle== typeProd)
+			filterList.push(prod);
+	});
+	
+	}
+	else if(typeProd=="stockout")
+		{
+		this._productsList.forEach(function (prod){
+			
+			if(prod.stock== 0)
+				filterList.push(prod);
+			
+		});
+	}else{
+		this._productsList.forEach(function (prod){
+			filterList.push(prod);
+		})
+	}
 	filterList.forEach(function(prod){
 		this.emit('addedProduct',{product: product});
 
