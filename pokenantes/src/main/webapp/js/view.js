@@ -200,7 +200,7 @@ View.prototype._drawBoard = function() {
 View.prototype._loginSuccess = function(){
 	var context = this;
 	$('body').empty();
-	var deconnectButton = '<button id="relogin" type="button" name="deconnexion">Déconnection</button>';
+	var deconnectButton = '<button id="relogin" type="button" name="deconnexion">Deconnexion</button>';
 	$('body').append(deconnectButton);
 	$('#relogin').click(function(){
 		$('#relogin').remove();
@@ -210,9 +210,11 @@ View.prototype._loginSuccess = function(){
 	context._drawBoard();
 }
 
+
 View.prototype._drawAddSupplier = function(context) {
-    var suppliers 	   = context._model._suppliersList; 
+    var suppliers 	       = context._model._suppliersList; 
     var addProductForm     = '<form id="addProductForm" method="post" style="display: none;" enctype="multipart/form-data"></form>';
+    var closeForm          = '<div id="closeForm" class="addProductLine"><div id="closeCross" class="ui-icon ui-icon-close"></div></div>';
     var addProductLine     = '<div class="addProductLine"><div class="addProductTypo"></div></div>';
     var addSupplier        = '<div id="addSupplier"></div>'    
     var selectSupplier     = '<select id="selectSupplier" name="idfournisseur"></select>';
@@ -224,6 +226,12 @@ View.prototype._drawAddSupplier = function(context) {
     var addSupplierPhone   = '<input id="addSupplierPhone" name="numtelfournisseur" type="text" placeholder="Téléphone fournisseur"></input>';
     
     $('#boardProducts').append(addProductForm);
+    $('#addProductForm').append(closeForm);
+    var context = this;
+    $('#closeCross').click(function(){
+		$('#addProductForm').remove();
+		context._drawAddSupplier();
+    });
     $('#addProductForm').append(addProductLine);
     $('.addProductTypo:last').append('Sélectionnez un fournisseur');
     $('.addProductLine:last').append(selectSupplier);

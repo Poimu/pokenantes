@@ -131,6 +131,10 @@ input[type='file'] {
 	text-align: center;
 }
 
+#closeCross{
+	margin-left: auto;
+}
+
 .productBlock:nth-child(odd) {
 	background-color: #f4f6f6;
 }
