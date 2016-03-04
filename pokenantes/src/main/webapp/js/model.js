@@ -14,20 +14,22 @@ Model.prototype._getProduct = function(idarticle) {
 	this._productsList.forEach(function (prod){
 		if (prod.idarticle == idarticle) {product=prod};
 	})
-    return product;
+	return product;
 }
 
 Model.prototype._getQty = function(idarticle) {
 	return this._getProduct(idarticle).quantitearticle;
 }
 
-Model.prototype._setQty = function(idarticle,stockValue) {
-	var newQty = stockValue + (this._getQty(idarticle));
+Model.prototype._setQty = function(productId,removeQty) {
+	var newQty = removeQty + (this._getQty(productId));
+	this._getProduct(productId).quantitearticle = newQty;
+	console.log(newQty);
 	if (newQty < 0){
 		return
 	}
 	this.emit("updatedQty",{
-		idarticle: idarticle,
+		idarticle: productId,
 		qtearticle: newQty
 	});
 }

@@ -332,16 +332,14 @@ View.prototype._updateAddProductBoard = function(){
 		}
 		
 		if ($(event.target).is('.stockRemove')){
-			removeQty = ($(this).find($('.stockInput')).val()*(-1)) ;
+			var removeQty = ($(this).find($('.stockInput')).val()*(-1));
 			context._model._setQty(productId,removeQty);
-			context.emit('updateQuantity', {idarticle: productId});
 			return
 		}
 			
 		if ($(event.target).is('.stockAdd')){
-			removeQty = ($(this).find($('.stockInput')).val()*1) ;
+			var removeQty = ($(this).find($('.stockInput')).val()*1) ;
 			context._model._setQty(productId,removeQty);
-			context.emit('updateQuantity', {idarticle: productId});
 			return
 		}
 		

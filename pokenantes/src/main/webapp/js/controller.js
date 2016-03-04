@@ -51,7 +51,7 @@ Controller.prototype._deleteProduct = function() {
 
 Controller.prototype._updateQuantity = function() {
 	var context = this;
-	context._view.on('updateQuantity', function(data) {	
+	context._view.on('editQty', function(data) {	
 		$.post({
 			url: "editQty",  					//URL à laquelle la requête AJAX est envoyée. L'action Login est mappée avec cette URL.
 			data: {							//Données envoyées.

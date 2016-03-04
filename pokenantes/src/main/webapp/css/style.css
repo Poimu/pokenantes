@@ -64,6 +64,10 @@ input[type='file'] {
 	margin-left: auto;
 }
 
+.productPic:hover {
+	background-image: url("./uploadedImages/blister.jpg")
+}
+
 .headerField, .blockField {
 	width: 10.5%;
 	text-align: center;

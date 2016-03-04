@@ -50,8 +50,11 @@ public class AddProduct extends ActionSupport {
 	private Dao dao;
 
 	public String execute() {
+		System.out.println(new File("."));
 		System.out.println("Executed");
-		this.destPath = "css/images";
+		this.destPath = this.getClass().getResource("/../../uploadedImages/").getFile();
+		System.out.println(this.getClass().getResource("/../../uploadedImages/").getFile());
+		// this.destPath = "css/images";
 		try {
 			this.destFile = new File(this.destPath, this.photoarticleFileName);
 			FileUtils.copyFile(this.photoarticle, this.destFile);
