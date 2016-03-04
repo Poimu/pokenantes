@@ -101,7 +101,7 @@ View.prototype._loginSuccess = function(){
 View.prototype._drawAddForm = function(){
 	var context = this;
 	var suppliers = context._model._suppliersList;
-	var articleTypesList = ['Vêtements toutes tailles','Déguisements manga','Jeux vidéos','Livres','DVDs','CDs','Figurines','Cartes de collection'];
+	var articleTypesList = ['Vêtements toutes tailles','Déguisements manga','Jeux vidéos','Livres','DVDs','CDs','Figurines','Cartes de collection','Autre'];
 	
 	// le formulaire Article
 	var formArticle 	 	  = '<form id ="addProductForm"></form>';
