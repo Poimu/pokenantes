@@ -86,9 +86,8 @@ View.prototype._drawBoard = function() {
 	    	context.emit('sendProductForm');
 	    }
 	    else {
-			//$('#addProductForm').show('fast');
-			$('#addProductButton').html('Envoyer le formulaire');
-			context._drawAddSupplier(context);
+		$('#addProductButton').html('Envoyer le formulaire');
+		context._drawAddSupplier(context);
 	    }	    
 	})
 	
