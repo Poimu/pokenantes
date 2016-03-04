@@ -49,7 +49,7 @@ Model.prototype._getSupplier = function(id) {
 Model.prototype._pushSupplier = function(product) {
     var currentModel = this;
     if (currentModel._supplierUnique(currentModel, product)) {
-	currentModel._suppliersList.push(product.clefournisseur);
+    	currentModel._suppliersList.push(product.clefournisseur);
     }
 }
 
@@ -61,4 +61,9 @@ Model.prototype._supplierUnique = function(currentModel, product) {
 	}
     })
     return unique;
+}
+
+Model.prototype._addProduct = function (product){
+	this._productsList.push(product);
+	this.emit('addedProduct',{product: product});
 }

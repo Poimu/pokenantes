@@ -5,6 +5,7 @@ function View(model) {
 	this._drawBoard;
 	this._loginSuccess;
 	this._updateQty();
+	this._updateAddProductBoard(); //permet l'écoute en continu
 }
 
 View.prototype = new EventEmitter();
@@ -46,12 +47,12 @@ View.prototype._checkLogin = function () {
 }
 
 View.prototype._drawBoard = function() {
-    	var context	    = this;
-    
-	var board 	    = '<div id="board"></div>';
+    var context	        = this;
+	var board 	        = '<div id="board"></div>';
 	var boardHeader     = '<div id="boardHeader"></div>';
 	var boardProducts   = '<div id="boardProducts"></div>';
-	var addProductButton= '<div id="addProductButton">Ajouter un produit</div>'
+	var addProductButton= '<div id="addProductButton">Ajouter un produit</div>';
+    var productForm     = '<div id="productForm"></div>';	
 	//Les variables du header.
 	var headerId 	    = '<div id="headerId" class="headerField">Identifiant</div>';
 	var headerName      = '<div id="headerName" class="headerField">Nom</div>';
@@ -63,29 +64,6 @@ View.prototype._drawBoard = function() {
 	var headerKind      = '<div id="headerKind" class="headerField">Type</div>';
 	var headerPic       = '<div id="headerPic" class="headerField">Photo</div>';
 	var headerDelete    = '<div class="deleteButtonHeader"></div>'
-	//Les variables pour chaque produit.
-	var productLine     = '<div class="productLine"></div>';
-	var productCode	    = '<div class="productCode blockField"></div>';
-	var productName     = '<div class="productName blockField"></div>';
-	var productStock    = '<div class="productStock blockField"></div>';
-	var stockValue	    = '<div class="stockValue"></div>';
-	var stockInput	    = '<input type="text" class="stockInput" placeholder="Quantité">';
-	var stockButtons    = '<div class="stockButtons"></div>'
-	var stockAdd  	    = '<div class="stockAdd ui-icon ui-icon-plus"></div>';
-	var stockRemove	    = '<div class="stockRemove ui-icon ui-icon-minus"></div>';
-	var productCondition= '<div class="productCondition blockField"></div>';
-	var productOrigin   = '<div class="productOrigin blockField"></div>';
-	var productColor    = '<div class="productColor blockField"></div>';
-	var productSize     = '<div class="productSize blockField"></div>';
-	var productKind     = '<div class="productKind blockField"></div>';
-	var productPic      = '<div class="productPic blockField"></div>';
-	var productDelete   = '<div class="deleteProduct ui-icon ui-icon-trash">deleteProduct</div>'
-	//Les variables pour chaque fournisseur.
-	var supplierLine    = '<div class="supplierLine" style="display: none;"></div>';
-	var supplierName    = '<div class="supplierName supplierField"><b>Nom du fournisseur :&nbsp</b></div>';
-	var supplierType    = '<div class="supplierType supplierField"><b>Type de fournisseur :&nbsp</b></div>';
-	var supplierPhone   = '<div class="supplierPhone supplierField"><b>Téléphone du fournisseur :&nbsp</b></div>';
-	var supplierAddress = '<div class="supplierAddress supplierField"><b>Adresse du fournisseur :&nbsp</b></div>';
 	
 	$('body').append(board);
 	$('#board').append(boardHeader);
@@ -99,99 +77,18 @@ View.prototype._drawBoard = function() {
 	$('#boardHeader').append(headerKind);
 	$('#boardHeader').append(headerPic);
 	$('#boardHeader').append(headerDelete);
-	$('#board').append(boardProducts)
+	$('#board').append(boardProducts);
+    $('body').append(productForm);
 	
-	/* Ajout des détails de chaque produit */
-	for (var i = 0; i < context._model._productsList.length; i++) {
-	    var productBlock       = '<div data-id="' + context._model._productsList[i].idarticle + '" class="productBlock"></div>';
-	    var currentBlock       = '[data-id="' + context._model._productsList[i].idarticle + '"]';
-	    var currentProductDiv  = '.productLine:last';
-	    var currentSupplierDiv = '.supplierLine:last';
-	    var product            = context._model._productsList[i];
-	    	    
-	    $('#boardProducts').append(productBlock);
-	    $(currentBlock).append(productLine);
-	    $(currentProductDiv).append(productCode);
-	    $('.productCode:last').append(product.codearticle);
-	    $(currentProductDiv).append(productName);
-	    $('.productName:last').append(product.nomarticle);
-	    
-	    $(currentProductDiv).append(productStock);
-	    $('.productStock:last').append(stockValue);
-	    $('.stockValue:last').append(product.quantitearticle);
-	    if (product.quantitearticle <= 0) $('.stockValue:last').addClass('error');
-	    $('.productStock:last').append(stockInput);
-	    $('.productStock:last').append(stockButtons);
-	    $('.stockButtons:last').append(stockAdd);
-	    $('.stockButtons:last').append(stockRemove);
-	    
-	    $(currentProductDiv).append(productCondition);
-	    $('.productCondition:last').append(product.etatarticle);
-	    $(currentProductDiv).append(productOrigin);
-	    $('.productOrigin:last').append(product.provenancearticle);
-	    $(currentProductDiv).append(productColor);
-	    $('.productColor:last').append(product.couleurarticle);
-	    $(currentProductDiv).append(productSize);
-	    $('.productSize:last').append(product.taillearticle);
-	    $(currentProductDiv).append(productKind);
-	    $('.productKind:last').append(product.typearticle);
-	    $(currentProductDiv).append(productPic);
-	    $('.productPic:last').append(product.photoarticle);
-	    $(currentProductDiv).append(productDelete);
-	    
-	    
-	    /* Gestion des clicks sur le tableau de bord */
-	    $(currentBlock).click(function(event) {
-		var supplier  = context._model._getSupplier($(this).data('id'));
-		var productId = $(this).data('id');
-		
-		if ($(event.target).is('.deleteProduct')) { 
-		    context.emit('deleteProduct', {idarticle: productId});
-		    $(this).remove();
-		    return
-		}
-		
-		if ($(event.target).is('.stockRemove')){
-			removeQty = ($(this).find($('.stockInput')).val()*(-1)) ;
-			context._model._setQty(productId,removeQty);
-			context.emit('updateQuantity', {idarticle: productId});
-			return
-		}
-			
-		if ($(event.target).is('.stockAdd')){
-			removeQty = ($(this).find($('.stockInput')).val()*1) ;
-			context._model._setQty(productId,removeQty);
-			context.emit('updateQuantity', {idarticle: productId});
-			return
-		}
-		
-		if ($(this).find('.supplierLine').length) {
-		    $('.supplierLine').remove();
-		}
-		else {
-		    $('.supplierLine').remove();
-		    $(this).append(supplierLine);
-		    $(currentSupplierDiv).append(supplierName);
-		    $('.supplierName:last').append(supplier.nomfournisseur);
-		    $(currentSupplierDiv).append(supplierType);
-		    $('.supplierType:last').append(supplier.typefournisseur);
-		    $(currentSupplierDiv).append(supplierPhone);
-		    $('.supplierPhone:last').append(supplier.numtelfournisseur);
-		    $(currentSupplierDiv).append(supplierAddress);
-		    $('.supplierAddress:last').append(supplier.nomadressefournisseur);
-		    $(currentSupplierDiv).show('fast');
-		}
-	    });
-	}
-	context._drawAddSupplier(context);
-	$('#board').append(addProductButton);
+	$('body').append(addProductButton);
 	$('#addProductButton').click(function() {
 	    if ($('#addProductButton').html() == 'Envoyer le formulaire') {
-		context.emit('sendProductForm');
+	    	context.emit('sendProductForm');
 	    }
 	    else {
-		$('#addProductForm').show('fast');
-		$('#addProductButton').html('Envoyer le formulaire');
+			//$('#addProductForm').show('fast');
+			$('#addProductButton').html('Envoyer le formulaire');
+			context._drawAddSupplier(context);
 	    }	    
 	})
 	
@@ -211,8 +108,9 @@ View.prototype._loginSuccess = function(){
 }
 
 View.prototype._drawAddSupplier = function(context) {
-    var suppliers 	   = context._model._suppliersList; 
-    var addProductForm     = '<form id="addProductForm" method="post" style="display: none;" enctype="multipart/form-data"></form>';
+    var suppliers 	       = context._model._suppliersList;
+
+    var addProductForm     = '<form id="addProductForm" method="post" enctype="multipart/form-data"></form>';
     var addProductLine     = '<div class="addProductLine"><div class="addProductTypo"></div></div>';
     var addSupplier        = '<div id="addSupplier"></div>'    
     var selectSupplier     = '<select id="selectSupplier" name="idfournisseur"></select>';
@@ -223,14 +121,15 @@ View.prototype._drawAddSupplier = function(context) {
     var addSupplierAddress = '<input id="addSupplierAddress" name="nomadressefournisseur" type="text" placeholder="Adresse fournisseur"></input>';
     var addSupplierPhone   = '<input id="addSupplierPhone" name="numtelfournisseur" type="text" placeholder="Téléphone fournisseur"></input>';
     
-    $('#boardProducts').append(addProductForm);
+
+    $('#productForm').append(addProductForm);
     $('#addProductForm').append(addProductLine);
     $('.addProductTypo:last').append('Sélectionnez un fournisseur');
     $('.addProductLine:last').append(selectSupplier);
     $('#selectSupplier').append('<option class="supplier-option" value="" disabled selected>Renseignez un fournisseur</option>')
     suppliers.forEach(function(supplier) {
-	var option = '<option value="' + supplier.idfournisseur + '">' + supplier.nomfournisseur + '</option>';
-	$('#selectSupplier').append(option);
+    	var option = '<option value="' + supplier.idfournisseur + '">' + supplier.nomfournisseur + '</option>';
+    	$('#selectSupplier').append(option);
     });
     $('#selectSupplier').append('<option value="0"> Nouveau fournisseur </option>');
     $('#selectSupplier').change(function() {
@@ -340,5 +239,113 @@ View.prototype._updateQty = function(){
 		});
 	})
 };
+
+View.prototype._updateAddProductBoard = function(){
+		var context = this;
+		this._model.on('addedProduct',function(data){
+		var product         = data.product;
+		var productLine     = '<div class="productLine"></div>';
+		var productCode	    = '<div class="productCode blockField"></div>';
+		var productName     = '<div class="productName blockField"></div>';
+		var productStock    = '<div class="productStock blockField"></div>';
+		var stockValue	    = '<div class="stockValue"></div>';
+		var stockInput	    = '<input type="text" class="stockInput" placeholder="Quantité">';
+		var stockButtons    = '<div class="stockButtons"></div>'
+		var stockAdd  	    = '<div class="stockAdd ui-icon ui-icon-plus"></div>';
+		var stockRemove	    = '<div class="stockRemove ui-icon ui-icon-minus"></div>';
+		var productCondition= '<div class="productCondition blockField"></div>';
+		var productOrigin   = '<div class="productOrigin blockField"></div>';
+		var productColor    = '<div class="productColor blockField"></div>';
+		var productSize     = '<div class="productSize blockField"></div>';
+		var productKind     = '<div class="productKind blockField"></div>';
+		var productPic      = '<div class="productPic blockField"></div>';
+		var productDelete   = '<div class="deleteProduct ui-icon ui-icon-trash">deleteProduct</div>'
+		//Les variables pour chaque fournisseur.
+		var supplierLine    = '<div class="supplierLine" style="display: none;"></div>';
+		var supplierName    = '<div class="supplierName supplierField"><b>Nom du fournisseur :&nbsp</b></div>';
+		var supplierType    = '<div class="supplierType supplierField"><b>Type de fournisseur :&nbsp</b></div>';
+		var supplierPhone   = '<div class="supplierPhone supplierField"><b>Téléphone du fournisseur :&nbsp</b></div>';
+		var supplierAddress = '<div class="supplierAddress supplierField"><b>Adresse du fournisseur :&nbsp</b></div>';
+		
+		var productBlock       = '<div data-id="' + product.idarticle + '" class="productBlock"></div>';
+	    var currentBlock       = '[data-id="' + product.idarticle + '"]';
+	    var currentProductDiv  = '.productLine:last';
+	    var currentSupplierDiv = '.supplierLine:last';        
+	    
+	    $('#boardProducts').append(productBlock);
+	    $(currentBlock).append(productLine);
+	    $(currentProductDiv).append(productCode);
+	    $('.productCode:last').append(product.codearticle);
+	    $(currentProductDiv).append(productName);
+	    $('.productName:last').append(product.nomarticle);
+	    
+	    $(currentProductDiv).append(productStock);
+	    $('.productStock:last').append(stockValue);
+	    $('.stockValue:last').append(product.quantitearticle);
+	    if (product.quantitearticle <= 0) $('.stockValue:last').addClass('error');
+	    $('.productStock:last').append(stockInput);
+	    $('.productStock:last').append(stockButtons);
+	    $('.stockButtons:last').append(stockAdd);
+	    $('.stockButtons:last').append(stockRemove);
+	    
+	    $(currentProductDiv).append(productCondition);
+	    $('.productCondition:last').append(product.etatarticle);
+	    $(currentProductDiv).append(productOrigin);
+	    $('.productOrigin:last').append(product.provenancearticle);
+	    $(currentProductDiv).append(productColor);
+	    $('.productColor:last').append(product.couleurarticle);
+	    $(currentProductDiv).append(productSize);
+	    $('.productSize:last').append(product.taillearticle);
+	    $(currentProductDiv).append(productKind);
+	    $('.productKind:last').append(product.typearticle);
+	    $(currentProductDiv).append(productPic);
+	    $('.productPic:last').append(product.photoarticle);
+	    $(currentProductDiv).append(productDelete);
+	    
+	    
+	    /* Gestion des clicks sur le tableau de bord */
+	    $(currentBlock).click(function(event) {
+		var supplier  = context._model._getSupplier(product.idarticle);
+		var productId = product.idarticle;
+		
+		if ($(event.target).is('.deleteProduct')) { 
+		    context.emit('deleteProduct', {idarticle: productId});
+		    $(this).remove();
+		    return
+		}
+		
+		if ($(event.target).is('.stockRemove')){
+			removeQty = ($(this).find($('.stockInput')).val()*(-1)) ;
+			context._model._setQty(productId,removeQty);
+			context.emit('updateQuantity', {idarticle: productId});
+			return
+		}
+			
+		if ($(event.target).is('.stockAdd')){
+			removeQty = ($(this).find($('.stockInput')).val()*1) ;
+			context._model._setQty(productId,removeQty);
+			context.emit('updateQuantity', {idarticle: productId});
+			return
+		}
+		
+		if ($(this).find('.supplierLine').length) {
+		    $('.supplierLine').remove();
+		}
+		else {
+		    $('.supplierLine').remove();
+		    $(this).append(supplierLine);
+		    $(currentSupplierDiv).append(supplierName);
+		    $('.supplierName:last').append(supplier.nomfournisseur);
+		    $(currentSupplierDiv).append(supplierType);
+		    $('.supplierType:last').append(supplier.typefournisseur);
+		    $(currentSupplierDiv).append(supplierPhone);
+		    $('.supplierPhone:last').append(supplier.numtelfournisseur);
+		    $(currentSupplierDiv).append(supplierAddress);
+		    $('.supplierAddress:last').append(supplier.nomadressefournisseur);
+		    $(currentSupplierDiv).show('fast');
+		}
+	    });
+	})
+}
 
 

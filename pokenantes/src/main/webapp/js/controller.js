@@ -79,7 +79,8 @@ Controller.prototype._sendProductForm = function() {
 	    data: data,
 	}).done(function(data) {
 	    console.log("Bien envoyé");
-	    console.log(data.article);
+	    context._model._addProduct(data.article);
+	    context._model._pushSupplier(data.article);
 	    console.log(data.fournisseur);
 	}).fail(function() {
 	    console.log("Pas envoyé");
@@ -92,11 +93,12 @@ Controller.prototype._TESTreturnBoard =  function() {
 	$.post({
 		url: "trylogin",  					//URL à laquelle la requête AJAX est envoyée. L'action Login est mappée avec cette URL.		
 	}).done(function(data) {					//Si la requête reçoit un success : un remplit la liste des produits dans notre modèle.
-		data.productsList.forEach(function(product) {
-			context._model._productsList.push(product);
-			context._model._pushSupplier(product);
-		});
 		context._view._drawBoard();
+		data.productsList.forEach(function(product) {
+			context._model._pushSupplier(product);
+			context._model._addProduct(product);
+		});
+		
 	}).fail(function( jqXHR, textStatus ) {				//Si la requête ne reçoit pas un success.
 		console.log("Login Refusé : " + textStatus);
 	})
