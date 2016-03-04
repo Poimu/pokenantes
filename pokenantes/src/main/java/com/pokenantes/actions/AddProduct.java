@@ -51,7 +51,7 @@ public class AddProduct extends ActionSupport {
 
 	public String execute() {
 		System.out.println("Executed");
-		this.destPath = "/home/audren/git/pokenantes/pokenantes/src/main/webapp/uploadedImages";
+		this.destPath = "css/images";
 		try {
 			this.destFile = new File(this.destPath, this.photoarticleFileName);
 			FileUtils.copyFile(this.photoarticle, this.destFile);
