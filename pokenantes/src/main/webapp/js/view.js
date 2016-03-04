@@ -47,8 +47,11 @@ View.prototype._checkLogin = function () {
 }
 
 View.prototype._drawBoard = function() {
-    var context	        = this;
-	var board 	        = '<div id="board"></div>';
+    	var context	    = this;
+    	var selectFilter    = '<div id="selectFilterLine"></div>';
+    	var selectFilterTypo= '<div id="selectFilterTypo">Filtre produits : </div>';
+    	var selectFilterOpt = '<select id="selectFilter"></select>'
+	var board 	    = '<div id="board"></div>';
 	var boardHeader     = '<div id="boardHeader"></div>';
 	var boardProducts   = '<div id="boardProducts"></div>';
 	var addProductButton= '<div id="addProductButton">Ajouter un produit</div>';
@@ -65,8 +68,21 @@ View.prototype._drawBoard = function() {
 	var headerSize      = '<div id="headerSize" class="headerField">Taille</div>';
 	var headerKind      = '<div id="headerKind" class="headerField">Type</div>';
 	var headerPic       = '<div id="headerPic" class="headerField">Photo</div>';
-	var headerDelete    = '<div class="deleteButtonHeader"></div>'
+	var headerDelete    = '<div class="deleteButtonHeader"></div>';
 	
+	/* Les filtres possibles */
+	$('body').append(selectFilter);
+	$('#selectFilterLine').append(selectFilterTypo);
+	$('#selectFilterTypo').append(selectFilterOpt);
+	$('#selectFilter').append('<option value="nofilter">Tous les articles</option>');
+	$('#selectFilter').append('<option value="deffective">Articles défectueux</option>');
+	$('#selectFilter').append('<option value="stockOut">Articles en rupture de stock</option>');
+	/* Appel de la fonction de tri */
+	$('#selectFilter').change(function() {
+	    $('#boardProducts').empty();
+	    context.emit($('#selectFilter').val())
+	})
+
 	$('body').append(board);
 	$('#board').append(boardHeader);
 	$('#boardHeader').append(headerId);
