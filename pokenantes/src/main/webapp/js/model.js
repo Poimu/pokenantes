@@ -7,6 +7,23 @@ function Model() {
 	this._supplierUnique;
 }
 
+var trier= function(array ,  parametre ){
+	if(parametre=="quantite")
+		{
+			array.sort(function(a,b){
+				return (b.quantite) > (a.quantite);
+				
+				
+			});
+		
+		}
+	
+	return array;}
+
+
+
+
+
 Model.prototype = new EventEmitter();
 
 Model.prototype._getProduct = function(idarticle) {
@@ -61,4 +78,7 @@ Model.prototype._supplierUnique = function(currentModel, product) {
 	}
     })
     return unique;
+    
+    
+
 }
