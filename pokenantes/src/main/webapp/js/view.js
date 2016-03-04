@@ -154,14 +154,14 @@ View.prototype._drawBoard = function() {
 		if ($(event.target).is('.stockRemove')){
 			removeQty = ($(this).find($('.stockInput')).val()*(-1)) ;
 			context._model._setQty(productId,removeQty);
-			context.emit('addQuantity', {idarticle: productId});
+			context.emit('updateQuantity', {idarticle: productId});
 			return
 		}
 			
 		if ($(event.target).is('.stockAdd')){
 			removeQty = ($(this).find($('.stockInput')).val()*1) ;
 			context._model._setQty(productId,removeQty);
-			context.emit('addQuantity', {idarticle: productId});
+			context.emit('updateQuantity', {idarticle: productId});
 			return
 		}
 		

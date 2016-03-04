@@ -16,12 +16,11 @@ import com.pokenantes.dtos.Fournisseur;
 
 @Action("/addProduct")
 @ParentPackage("json-default")
-@Result(type = "json", params = { "includeproperties", "msg, idarticle" })
+@Result(type = "json", params = { "includeproperties", "msg,"
+		+ "article\\[\\d+\\]\\,"
+		+ "fournisseur\\[\\d+\\]\\" })
 public class AddProduct extends ActionSupport {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	// Variables reçues fournisseur
 	private int idfournisseur;
@@ -77,6 +76,18 @@ public class AddProduct extends ActionSupport {
 
 		article = dao.addProduct(article);
 		return ActionSupport.SUCCESS;
+	}
+
+	public Fournisseur getFournisseur() {
+		return fournisseur;
+	}
+
+	public void setFournisseur(Fournisseur fournisseur) {
+		this.fournisseur = fournisseur;
+	}
+
+	public void setDao(Dao dao) {
+		this.dao = dao;
 	}
 
 	public void setArticle(Article article) {

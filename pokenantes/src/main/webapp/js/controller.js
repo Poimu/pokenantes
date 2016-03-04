@@ -3,7 +3,7 @@ function Controller(model, view) {
 	this._view = view;
 	//this._tryLogin();
 	this._deleteProduct();
-	this._addQuantity();
+	this._updateQuantity();
 	this._sendProductForm();
 	this._TESTreturnBoard();
 
@@ -49,9 +49,9 @@ Controller.prototype._deleteProduct = function() {
     })
 }
 
-Controller.prototype._addQuantity = function() {
+Controller.prototype._updateQuantity = function() {
 	var context = this;
-	context._view.on('editQty', function(data) {	
+	context._view.on('updateQuantity', function(data) {	
 		$.post({
 			url: "editQty",  					//URL à laquelle la requête AJAX est envoyée. L'action Login est mappée avec cette URL.
 			data: {							//Données envoyées.
@@ -77,8 +77,10 @@ Controller.prototype._sendProductForm = function() {
 	    contentType: false,
 	    processData: false,
 	    data: data,
-	}).done(function() {
+	}).done(function(data) {
 	    console.log("Bien envoyé");
+	    console.log(data.article);
+	    console.log(data.fournisseur);
 	}).fail(function() {
 	    console.log("Pas envoyé");
 	})
