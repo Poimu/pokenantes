@@ -52,7 +52,9 @@ View.prototype._drawBoard = function() {
 	var boardHeader     = '<div id="boardHeader"></div>';
 	var boardProducts   = '<div id="boardProducts"></div>';
 	var addProductButton= '<div id="addProductButton">Ajouter un produit</div>';
-    var productForm     = '<div id="productForm"></div>';	
+
+	var productForm     = '<div id="productForm"></div>';	
+
 	//Les variables du header.
 	var headerId 	    = '<div id="headerId" class="headerField">Identifiant</div>';
 	var headerName      = '<div id="headerName" class="headerField">Nom</div>';
@@ -346,5 +348,7 @@ View.prototype._updateAddProductBoard = function(){
 	    });
 	})
 }
+
+
 
 
