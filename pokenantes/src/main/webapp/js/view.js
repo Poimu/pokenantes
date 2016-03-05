@@ -188,10 +188,11 @@ View.prototype._drawBoard = function() {
 	$('#addProductButton').click(function() {
 	    if ($('#addProductButton').html() == 'Envoyer le formulaire') {
 		context.emit('sendProductForm');
+		$('addProductButton').html('Ajouter un produit');
 	    }
 	    else {
-		$('#addProductForm').show('fast');
 		$('#addProductButton').html('Envoyer le formulaire');
+		context._drawAddSupplier();
 	    }	    
 	})
 	
@@ -229,8 +230,8 @@ View.prototype._drawAddSupplier = function(context) {
     $('#addProductForm').append(closeForm);
     var context = this;
     $('#closeCross').click(function(){
-		$('#addProductForm').remove();
-		context._drawAddSupplier();
+		$('#addProductForm').empty();
+		$('addProductButton').html('Ajouter un produit');
     });
     $('#addProductForm').append(addProductLine);
     $('.addProductTypo:last').append('Sélectionnez un fournisseur');
