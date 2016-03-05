@@ -97,14 +97,16 @@ View.prototype._drawBoard = function() {
 	$('#boardHeader').append(headerPic);
 	$('#boardHeader').append(headerDelete);
 	$('#board').append(boardProducts);
-    $('body').append(productForm);
+	$('body').append(productForm);
 	
 	$('body').append(addProductButton);
 	$('#addProductButton').click(function() {
 	    if ($('#addProductButton').html() == 'Envoyer le formulaire') {
-	    	context.emit('sendProductForm');
-	    	$('#productForm').empty();
-	    	$('#addProductButton').html('Ajouter un produit')
+		if (context._formIsComplete()) {
+		    context.emit('sendProductForm');
+		    $('#productForm').empty();
+		    $('#addProductButton').html('Ajouter un produit')
+		}
 	    }
 	    else {
 		$('#addProductButton').html('Envoyer le formulaire');
@@ -141,7 +143,6 @@ View.prototype._drawAddSupplier = function(context) {
     var supplierTypeCas    = '<div class="addSupplierRadio"><input name="typefournisseur" type="radio" value="Particulier" checked="checked"><div class="supplierRadioTypo">Particulier</div></div>';
     var addSupplierAddress = '<input id="addSupplierAddress" name="nomadressefournisseur" type="text" placeholder="Adresse fournisseur"></input>';
     var addSupplierPhone   = '<input id="addSupplierPhone" name="numtelfournisseur" type="text" placeholder="Téléphone fournisseur"></input>';
-    
 
     $('#productForm').append(addProductForm);
     $('#addProductForm').append(closeForm);
@@ -294,7 +295,7 @@ View.prototype._updateAddProductBoard = function(){
 		var supplierPhone   = '<div class="supplierPhone supplierField"><b>Téléphone du fournisseur :&nbsp</b></div>';
 		var supplierAddress = '<div class="supplierAddress supplierField"><b>Adresse du fournisseur :&nbsp</b></div>';
 		
-		var productBlock       = '<div data-id="' + product.idarticle + '" class="productBlock"></div>';
+	    var productBlock       = '<div data-id="' + product.idarticle + '" class="productBlock"></div>';
 	    var currentBlock       = '[data-id="' + product.idarticle + '"]';
 	    var currentProductDiv  = '.productLine:last';
 	    var currentSupplierDiv = '.supplierLine:last';
@@ -409,6 +410,50 @@ View.prototype._removeProduct = function() {
 	var blockToDelete = $('[data-id="' + data.idarticle + '"]');
 	blockToDelete.remove();
     })
+}
+
+View.prototype._formIsComplete = function() {
+    var isComplete = true;
+    var errorTypo = '<div class="errorTypo animated fadeOut">&nbsp Incomplet.</div>';
+    $('.errorTypo').remove();
+    $('.errorTypo').empty().removeClass("animate animated fadeOut");
+    if ($('#addSupplierName').length && $('#addSupplierName').val().length < 1) {
+	var nameTypo = $('#addSupplierName').parent().find('.addProductTypo');
+	nameTypo.append(errorTypo);
+	isComplete = false;
+    }
+    if ($('#addSupplierAddress').length && $('#addSupplierAddress').val().length < 1) {
+	var addressTypo = $('#addSupplierAddress').parent().find('.addProductTypo');
+	addressTypo.append(errorTypo);
+	isComplete = false;
+    }
+    if ($('#addSupplierPhone').length && $('#addSupplierPhone').val().length < 1) {
+	var phoneTypo = $('#addSupplierPhone').parent().find('.addProductTypo');
+	phoneTypo.append(errorTypo);
+	isComplete = false;
+    }
+    if ($('#addProductName').length && $('#addProductName').val().length < 1) {
+	var productNameTypo = $('#addProductName').parent().find('.addProductTypo');
+	productNameTypo.append(errorTypo);
+	isComplete = false;
+    }
+    if ($('#addProductCode').length && $('#addProductCode').val().length < 1) {
+	var codeTypo = $('#addProductCode').parent().find('.addProductTypo');
+	codeTypo.append(errorTypo);
+	isComplete = false;
+    }
+    if (($('#addProductStock').length && $('#addProductStock').val().length < 1) || isNaN($('#addProductStock').val())) {
+	var stockTypo = $('#addProductStock').parent().find('.addProductTypo');
+	stockTypo.append(errorTypo);
+	$('.errorTypo:last').html('&nbspEntrez un nombre.');
+	isComplete = false;
+    }
+    if ($('#addProductOrigin').length && $('#addProductOrigin').val().length < 1) {
+	var originTypo = $('#addProductOrigin').parent().find('.addProductTypo');
+	originTypo.append(errorTypo);
+	isComplete = false;
+    }
+    return isComplete;
 }
 
 
