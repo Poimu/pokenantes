@@ -192,7 +192,7 @@ View.prototype._drawBoard = function() {
 	    }
 	    else {
 		$('#addProductButton').html('Envoyer le formulaire');
-		context._drawAddSupplier();
+		context._drawAddSupplier(context);
 	    }	    
 	})
 	
