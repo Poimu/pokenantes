@@ -40,7 +40,7 @@ Controller.prototype._deleteProduct = function() {
 		idarticle: deleteData.idarticle
 	    }
 	}).done(function(data) {
-	    console.log("Removed product id : " + data.idarticle);
+	    console.log("SERVER RESPONSE: Removed product(id:" + data.idarticle + ") from database");
 	    context._model._removeProduct(data.idarticle);
 	}).fail(function(jqXHR, textStatus) {
 	    console.log("product not deleted");
@@ -51,8 +51,6 @@ Controller.prototype._deleteProduct = function() {
 Controller.prototype._updateQuantity = function() {
 	var context = this;
 	context._view.on('editQty', function(data) {
-	    	console.log(data.quantity);
-	    	console.log(data.stockValue);
 	    	var newQty = data.quantity + data.stockValue;
 		$.post({
 			url: "editQty",  					//URL à laquelle la requête AJAX est envoyée. L'action Login est mappée avec cette URL.
@@ -61,7 +59,7 @@ Controller.prototype._updateQuantity = function() {
 				idarticle: data.idarticle
 			}		
 		}).done(function(data) {					//Si la requête reçoit un success.
-			console.log("Product(id: " + data.idarticle + ") edite with new quantity : " + newQty);
+			console.log("SERVER RESPONSE : Product(id: " + data.idarticle + ") edited in database with new quantity : " + newQty);
 			context._model._setQty(data.idarticle, newQty);
 		}).fail(function( jqXHR, textStatus ) {				//Si la requête ne reçoit pas un success.
 			console.log("Product not edited");
@@ -81,7 +79,7 @@ Controller.prototype._sendProductForm = function() {
 	    processData: false,
 	    data: data,
 	}).done(function(data) {
-	    console.log("Bien envoyé");
+	    console.log("SERVER RESPONSE: Product(id:" + data.article.idarticle + ") added to the database.");
 	    context._model._addProduct(data.article);
 	    context._model._pushSupplier(data.article);
 	}).fail(function() {
