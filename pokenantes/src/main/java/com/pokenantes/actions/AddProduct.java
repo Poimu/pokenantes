@@ -50,10 +50,23 @@ public class AddProduct extends ActionSupport {
 	private Dao dao;
 
 	public String execute() {
-		System.out.println(new File("."));
+		System.out.println("idfournisseur: " + this.idfournisseur);
+		System.out.println("nomfournisseur: " + this.nomfournisseur);
+		System.out.println("nomadressefournisseur: " + this.nomadressefournisseur);
+		System.out.println("typefournisseur: " + this.typefournisseur);
+		System.out.println("numtelfournisseur: " + this.numtelfournisseur);
+
+		System.out.println("nomarticle: " + this.nomarticle);
+		System.out.println("couleurarticle: " + this.couleurarticle);
+		System.out.println("taillearticle: " + this.taillearticle);
+		System.out.println("provenancearticle: " + this.provenancearticle);
+		System.out.println("etatarticle: " + this.etatarticle);
+		System.out.println("typearticle: " + this.typearticle);
+		System.out.println("quantitearticle: " + this.quantitearticle);
+		System.out.println("codearticle: " + this.codearticle);
+		System.out.println("photoarticle: " + this.photoarticleFileName);
 		System.out.println("Executed");
 		this.destPath = this.getClass().getResource("/../../css/uploadedImages/").getFile();
-		// this.destPath = "css/images";
 		try {
 			this.destFile = new File(this.destPath, this.photoarticleFileName);
 			FileUtils.copyFile(this.photoarticle, this.destFile);

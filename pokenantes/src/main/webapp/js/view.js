@@ -131,14 +131,14 @@ View.prototype._drawAddSupplier = function(context) {
     var suppliers 	       = context._model._suppliersList;
     
     var addProductForm     = '<form id="addProductForm" method="post" enctype="multipart/form-data"></form>';
-    var closeForm          = '<div id="closeForm" class="addProductLine"><div id="closeCross" class="ui-icon ui-icon-close"></div></div>';
+    var closeForm          = '<div id="closeForm" class="addProductLine"><div id="formTitle">Formulaire : Ajout de produit</div><div id="closeCross" class="ui-icon ui-icon-close"></div></div>';
     var addProductLine     = '<div class="addProductLine"><div class="addProductTypo"></div></div>';
     var addSupplier        = '<div id="addSupplier"></div>'    
     var selectSupplier     = '<select id="selectSupplier" class="addSelect" name="idfournisseur"></select>';
     var addSupplierName    = '<input id="addSupplierName" name="nomfournisseur" type="text" placeholder="Nom fournisseur"></input>';
     var addSupplierType    = '<div id="addSupplierType"></div>';
     var supplierTypePro    = '<div class="addSupplierRadio"><input name="typefournisseur" type="radio" value="Professionnel"><div class="supplierRadioTypo">Professionnel</div></div>';
-    var supplierTypeCas    = '<div class="addSupplierRadio"><input name="typefournisseur" type="radio" value="Particulier"><div class="supplierRadioTypo">Particulier</div></div>';
+    var supplierTypeCas    = '<div class="addSupplierRadio"><input name="typefournisseur" type="radio" value="Particulier" checked="checked"><div class="supplierRadioTypo">Particulier</div></div>';
     var addSupplierAddress = '<input id="addSupplierAddress" name="nomadressefournisseur" type="text" placeholder="Adresse fournisseur"></input>';
     var addSupplierPhone   = '<input id="addSupplierPhone" name="numtelfournisseur" type="text" placeholder="Téléphone fournisseur"></input>';
     
@@ -200,7 +200,7 @@ View.prototype._drawAddProduct = function(context, addProductLine) {
     var addProductCode 	    = '<input id="addProductCode" class="addInput" name="codearticle" type="text" placeholder="Code produit"></input>';
     var addProductStock	    = '<input id="addProductStock" class="addInput" name="quantitearticle" type="text" placeholder="Stock initial"></input>';
     var addProductCondition = '<div id="addProductCondition"></div>';
-    var conditionRadioBroken= '<div class="productConditionRadio"><input name="etatarticle" type="radio" value="Commercialisable"><div class="supplierRadioTypo">Commercialisable</div></div>';
+    var conditionRadioBroken= '<div class="productConditionRadio"><input name="etatarticle" type="radio" value="Commercialisable" checked="checked"><div class="supplierRadioTypo">Commercialisable</div></div>';
     var conditionRadioFine  = '<div class="productConditionRadio"><input name="etatarticle" type="radio" value="Défectueux"><div class="supplierRadioTypo">Défectueux</div></div>';
     var addProductOrigin    = '<input id="addProductOrigin" class="addInput" name="provenancearticle" type="text" placeholder="Provenance">';
     var addProductColor     = '<input id="addProductColor" class="addInput" name="couleurarticle" type="text" placeholder="Couleur produit">';

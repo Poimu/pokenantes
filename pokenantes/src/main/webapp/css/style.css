@@ -41,6 +41,10 @@ body {
 	flex-direction: row;
 }
 
+#closeForm {
+	margin-bottom: 10px;
+}
+
 #addProductForm {
 	margin-top: 30px;
 	-webkit-box-shadow: -2px 2px 7px 0px rgba(0,0,0,0.75);
@@ -110,7 +114,7 @@ input[type='file'] {
 	margin-bottom: auto;
 }
 
-.deleteProduct:hover {
+.deleteProduct:hover, #closeCross {
 	transform: scale(1.5);
 	cursor: pointer; 
 }
@@ -145,6 +149,10 @@ img {
 
 #closeCross {
 	margin-left: auto;
+	margin-top: auto;
+	margin-bottom: auto;
+	border: solid 1px;
+	border-radius: 30px;
 }
 
 .productLine {
@@ -157,6 +165,10 @@ img {
 	margin-left: 22%;
 	font-size: 08px;
 	margin-bottom: 10px;
+}
+
+#formTitle {
+	margin-left: 28%;
 }
 
 #addProductButton {

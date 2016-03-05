@@ -14,6 +14,8 @@ public class Root extends ActionSupport {
 	/**
 	 * 
 	 */
+
 	private static final long serialVersionUID = 1L;
 	// this is intentionally empty
+
 }
