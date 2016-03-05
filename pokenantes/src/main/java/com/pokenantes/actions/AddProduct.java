@@ -50,6 +50,9 @@ public class AddProduct extends ActionSupport {
 	private Dao dao;
 
 	public String execute() {
+		if (this.photoarticleFileName == null) {
+			this.photoarticleFileName = "";
+		}
 		System.out.println("idfournisseur: " + this.idfournisseur);
 		System.out.println("nomfournisseur: " + this.nomfournisseur);
 		System.out.println("nomadressefournisseur: " + this.nomadressefournisseur);
@@ -74,6 +77,8 @@ public class AddProduct extends ActionSupport {
 			System.out.println(this.destFile.getAbsolutePath());
 		} catch (IOException var2) {
 			var2.printStackTrace();
+		} catch (Exception e) {
+			e.getMessage();
 		}
 
 		if (idfournisseur == 0) {
