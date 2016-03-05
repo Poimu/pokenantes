@@ -207,7 +207,7 @@ View.prototype._drawAddProduct = function(context, addProductLine) {
     var addProductColor     = '<input id="addProductColor" class="addInput" name="couleurarticle" type="text" placeholder="Couleur produit">';
     var addProductSize      = '<input id="addProductSize" class="addInput" name="taillearticle" type="text" placeholder="Taille produit">';
     var selectProductType   = '<select id="selectProductType" class="addSelect" name="typearticle"></supplier>';
-    var addProductPic       = '<input id="addProductPic" name="photoarticle" type="file" placeholder="Photographie produit">';
+    var addProductPic       = '<input id="addProductPic" name="photoarticle" type="file" accept="image/*" placeholder="Photographie produit">';
     
     $('#addProductForm').append(addProduct);
     
