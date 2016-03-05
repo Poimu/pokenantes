@@ -5,9 +5,36 @@ function Model() {
 	this._getSupplier;
 	this._pushSupplier;
 	this._supplierUnique;
+	this._filter;
+	this._removeProduct;
 }
 
 Model.prototype = new EventEmitter();
+
+Model.prototype._filter= function(typeProd){
+    	var context = this;
+	var filterList= [];
+	if(typeProd=="deffective"){
+	    context._productsList.forEach(function (prod){
+        	    if(prod.etatarticle== "Défectueux") filterList.push(prod);
+        	});
+	}
+	else if(typeProd=="stockOut")
+		{
+	    context._productsList.forEach(function (prod){
+		    if(prod.quantitearticle == 0) filterList.push(prod);
+		});
+	}
+	else {
+	    context._productsList.forEach(function (prod){
+			filterList.push(prod);
+		})
+	}
+	
+	filterList.forEach(function(prod){
+	    context.emit('addedProduct',{product: prod});
+	});
+}
 
 Model.prototype._getProduct = function(idarticle) {
 	var product;
@@ -21,13 +48,8 @@ Model.prototype._getQty = function(idarticle) {
 	return this._getProduct(idarticle).quantitearticle;
 }
 
-Model.prototype._setQty = function(productId,removeQty) {
-	var newQty = removeQty + (this._getQty(productId));
+Model.prototype._setQty = function(productId,newQty) {
 	this._getProduct(productId).quantitearticle = newQty;
-	console.log(newQty);
-	if (newQty < 0){
-		return
-	}
 	this.emit("updatedQty",{
 		idarticle: productId,
 		qtearticle: newQty
@@ -60,10 +82,17 @@ Model.prototype._supplierUnique = function(currentModel, product) {
     currentModel._suppliersList.forEach(function(supplier) {
 	if (supplier.idfournisseur === product.clefournisseur.idfournisseur) {
 	    unique = false;
-	}
-    })
+	};
+    });
     return unique;
-}
+};
+
+Model.prototype._removeProduct = function(data) {
+    var productId = data;
+    var index = this._productsList.indexOf(this._getProduct(productId));
+    this._productsList.splice(index, 1);
+    this.emit('productDeleted', {idarticle: productId})
+};
 
 Model.prototype._addProduct = function (product){
 	this._productsList.push(product);

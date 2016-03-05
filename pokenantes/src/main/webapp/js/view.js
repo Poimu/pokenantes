@@ -5,7 +5,8 @@ function View(model) {
 	this._drawBoard;
 	this._loginSuccess;
 	this._updateQty();
-	this._updateAddProductBoard(); //permet l'écoute en continu
+	this._updateAddProductBoard();
+	this._removeProduct();
 }
 
 View.prototype = new EventEmitter();
@@ -80,7 +81,7 @@ View.prototype._drawBoard = function() {
 	/* Appel de la fonction de tri */
 	$('#selectFilter').change(function() {
 	    $('#boardProducts').empty();
-	    context.emit($('#selectFilter').val())
+	    context._model._filter($('#selectFilter').val());
 	})
 
 	$('body').append(board);
@@ -102,6 +103,8 @@ View.prototype._drawBoard = function() {
 	$('#addProductButton').click(function() {
 	    if ($('#addProductButton').html() == 'Envoyer le formulaire') {
 	    	context.emit('sendProductForm');
+	    	$('#productForm').empty();
+	    	$('#addProductButton').html('Ajouter un produit')
 	    }
 	    else {
 		$('#addProductButton').html('Envoyer le formulaire');
@@ -126,11 +129,12 @@ View.prototype._loginSuccess = function(){
 
 View.prototype._drawAddSupplier = function(context) {
     var suppliers 	       = context._model._suppliersList;
-
+    
     var addProductForm     = '<form id="addProductForm" method="post" enctype="multipart/form-data"></form>';
+    var closeForm          = '<div id="closeForm" class="addProductLine"><div id="closeCross" class="ui-icon ui-icon-close"></div></div>';
     var addProductLine     = '<div class="addProductLine"><div class="addProductTypo"></div></div>';
     var addSupplier        = '<div id="addSupplier"></div>'    
-    var selectSupplier     = '<select id="selectSupplier" name="idfournisseur"></select>';
+    var selectSupplier     = '<select id="selectSupplier" class="addSelect" name="idfournisseur"></select>';
     var addSupplierName    = '<input id="addSupplierName" name="nomfournisseur" type="text" placeholder="Nom fournisseur"></input>';
     var addSupplierType    = '<div id="addSupplierType"></div>';
     var supplierTypePro    = '<div class="addSupplierRadio"><input name="typefournisseur" type="radio" value="Professionnel"><div class="supplierRadioTypo">Professionnel</div></div>';
@@ -140,6 +144,12 @@ View.prototype._drawAddSupplier = function(context) {
     
 
     $('#productForm').append(addProductForm);
+    $('#addProductForm').append(closeForm);
+    $('#closeCross').click(function() {
+	$('#productForm').empty();
+	$('#addProductButton').html('Ajouter un produit');
+    })
+    
     $('#addProductForm').append(addProductLine);
     $('.addProductTypo:last').append('Sélectionnez un fournisseur');
     $('.addProductLine:last').append(selectSupplier);
@@ -186,16 +196,16 @@ View.prototype._drawAddSupplier = function(context) {
 View.prototype._drawAddProduct = function(context, addProductLine) {
     var productTypesList    = ['Vêtement', 'High-Tech', 'Culturel', 'Figurine', 'Carte', 'Autre'];
     var addProduct     	    = '<div id="addProduct"></div>';
-    var addProductName 	    = '<input id="addProductName" name="nomarticle" type="text" placeholder="Nom produit"></input>';
-    var addProductCode 	    = '<input id="addProductCode" name="codearticle" type="text" placeholder="Code produit"></input>';
-    var addProductStock	    = '<input id="addProductStock" name="quantitearticle" type="text" placeholder="Stock initial"></input>';
+    var addProductName 	    = '<input id="addProductName" class="addInput" name="nomarticle" type="text" placeholder="Nom produit"></input>';
+    var addProductCode 	    = '<input id="addProductCode" class="addInput" name="codearticle" type="text" placeholder="Code produit"></input>';
+    var addProductStock	    = '<input id="addProductStock" class="addInput" name="quantitearticle" type="text" placeholder="Stock initial"></input>';
     var addProductCondition = '<div id="addProductCondition"></div>';
     var conditionRadioBroken= '<div class="productConditionRadio"><input name="etatarticle" type="radio" value="Commercialisable"><div class="supplierRadioTypo">Commercialisable</div></div>';
     var conditionRadioFine  = '<div class="productConditionRadio"><input name="etatarticle" type="radio" value="Défectueux"><div class="supplierRadioTypo">Défectueux</div></div>';
-    var addProductOrigin    = '<input id="addProductOrigin" name="provenancearticle" type="text" placeholder="Provenance">';
-    var addProductColor     = '<input id="addProductColor" name="couleurarticle" type="text" placeholder="Couleur produit">';
-    var addProductSize      = '<input id="addProductSize" name="taillearticle" type="text" placeholder="Taille produit">';
-    var selectProductType   = '<select id="selectProductType" name="typearticle"></supplier>';
+    var addProductOrigin    = '<input id="addProductOrigin" class="addInput" name="provenancearticle" type="text" placeholder="Provenance">';
+    var addProductColor     = '<input id="addProductColor" class="addInput" name="couleurarticle" type="text" placeholder="Couleur produit">';
+    var addProductSize      = '<input id="addProductSize" class="addInput" name="taillearticle" type="text" placeholder="Taille produit">';
+    var selectProductType   = '<select id="selectProductType" class="addSelect" name="typearticle"></supplier>';
     var addProductPic       = '<input id="addProductPic" name="photoarticle" type="file" placeholder="Photographie produit">';
     
     $('#addProductForm').append(addProduct);
@@ -247,13 +257,13 @@ View.prototype._drawAddProduct = function(context, addProductLine) {
 View.prototype._updateQty = function(){
 	var context = this;
 	context._model.on('updatedQty',function(data){
-		$('[data-id="' + data.idarticle + '"]').find($('.stockValue')).html(data.qtearticle);
-		id = data.idarticle;
-		qty = data.qtearticle;
-		context.emit('editQty', {
-			newQty: data.qtearticle,
-			idarticle: data.idarticle
-		});
+	    	var stockValue = $('[data-id="' + data.idarticle + '"]').find($('.stockValue'))
+		stockValue.html(data.qtearticle);
+		if (data.qtearticle <= 0) {
+		    stockValue.attr('class', 'stockValue error');
+		} else {
+		    stockValue.attr('class', 'stockValue');
+		}
 	})
 };
 
@@ -287,7 +297,8 @@ View.prototype._updateAddProductBoard = function(){
 		var productBlock       = '<div data-id="' + product.idarticle + '" class="productBlock"></div>';
 	    var currentBlock       = '[data-id="' + product.idarticle + '"]';
 	    var currentProductDiv  = '.productLine:last';
-	    var currentSupplierDiv = '.supplierLine:last';        
+	    var currentSupplierDiv = '.supplierLine:last';
+	    var picUrl             = '<img src="css/uploadedImages/' + product.photoarticle + '" />';
 	    
 	    $('#boardProducts').append(productBlock);
 	    $(currentBlock).append(productLine);
@@ -319,27 +330,57 @@ View.prototype._updateAddProductBoard = function(){
 	    $('.productPic:last').append(product.photoarticle);
 	    $(currentProductDiv).append(productDelete);
 	    
+	    /* Ajout d'un tooltip sur l'image */
+	    $('.productPic:last').qtip({
+		content: {
+		    text: picUrl
+		},
+	    	position: {
+	    	    target: 'mouse',
+	    	    adjust: {x: -200, y: -75},
+	    	},
+		style: {
+		    tip: {
+			corner: 'right center'
+		    },
+		    classes: 'productImageBox'
+		}
+	    });
+	    
 	    
 	    /* Gestion des clicks sur le tableau de bord */
 	    $(currentBlock).click(function(event) {
 		var supplier  = context._model._getSupplier(product.idarticle);
 		var productId = product.idarticle;
 		
+		if ($(event.target).is('.stockInput')) return
+		
 		if ($(event.target).is('.deleteProduct')) { 
 		    context.emit('deleteProduct', {idarticle: productId});
-		    $(this).remove();
 		    return
 		}
 		
 		if ($(event.target).is('.stockRemove')){
-			var removeQty = ($(this).find($('.stockInput')).val()*(-1));
-			context._model._setQty(productId,removeQty);
+			var quantity = $(this).find($('.stockInput')).val()*(-1);
+			var stockValue = $(this).find($('.stockValue')).html()*(1);
+			if (!(stockValue < -quantity)) {
+			    context.emit('editQty', {
+		                 idarticle: productId,
+			         quantity: quantity,
+			         stockValue: stockValue
+				 })
+			}
 			return
 		}
 			
 		if ($(event.target).is('.stockAdd')){
-			var removeQty = ($(this).find($('.stockInput')).val()*1) ;
-			context._model._setQty(productId,removeQty);
+			var quantity = ($(this).find($('.stockInput')).val()*1) ;
+			var stockValue = $(this).find($('.stockValue')).html()*1;
+			context.emit('editQty', {
+			    idarticle: productId,
+			    quantity: quantity,
+			    stockValue: stockValue
+			    })
 			return
 		}
 		
@@ -361,6 +402,13 @@ View.prototype._updateAddProductBoard = function(){
 		}
 	    });
 	})
+}
+
+View.prototype._removeProduct = function() {
+    this._model.on('productDeleted', function(data) {
+	var blockToDelete = $('[data-id="' + data.idarticle + '"]');
+	blockToDelete.remove();
+    })
 }
 
 

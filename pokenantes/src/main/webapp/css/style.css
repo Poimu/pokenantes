@@ -58,14 +58,39 @@ input[type='file'] {
 
 .addProductTypo {
 	width: 50%;
+	margin-left: 08px;
+	margin-right: 08px;
+	margin-top: auto;
+	margin-bottom: auto;
+	font-size: 12px;
+}
+
+.addSelect {
+	width: 45%;
+	padding-left: 08px;
+	padding-right: 08px;
+	font-size: 12px;
+}
+
+.addInput {
+	width: 44%;
+	font-size: 12px;
+	padding: 04px;
+}
+
+.productConditionRadio {
+	margin-top: auto;
+	margin-bottom: auto;
+	font-size: 12px;
+}
+
+#selectFilterTypo {
+	margin: 10px;
+	font-size: 12px;
 }
 
 .stockValue {
 	margin-left: auto;
-}
-
-.productPic:hover {
-	background-image: url("./uploadedImages/blister.jpg")
 }
 
 .headerField, .blockField {
@@ -101,9 +126,13 @@ input[type='file'] {
 	margin-right: 5px;
 }
 
+img {
+	max-height: 150px;
+	max-width: 150px;
+}
 
 #boardHeader {
-	margin-top: 30px;
+	margin-top: 15px;
 	margin-bot: 30px;
 	border-top: solid 1px;
 	border-bottom: solid 1px;
@@ -112,6 +141,10 @@ input[type='file'] {
 	padding-bottom: 15px;
 	font-size: 12px;
 	
+}
+
+#closeCross {
+	margin-left: auto;
 }
 
 .productLine {
@@ -157,4 +190,8 @@ input[type='file'] {
 .error {
 	color: red;
 }
+
+
+
+
 

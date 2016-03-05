@@ -74,7 +74,7 @@ public class ApplicationContextConfig {
 			{
 				setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
 				setProperty(Environment.HBM2DDL_AUTO, "update");
-				setProperty(Environment.SHOW_SQL, "true");
+				setProperty(Environment.SHOW_SQL, "false");
 			}
 
 		};
