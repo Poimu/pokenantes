@@ -1,66 +1,53 @@
 function Model() {
-	this._productsList = [];
-	this._suppliersList = [];
-	this._getProduct;
-	this._getSupplier;
-	this._pushSupplier;
-	this._supplierUnique;
-	this._filter;
-	this._removeProduct;
+    this._productsList = [];
+    this._suppliersList = [];
+    this._getProduct;
+    this._getSupplier;
+    this._pushSupplier;
+    this._supplierUnique;
+    this._filter;
+    this._removeProduct;
+    this._currentFilter ='nofilter';
 }
 
 Model.prototype = new EventEmitter();
 
-Model.prototype._filter= function(typeProd){
-    	var context = this;
-	var filterList= [];
-	if(typeProd=="deffective"){
-	    context._productsList.forEach(function (prod){
-        	    if(prod.etatarticle== "Défectueux") filterList.push(prod);
-        	});
-	}
-	else if(typeProd=="stockOut")
-		{
-	    context._productsList.forEach(function (prod){
-		    if(prod.quantitearticle == 0) filterList.push(prod);
-		});
-	}
-	else {
-	    context._productsList.forEach(function (prod){
-			filterList.push(prod);
-		})
-	}
-	
-	filterList.forEach(function(prod){
-	    context.emit('addedProduct',{product: prod});
-	});
+Model.prototype._filter= function(){
+    var context = this;	
+    context._productsList.forEach(function(product){
+	context._activeFilter(product);
+    });
 }
 
 Model.prototype._getProduct = function(idarticle) {
-	var product;
-	this._productsList.forEach(function (prod){
-		if (prod.idarticle == idarticle) {product=prod};
-	})
-	return product;
+    var product;
+    this._productsList.forEach(function (prod){
+	if (prod.idarticle == idarticle) {product=prod};
+    })
+    return product;
 }
 
 Model.prototype._getQty = function(idarticle) {
-	return this._getProduct(idarticle).quantitearticle;
+    return this._getProduct(idarticle).quantitearticle;
 }
 
 Model.prototype._setQty = function(productId,newQty) {
-	this._getProduct(productId).quantitearticle = newQty;
-	this.emit("updatedQty",{
-		idarticle: productId,
-		qtearticle: newQty
-	});
+    product = this._getProduct(productId);
+    product.quantitearticle = newQty;
+    //this._activeFilter(product);
+
+    this.emit("updatedQty",{
+	idarticle: productId,
+	qtearticle: newQty
+    });
+
 }
 
 Model.prototype._getSupplier = function(id) {
     var currentModel = this;
     var product;
     var supplier;
-    
+
     currentModel._productsList.forEach(function(prod) {
 	if (prod.idarticle == id) {product=prod};
     })
@@ -73,7 +60,7 @@ Model.prototype._getSupplier = function(id) {
 Model.prototype._pushSupplier = function(product) {
     var currentModel = this;
     if (currentModel._supplierUnique(currentModel, product)) {
-    	currentModel._suppliersList.push(product.clefournisseur);
+	currentModel._suppliersList.push(product.clefournisseur);
     }
 }
 
@@ -95,6 +82,15 @@ Model.prototype._removeProduct = function(data) {
 };
 
 Model.prototype._addProduct = function (product){
-	this._productsList.push(product);
-	this.emit('addedProduct',{product: product});
+    this._productsList.push(product);
+    this._activeFilter(product);
+}
+
+Model.prototype._activeFilter = function(product) {
+    if ((this._currentFilter == 'deffective' && product.etatarticle=='Défectueux') 
+	    || (this._currentFilter == 'stockOut' && product.quantitearticle == 0) 
+	    || (this._currentFilter == 'nofilter')) {
+	this.emit('addedProduct', {product: product});
+    }
+
 }

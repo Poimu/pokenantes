@@ -43,6 +43,10 @@ body {
 	flex-direction: column;
 }
 
+#board {
+	min-width: 1100px;
+}
+
 .productLine, #boardHeader, .supplierField, .productStock, .addProductLine, #addSupplierType, .addSupplierRadio, #addProductCondition, .addProductTypo, .productConditionRadio{
 	display: flex;
 	flex-direction: row;
@@ -66,6 +70,10 @@ body {
 
 input[type='file'] {
   color: transparent;
+}
+
+.ui-tooltip {
+	font-size: 10px;
 }
 
 .addProductTypo {
@@ -245,7 +253,7 @@ input[type="radio"] {
 }
 
 .addProductLine:hover .addProductTypo {
-	font-weight: 400;
+	text-decoration: underline;
 }
 
 .productCode {
