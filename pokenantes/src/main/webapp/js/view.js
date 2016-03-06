@@ -37,9 +37,10 @@ View.prototype._drawLogin = function() {
 View.prototype._checkLogin = function () {
 	//Si un champ est incomplet: ajout d'un message d'erreur
 	if ($('#loginName').val().length <= 0 || $('#loginPass').val().length <= 0) {
-		var fieldIncomplete = '<div id="errorLogin" class="animated fadeOut">Complétez tous les champs.</div>';
+		var fieldIncomplete = '<div id="errorLogin">Complétez tous les champs.</div>';
 		$('#errorLogin').remove();
 		$('#login').append(fieldIncomplete);
+		$('#errorLogin').fadeOut('slow');
 	}
 	//Sinon: appel de la fonction de vérification du nom/mdp dans le controlleur
 	else {
@@ -50,7 +51,7 @@ View.prototype._checkLogin = function () {
 View.prototype._drawBoard = function() {
     	var context	    = this;
     	var selectFilter    = '<div id="selectFilterLine"></div>';
-    	var selectFilterTypo= '<div id="selectFilterTypo">Filtre produits : </div>';
+    	var selectFilterTypo= '<div id="selectFilterTypo"></div>';
     	var selectFilterOpt = '<select id="selectFilter"></select>'
 	var board 	    = '<div id="board"></div>';
 	var boardHeader     = '<div id="boardHeader"></div>';
@@ -75,10 +76,11 @@ View.prototype._drawBoard = function() {
 	$('body').append(selectFilter);
 	$('#selectFilterLine').append(selectFilterTypo);
 	$('#selectFilterTypo').append(selectFilterOpt);
-	$('#selectFilter').append('<option value="nofilter">Tous les articles</option>');
-	$('#selectFilter').append('<option value="deffective">Articles défectueux</option>');
-	$('#selectFilter').append('<option value="stockOut">Articles en rupture de stock</option>');
+	$('#selectFilter').append('<option value="nofilter">Afficher tous les articles</option>');
+	$('#selectFilter').append('<option value="deffective">Afficher les articles défectueux</option>');
+	$('#selectFilter').append('<option value="stockOut">Afficher les articles en rupture de stock</option>');
 	/* Appel de la fonction de tri */
+	$('#selectFilter').niceSelect();
 	$('#selectFilter').change(function() {
 	    $('#boardProducts').empty();
 	    context._model._filter($('#selectFilter').val());
@@ -137,12 +139,12 @@ View.prototype._drawAddSupplier = function(context) {
     var addProductLine     = '<div class="addProductLine"><div class="addProductTypo"></div></div>';
     var addSupplier        = '<div id="addSupplier"></div>'    
     var selectSupplier     = '<select id="selectSupplier" class="addSelect" name="idfournisseur"></select>';
-    var addSupplierName    = '<input id="addSupplierName" name="nomfournisseur" type="text" placeholder="Nom fournisseur"></input>';
+    var addSupplierName    = '<input id="addSupplierName" class="addInput" name="nomfournisseur" type="text" placeholder="Nom fournisseur"></input>';
     var addSupplierType    = '<div id="addSupplierType"></div>';
     var supplierTypePro    = '<div class="addSupplierRadio"><input name="typefournisseur" type="radio" value="Professionnel"><div class="supplierRadioTypo">Professionnel</div></div>';
     var supplierTypeCas    = '<div class="addSupplierRadio"><input name="typefournisseur" type="radio" value="Particulier" checked="checked"><div class="supplierRadioTypo">Particulier</div></div>';
-    var addSupplierAddress = '<input id="addSupplierAddress" name="nomadressefournisseur" type="text" placeholder="Adresse fournisseur"></input>';
-    var addSupplierPhone   = '<input id="addSupplierPhone" name="numtelfournisseur" type="text" placeholder="Téléphone fournisseur"></input>';
+    var addSupplierAddress = '<input id="addSupplierAddress" class="addInput" name="nomadressefournisseur" type="text" placeholder="Adresse fournisseur"></input>';
+    var addSupplierPhone   = '<input id="addSupplierPhone" class="addInput" name="numtelfournisseur" type="text" placeholder="Téléphone fournisseur"></input>';
 
     $('#productForm').append(addProductForm);
     $('#addProductForm').append(closeForm);
@@ -154,14 +156,19 @@ View.prototype._drawAddSupplier = function(context) {
     $('#addProductForm').append(addProductLine);
     $('.addProductTypo:last').append('Sélectionnez un fournisseur');
     $('.addProductLine:last').append(selectSupplier);
-    $('#selectSupplier').append('<option class="supplier-option" value="" disabled selected>Renseignez un fournisseur</option>')
+    $('#selectSupplier').append('<option value="none">Sélectionnez un fournisseur</option>')
     suppliers.forEach(function(supplier) {
     	var option = '<option value="' + supplier.idfournisseur + '">' + supplier.nomfournisseur + '</option>';
     	$('#selectSupplier').append(option);
     });
     $('#selectSupplier').append('<option value="0"> Nouveau fournisseur </option>');
+    $('#selectSupplier').niceSelect();
     $('#selectSupplier').change(function() {
-	if ($(this).val() == "0") {
+	if ($(this).val() == "none") {
+	    $('#addProduct').remove();
+	    $('#addSupplier').remove();
+	}
+	else if ($(this).val() == "0") {
 	    $('#addSupplier').remove();
 	    $('#addProduct').remove();
 	    $('#addProductForm').append(addSupplier);
@@ -248,6 +255,7 @@ View.prototype._drawAddProduct = function(context, addProductLine) {
 	var option = '<option value="' + type + '">' + type + '</option>';
 	$('#selectProductType').append(option);
     });
+    $('#selectProductType').niceSelect();
     
     $('#addProduct').append(addProductLine);
     $('.addProductTypo:last').append('Photo article');
@@ -399,7 +407,8 @@ View.prototype._updateAddProductBoard = function(){
 		    $('.supplierPhone:last').append(supplier.numtelfournisseur);
 		    $(currentSupplierDiv).append(supplierAddress);
 		    $('.supplierAddress:last').append(supplier.nomadressefournisseur);
-		    $(currentSupplierDiv).show('fast');
+		    $(currentSupplierDiv).show();
+		    $(currentSupplierDiv).addClass('animate animated zoomIn')
 		}
 	    });
 	})
@@ -414,9 +423,8 @@ View.prototype._removeProduct = function() {
 
 View.prototype._formIsComplete = function() {
     var isComplete = true;
-    var errorTypo = '<div class="errorTypo animated fadeOut">&nbsp Incomplet.</div>';
+    var errorTypo = '<div class="errorTypo">&nbsp Incomplet.</div>';
     $('.errorTypo').remove();
-    $('.errorTypo').empty().removeClass("animate animated fadeOut");
     if ($('#addSupplierName').length && $('#addSupplierName').val().length < 1) {
 	var nameTypo = $('#addSupplierName').parent().find('.addProductTypo');
 	nameTypo.append(errorTypo);
@@ -453,6 +461,7 @@ View.prototype._formIsComplete = function() {
 	originTypo.append(errorTypo);
 	isComplete = false;
     }
+    $('.errorTypo').fadeOut('slow');
     return isComplete;
 }
 

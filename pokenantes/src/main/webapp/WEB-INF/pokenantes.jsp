@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/jquery-ui.css">
     <link rel="stylesheet" href="css/jquery.qtip.css">
     <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/nice-select.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -18,6 +19,7 @@
 <script src="js/plugins/eventEmitter.js" type="text/javascript"></script>
 <script src="js/plugins/jquery-ui.js" type="text/javascript"></script>
 <script src="js/plugins/jquery.qtip.js" type="text/javascript"></script>
+<script src="js/plugins/jquery.nice-select.js" type="text/javascript"></script>
 <script src="js/model.js" type="text/javascript"></script>
 <script src="js/view.js" type="text/javascript"></script>
 <script src="js/controller.js" type="text/javascript"></script>

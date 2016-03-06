@@ -1,8 +1,15 @@
-body {
-	background-image: url("images/leather.png");
+@font-face {
+	font-family: customfont;
+	src: url(font/ubuntu-r.ttf);
 }
 
-#login {
+
+body {
+	background-image: url("images/leather.png");
+	font-family: customfont;
+}
+
+#login, #selectFilterTypo {
 	display: flex;
 	flex-direction: row;	
 }
@@ -11,7 +18,7 @@ body {
   	border: 1px solid;
 	padding: 7px;
 	margin-left: 8px;
-	font-size: 11px;
+	font-size: 12px;
 }
 
 #lockIcon {
@@ -50,10 +57,11 @@ body {
 	-webkit-box-shadow: -2px 2px 7px 0px rgba(0,0,0,0.75);
 	-moz-box-shadow: -2px 2px 7px 0px rgba(0,0,0,0.75);
 	box-shadow: -2px 2px 7px 0px rgba(0,0,0,0.75);
-	width: 550px;
+	width: 500px;
 	margin-left: auto;
 	margin-right: auto;
-	padding: 10px;
+	padding: 28px;
+	background-color: #F4F6F6;
 }
 
 input[type='file'] {
@@ -61,7 +69,7 @@ input[type='file'] {
 }
 
 .addProductTypo {
-	width: 50%;
+	width: 43%;
 	margin-left: 08px;
 	margin-right: 08px;
 	margin-top: auto;
@@ -70,7 +78,7 @@ input[type='file'] {
 }
 
 .addSelect {
-	width: 45%;
+	width: 237px;
 	padding-left: 08px;
 	padding-right: 08px;
 	font-size: 12px;
@@ -79,10 +87,21 @@ input[type='file'] {
 .addInput {
 	width: 44%;
 	font-size: 12px;
-	padding: 04px;
+	padding-left: 08px;
+	padding-right: 08px;
+	border-radius: 05px;
+	border: white;
+	height: 26px;
+	margin-top: 4px;
 }
 
-.productConditionRadio {
+.addInput:hover {
+    -webkit-box-shadow:inset 0px 0px 0px 1px grey;
+    -moz-box-shadow:inset 0px 0px 0px 1px grey;
+    box-shadow:inset 0px 0px 0px 1px grey;
+}
+
+.productConditionRadio, .addSupplierRadio {
 	margin-top: auto;
 	margin-bottom: auto;
 	font-size: 12px;
@@ -109,12 +128,12 @@ input[type='file'] {
 	border: solid 1px;
 }
 
-.stockValue, .blockField, .headerField, .deleteProduct, .stockInput  {
+.stockValue, .blockField, .headerField, .deleteProduct, .stockInput, input[type="radio"] {
 	margin-top: auto;
 	margin-bottom: auto;
 }
 
-.deleteProduct:hover, #closeCross {
+.deleteProduct:hover{
 	transform: scale(1.5);
 	cursor: pointer; 
 }
@@ -148,11 +167,13 @@ img {
 }
 
 #closeCross {
-	margin-left: auto;
-	margin-top: auto;
-	margin-bottom: auto;
+	background-color: white;
 	border: solid 1px;
 	border-radius: 30px;
+	position: relative;
+	bottom: 35px;
+	left: 170px;
+	cursor: pointer;
 }
 
 .productLine {
@@ -162,13 +183,17 @@ img {
 }
 
 .supplierLine {
-	margin-left: 22%;
-	font-size: 08px;
-	margin-bottom: 10px;
+	margin-left: 11%;
+	width: 300px;
+	font-size: 10px;
+	margin-bottom: 14px;
+	border-left: solid 2px black;
+	padding-left: 7px;
 }
 
 #formTitle {
 	margin-left: 28%;
+	margin-bottom: 10px;
 }
 
 #addProductButton {
@@ -181,8 +206,14 @@ img {
 	padding: 7px;
 	font-weight: bold;
 	text-align: center;
-	cursor: pointer; 
+	cursor: pointer;
+	background-color: #FDFEFE;
 	
+}
+
+#addProductButton:hover {
+	border: 1px solid rgb(0,0,139);
+	box-shadow: 0 0 5px rgb(0,0,139);
 }
 
 .productBlock:nth-child(odd) {
@@ -193,17 +224,51 @@ img {
 	background-color: #fdfefe;
 }
 
-.productBlock:hover {
-	-moz-box-shadow: inset #B3B3B3 0 -1px 0 1px;
-	-webkit-box-shadow: inset #B3B3B3 0 -1px 0 1px;
-	box-shadow: inset #B3B3B3 0 -1px 0 1px;
-}
-
 .error, .errorTypo {
 	color: red;
 }
 
+#addProductCondition, #addSupplierType {
+	border: medium none white;
+    border-radius: 5px;
+    font-size: 12px;
+    height: 26px;
+    margin-top: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+    width: 44%;
+    background-color: white;
+}
 
+input[type="radio"] {
+	transform: scale(0.7);
+}
 
+.addProductLine:hover .addProductTypo {
+	font-weight: 400;
+}
 
+.productCode {
+	text-decoration: none;
+	display: inline-block;
+	color: black;
+}
 
+.productCode:after {
+	content: '';
+	display: block;
+	height: 2px;
+	width: 0;
+	background: transparent;
+	transition: width .5s ease, background-color .5s ease;
+	-webkit-transition: width .5s ease, background-color .5s ease;
+	-moz-transition: width .5s ease, background-color .5s ease;
+	margin:auto;
+}
+
+.productBlock:hover .productCode:after {
+	margin-left: auto;
+	margin-right: auto;
+	width: 40%;
+	background: black;
+}
