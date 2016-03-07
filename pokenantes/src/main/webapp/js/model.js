@@ -12,8 +12,8 @@ function Model() {
 
 Model.prototype = new EventEmitter();
 
-Model.prototype._filter = function() {
-    var context = this;
+Model.prototype._filter = function(context) {
+    var context = context;
     context._productsList.forEach(function(product) {
         context._activeFilter(product);
     });
@@ -96,4 +96,5 @@ Model.prototype._activeFilter = function(product) {
 Model.prototype._resetDatas = function() {
     this._productsList = [];
     this._suppliersList = [];
+    this._currentFilter = 'nofilter';
 }

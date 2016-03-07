@@ -12,34 +12,32 @@ function View(model) {
 View.prototype = new EventEmitter();
 
 View.prototype._drawLogin = function() {
-    /* Initialisation des variables champs */
     var loginDiv 	= '<div id="login"></div>';
     var nameField 	= '<input class="loginField" id="loginName" type="text" placeholder="Utilisateur">';
     var passField 	= '<input class="loginField" id="loginPass" type="password" placeholder="Mot de passe">';
     var submitButton 	= '<span id="lockIcon" class="ui-icon ui-icon-locked"></span>';
+    var logo            = '<div id="logo">Pokenantes</div>';
+    var loginMsg        = '<div id="loginMsg">Authentification</div>'
 
-    /* Ajout des champs à pokenantes.jsp */
+    $('body').append(logo);
+    $('body').append(loginMsg);
     $('body').append(loginDiv);
     $('#login').append(nameField);
     $('#login').append(passField);
     $('#login').append(submitButton);
 
-    /* Ajout d'un effet hover au bouton lockIcon : il affichera un verrou ouvert si l'on passe la souris dessus */
     $('#lockIcon').hover(
         function() { $(this).attr('class', 'ui-icon ui-icon-unlocked') },
         function() { $(this).attr('class', 'ui-icon ui-icon-locked') }
     );
-
-    /* Ajout d'un event click sur le bouton lockIcon */
+    
     $('#lockIcon').click(this._checkLogin.bind(this));
 }
 
 View.prototype._checkLogin = function() {
-    //Si un champ est incomplet: ajout d'un message d'erreur
     if ($('#loginName').val().length <= 0 || $('#loginPass').val().length <= 0) {
         this._loginFail('Complétez tous les champs');
     }
-    //Sinon: appel de la fonction de vérification du nom/mdp dans le controlleur
     else this.emit('tryLogin');
 }
 
@@ -51,22 +49,30 @@ View.prototype._loginFail = function(errorMessage) {
 }
 
 /* Si le login est validé: affichage du tableau de bord */
-View.prototype._loginSuccess = function() {
-    var context = this;
-    $('body').empty();
-    var deconnectButton = '<button id="relogin" type="button" name="deconnexion">Déconnection</button>';
-    $('body').append(deconnectButton);
-    $('#relogin').click(function() {
-        context._model._resetDatas();
-        $('body').empty();
-        context._drawLogin();
+View.prototype._loginSuccess = function(context) {
+    var context = context;
+    var deconnectButton = '<div id="reloginArea"><div id="logoCorner">Pokenantes</div><button id="relogin" type="button" name="deconnexion">Déconnection</button></div>';
+    var display = function(drawBoard, drawProducts) {
+	    drawBoard(context);
+	    console.log('VIEW: Board successfully drawn.');
+	    drawProducts(context._model);
+	}
+    $('#login').fadeOut('fast', function() {
+	$('body').empty();
+	$('body').append(deconnectButton);
+	$('#relogin').click(function() {
+	    context._model._resetDatas();
+	    $('body').empty();
+	    context._drawLogin();
+	});
+	display(context._drawBoard, context._model._filter);
     });
-    context._drawBoard();
+    
 }
 
 /* Affichage du header du tableau */
-View.prototype._drawBoard = function() {
-    var context = this;
+View.prototype._drawBoard = function(context) {
+    var context = context;
     var selectFilter 		= '<div id="selectFilterLine"></div>';
     var selectFilterTypo 	= '<div id="selectFilterTypo"></div>';
     var selectFilterOpt 	= '<select id="selectFilter"></select>'
@@ -101,7 +107,7 @@ View.prototype._drawBoard = function() {
     $('#selectFilter').change(function() {
         $('#boardProducts').empty();
         context._model._currentFilter = $('#selectFilter').val();
-        context._model._filter($('#selectFilter').val());
+        context._model._filter(context._model);
     })
 
     $('body').append(board);
@@ -133,7 +139,6 @@ View.prototype._drawBoard = function() {
             context._drawAddSupplier(context);
         }
     })
-
 }
 
 /* Formulaire d'ajout de produit : partie fournisseur */

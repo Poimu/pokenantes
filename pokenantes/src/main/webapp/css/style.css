@@ -3,39 +3,79 @@
 	src: url(font/ubuntu-r.ttf);
 }
 
+@font-face {
+	font-family: pokemon;
+	src: url(font/pokemon.ttf);
+}
+
 
 body {
 	background-image: url("images/leather.png");
 	font-family: customfont;
 }
 
-#login, #selectFilterTypo {
+#logo {
+	font-family: pokemon;
+	font-size: 55px;
+	text-align: center;
+	margin-top: 100px;
+}
+
+#logoCorner {
+	font-family: pokemon;
+	font-size: 20px;
+	margin-right: auto;
+	margin-left: 10px;
+	margin-top: 05px;
+}
+
+#selectFilterTypo, #reloginArea {
 	display: flex;
 	flex-direction: row;	
+}
+
+#loginMsg {
+	font-size: 15px;
+	text-align: center;
+	margin-top: 20px;
+}
+
+#login {
+	display: flex;
+	flex-direction: column;
+	width: 280px;
+	padding: 15px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10px;
 }
 
 .loginField {
   	border: 1px solid;
 	padding: 7px;
-	margin-left: 8px;
 	font-size: 12px;
+	margin-bottom: 05px;
+}
+
+#relogin{
+	margin-left: auto;
 }
 
 #lockIcon {
-	margin-left: 8px;
-	margin-top: auto;
-	margin-bottom: auto;
+	margin-left: auto;
+	margin-right: auto;
 	border-radius: 30px;
 	border: 1px solid;
 	transform: scale(1.3);
 	cursor: pointer; 
+	margin-top: 10px;
+	margin-bottom: 15px;
 }
 
 #errorLogin {
 	color: red;
-	margin-left: 8px;
-	margin-top: auto;
-	margin-bottom: auto;
+	margin: auto;
+
 }
 
 #boardProducts, #board, .supplierLine, #addProductForm {

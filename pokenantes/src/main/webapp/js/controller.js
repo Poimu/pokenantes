@@ -22,11 +22,20 @@ Controller.prototype._tryLogin = function() {
             }
         }).done(function(data) {
             console.log('SERVER RESPONSE: Successfully authentified.');
-            context._view._loginSuccess();
-            data.productsList.forEach(function(product) {
-                context._model._pushSupplier(product);
-                context._model._addProduct(product);
-            });
+            var success = function(param1, param2) {
+        	param1();
+        	param2(context._view);
+            }
+            success(function() {
+        	data.productsList.forEach(function(product) {
+        	    context._model._pushSupplier(product);
+        	    context._model._productsList.push(product);
+        	});
+        	console.log('CONTROLLER : productsList loaded into the model.');
+            }, context._view._loginSuccess);
+
+
+
         }).fail(function(jqXHR, textStatus) {
             console.log("SERVER RESPONSE: Wrong name/password.");
             context._view._loginFail('Nom/Mot de passe invalide');
