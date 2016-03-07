@@ -46,33 +46,19 @@ public class Login extends ActionSupport {
 	/* Les variables que l'on va renvoyer */
 	private String msg;
 
-	/*
-	 * Rappel : Le DAO dans le modèle MVC correspond au modèle : c'est lui qui
-	 * gère les données et accède à la base de données.
-	 * 
-	 * Plus d'infos sur l'annotation Autowired : http://tinyurl.com/h3ewhec
-	 */
 	@Autowired
 	private Dao dao;
 
 	public String execute() {
-		/* on demande au DAO de vérifier si le nom/mdp correspondent */
-
 		if (dao.validCredentials(utilisateur, motdepasse)) {
 			System.out.println("USER FOUND");
-			/*
-			 * On demande au DAO de nous retourner la liste des articles :
-			 * consultez la classe Dao
-			 */
 			productsList = dao.fetchProducts();
 			msg = "success";
 		} else {
 			System.out.println("ERREUR");
 			msg = "error";
+			return ActionSupport.ERROR;
 		}
-		// pour le test, on renvoie systématiquement la liste des produits
-		productsList = dao.fetchProducts();
-		msg = "success";
 		return ActionSupport.SUCCESS;
 	}
 
