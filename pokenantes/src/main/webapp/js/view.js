@@ -12,7 +12,7 @@ View.prototype = new EventEmitter();
 View.prototype._drawLogin = function() {
 	/* Initialisation des variables champs */
 	var loginDiv 	 = '<div id="login"></div>';
-	var nameField 	 = '<input class="loginField" id="loginName" type="text" placeholder="Utilisateur">';
+	var nameField 	 = '<input class="loginField" id="loginName" type="text" placeholder="UtilisateurG">';
 	var passField 	 = '<input class="loginField" id="loginPass" type="password" placeholder="Mot de passe">';
 	var submitButton = '<span id="lockIcon" class="ui-icon ui-icon-locked"></span>';
 	
