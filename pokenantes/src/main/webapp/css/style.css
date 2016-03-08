@@ -23,15 +23,20 @@ body {
 
 #logoCorner {
 	font-family: pokemon;
-	font-size: 20px;
+	font-size: 25px;
+	margin-top: 15px;
 	margin-right: auto;
-	margin-left: 10px;
-	margin-top: 05px;
+	margin-left: 20px;
 }
 
-#selectFilterTypo, #reloginArea {
+#selectFilterTypo, #reloginArea, #flex-button {
 	display: flex;
 	flex-direction: row;	
+}
+
+
+#flex-button {
+	min-width: 800px;
 }
 
 #loginMsg {
@@ -58,7 +63,25 @@ body {
 }
 
 #relogin{
+	margin-right: 10px;
+	margin-top: 15px;
 	margin-left: auto;
+    padding: 2px 04px;
+    background: white;
+    color: black;
+    font-size: 10px;
+    height: 20px;
+    border: 1px solid;
+}
+
+#relogin:hover {
+	background: #f4f6f6;
+	cursor: pointer;
+	box-shadow: 0 0 1px;
+}
+
+#relogin:active {
+	background: #808080;
 }
 
 #lockIcon {
@@ -84,7 +107,7 @@ body {
 }
 
 #board {
-	min-width: 1100px;
+	min-width: 900px;
 }
 
 .productLine, #boardHeader, .supplierField, .productStock, .addProductLine, #addSupplierType, .addSupplierRadio, #addProductCondition, .addProductTypo, .productConditionRadio{
@@ -260,12 +283,12 @@ img {
 }
 
 #addProductButton:hover {
-	border: 1px solid rgb(0,0,139);
-	box-shadow: 0 0 5px rgb(0,0,139);
+	background-color: #F4F6F6;
+	box-shadow: 0 0 1px;
 }
 
 .productBlock:nth-child(odd) {
-	background-color: #f4f6f6;
+	background-color: #F4F6F6;
 }
 
 .productBlock:nth-child(even) {

@@ -45,7 +45,7 @@ View.prototype._loginFail = function(errorMessage) {
     var errorLogin = '<div id="errorLogin">' + errorMessage + '</div>';
     $('#errorLogin').remove();
     $('#login').append(errorLogin);
-    $('#errorLogin').fadeOut('slow');
+    $('#errorLogin').fadeOut(2000);
 }
 
 /* Si le login est validé: affichage du tableau de bord */
@@ -57,13 +57,20 @@ View.prototype._loginSuccess = function(context) {
 	    console.log('VIEW: Board successfully drawn.');
 	    drawProducts(context._model);
 	}
-    $('#login').fadeOut('fast', function() {
+    $('#lockIcon').css({
+	'border-color': 'green',
+	'border-width' : '2px'
+    });
+    $('#login, #loginMsg, #logo').fadeOut('fast', function() {
 	$('body').empty();
 	$('body').append(deconnectButton);
 	$('#relogin').click(function() {
 	    context._model._resetDatas();
-	    $('body').empty();
-	    context._drawLogin();
+	    $('#board, #selectFilterTypo, #reloginArea, #addProductButton').fadeOut('fast', function() {
+		$('body').empty();
+		context._drawLogin();
+	    })
+
 	});
 	display(context._drawBoard, context._model._filter);
     });
@@ -79,7 +86,7 @@ View.prototype._drawBoard = function(context) {
     var board 			= '<div id="board"></div>';
     var boardHeader 		= '<div id="boardHeader"></div>';
     var boardProducts 		= '<div id="boardProducts"></div>';
-    var addProductButton 	= '<div id="addProductButton">Ajouter un produit</div>';
+    var addProductButton 	= '<div id="flex-button"><div id="addProductButton">Ajouter un produit</div></div>';
 
     var productForm 		= '<div id="productForm"></div>';
 
@@ -484,6 +491,6 @@ View.prototype._formIsComplete = function() {
         originTypo.append(errorTypo);
         isComplete = false;
     }
-    $('.errorTypo').fadeOut('slow');
+    $('.errorTypo').fadeOut(2000);
     return isComplete;
 }
