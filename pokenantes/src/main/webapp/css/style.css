@@ -39,6 +39,12 @@ body {
 	margin-left: auto;
 	margin-top: auto;
 	margin-bottom: auto;
+	margin-right: 10px;
+	text-decoration: underline;
+}
+
+#anchorAddProduct:hover {
+	cursor: pointer; 
 }
 
 #flex-button {

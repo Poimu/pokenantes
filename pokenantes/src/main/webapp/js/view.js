@@ -86,8 +86,8 @@ View.prototype._drawBoard = function(context) {
     var selectFilter 		= '<div id="selectFilterLine"></div>';
     var selectFilterTypo 	= '<div id="selectFilterTypo"></div>';
     var selectFilterOpt 	= '<select id="selectFilter"></select>'
-    var anchorAddProduct    = '<div id="anchorAddProduct"><a href="#addProductButton">Aller à : Ajouter un produit</a></div>';
-    var board 			    = '<div id="board"></div>';
+    var anchorAddProduct        = '<div id="anchorAddProduct">Aller à : Ajouter un produit</div>';
+    var board 			= '<div id="board"></div>';
     var boardHeader 		= '<div id="boardHeader"></div>';
     var boardProducts 		= '<div id="boardProducts"></div>';
     var addProductButton 	= '<div id="flex-button"><div id="addProductButton">Ajouter un produit</div></div>';
@@ -110,6 +110,10 @@ View.prototype._drawBoard = function(context) {
     $('body').append(selectFilter);
     $('#selectFilterLine').append(selectFilterTypo);
     $('#selectFilterLine').append(anchorAddProduct);
+    $('#anchorAddProduct').click(function() {
+	$('html, body').animate({ scrollTop: $(document).height() }, 'fast');
+    })
+    
     $('#selectFilterTypo').append(selectFilterOpt);
     $('#selectFilter').append('<option value="nofilter">Afficher tous les articles</option>');
     $('#selectFilter').append('<option value="deffective">Afficher les articles défectueux</option>');
