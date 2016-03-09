@@ -52,7 +52,7 @@ View.prototype._loginFail = function(errorMessage) {
 /* Si le login est validé: affichage du tableau de bord */
 View.prototype._loginSuccess = function(context) {
     var context = context;
-    var deconnectButton = '<div id="reloginArea"><button id="relogin" type="button" name="deconnexion">Déconnection</button></div>';
+    var deconnectButton = '<div id="reloginArea"><button id="relogin" type="button" name="deconnexion">Déconnexion</button></div>';
     var logoArea = '<div id="logoLine"><div id="logoCorner">Pokenantes</div></div>';
     var display = function(drawBoard, drawProducts) {
 	    drawBoard(context);
