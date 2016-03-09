@@ -19,21 +19,27 @@ body {
 	font-size: 55px;
 	text-align: center;
 	margin-top: 100px;
+	
+	
 }
 
 #logoCorner {
 	font-family: pokemon;
-	font-size: 25px;
-	margin-top: 15px;
-	margin-right: auto;
-	margin-left: 20px;
+	font-size: 40px;
+	margin: auto; 
+	
 }
 
-#selectFilterTypo, #reloginArea, #flex-button {
+#selectFilterTypo, #reloginArea, #flex-button,#selectFilterLine,#logoLine {
 	display: flex;
 	flex-direction: row;	
 }
 
+#anchorAddProduct{
+	margin-left: auto;
+	margin-top: auto;
+	margin-bottom: auto;
+}
 
 #flex-button {
 	min-width: 800px;
@@ -69,9 +75,12 @@ body {
     padding: 2px 04px;
     background: white;
     color: black;
-    font-size: 10px;
+    font-size: 12px;
     height: 20px;
-    border: 1px solid;
+    border: 0px;
+    border-radius: 2px;
+    width: 100px;
+    box-shadow: 1px 1px 5px #888888;
 }
 
 #relogin:hover {

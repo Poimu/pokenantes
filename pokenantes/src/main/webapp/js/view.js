@@ -17,7 +17,8 @@ View.prototype._drawLogin = function() {
     var passField 	= '<input class="loginField" id="loginPass" type="password" placeholder="Mot de passe">';
     var submitButton 	= '<span id="lockIcon" class="ui-icon ui-icon-locked"></span>';
     var logo            = '<div id="logo">Pokenantes</div>';
-    var loginMsg        = '<div id="loginMsg">Authentification</div>'
+    var loginMsg        = '<div id="loginMsg">Authentification</div>';
+    
 
     $('body').append(logo);
     $('body').append(loginMsg);
@@ -51,7 +52,8 @@ View.prototype._loginFail = function(errorMessage) {
 /* Si le login est validé: affichage du tableau de bord */
 View.prototype._loginSuccess = function(context) {
     var context = context;
-    var deconnectButton = '<div id="reloginArea"><div id="logoCorner">Pokenantes</div><button id="relogin" type="button" name="deconnexion">Déconnection</button></div>';
+    var deconnectButton = '<div id="reloginArea"><button id="relogin" type="button" name="deconnexion">Déconnection</button></div>';
+    var logoArea = '<div id="logoLine"><div id="logoCorner">Pokenantes</div></div>';
     var display = function(drawBoard, drawProducts) {
 	    drawBoard(context);
 	    console.log('VIEW: Board successfully drawn.');
@@ -64,6 +66,7 @@ View.prototype._loginSuccess = function(context) {
     $('#login, #loginMsg, #logo').fadeOut('fast', function() {
 	$('body').empty();
 	$('body').append(deconnectButton);
+	$('body').append(logoArea);
 	$('#relogin').click(function() {
 	    context._model._resetDatas();
 	    $('#board, #selectFilterTypo, #reloginArea, #addProductButton').fadeOut('fast', function() {
@@ -83,7 +86,8 @@ View.prototype._drawBoard = function(context) {
     var selectFilter 		= '<div id="selectFilterLine"></div>';
     var selectFilterTypo 	= '<div id="selectFilterTypo"></div>';
     var selectFilterOpt 	= '<select id="selectFilter"></select>'
-    var board 			= '<div id="board"></div>';
+    var anchorAddProduct    = '<div id="anchorAddProduct"><a href="#addProductButton">Aller à : Ajouter un produit</a></div>';
+    var board 			    = '<div id="board"></div>';
     var boardHeader 		= '<div id="boardHeader"></div>';
     var boardProducts 		= '<div id="boardProducts"></div>';
     var addProductButton 	= '<div id="flex-button"><div id="addProductButton">Ajouter un produit</div></div>';
@@ -105,6 +109,7 @@ View.prototype._drawBoard = function(context) {
     /* Les filtres possibles */
     $('body').append(selectFilter);
     $('#selectFilterLine').append(selectFilterTypo);
+    $('#selectFilterLine').append(anchorAddProduct);
     $('#selectFilterTypo').append(selectFilterOpt);
     $('#selectFilter').append('<option value="nofilter">Afficher tous les articles</option>');
     $('#selectFilter').append('<option value="deffective">Afficher les articles défectueux</option>');
