@@ -12,6 +12,7 @@
 body {
 	background-image: url("images/leather.png");
 	font-family: customfont;
+	min-width: 800px;
 }
 
 #logo {
@@ -94,6 +95,11 @@ body {
 	cursor: pointer;
 	box-shadow: 0 0 1px;
 }
+
+ #closeCross:hover {
+   border: 1px solid;
+   border-color: red;
+ }
 
 #relogin:active {
 	background: #808080;

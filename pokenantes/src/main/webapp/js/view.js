@@ -189,6 +189,9 @@ View.prototype._drawAddSupplier = function(context) {
     });
     $('#selectSupplier').append('<option value="0"> Nouveau fournisseur </option>');
     $('#selectSupplier').niceSelect();
+    $('.addSelect').click(function() {
+	$('html, body').animate({ scrollTop: $(document).height() }, 'fast');
+    })
     $('#selectSupplier').change(function() {
         $('html, body').animate({ scrollTop: $(document).height() }, 'slow');
         if ($(this).val() == "none") {
@@ -282,6 +285,9 @@ View.prototype._drawAddProduct = function(context, addProductLine) {
         $('#selectProductType').append(option);
     });
     $('#selectProductType').niceSelect();
+    $('.addSelect').click(function() {
+	$('html, body').animate({ scrollTop: $(document).height() }, 'fast');
+    })
 
     $('#addProduct').append(addProductLine);
     $('.addProductTypo:last').append('Photo article');
