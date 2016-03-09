@@ -54,7 +54,6 @@ View.prototype._loginSuccess = function(context) {
     var deconnectButton = '<div id="reloginArea"><div id="logoCorner">Pokenantes</div><button id="relogin" type="button" name="deconnexion">Déconnection</button></div>';
     var display = function(drawBoard, drawProducts) {
 	    drawBoard(context);
-	    console.log('VIEW: Board successfully drawn.');
 	    drawProducts(context._model);
 	}
     $('#lockIcon').css({
@@ -166,8 +165,10 @@ View.prototype._drawAddSupplier = function(context) {
     $('#productForm').append(addProductForm);
     $('#addProductForm').append(closeForm);
     $('#closeCross').click(function() {
-        $('#productForm').empty();
-        $('#addProductButton').html('Ajouter un produit');
+	$('#closeForm, .addProductLine, #addSupplier, #addProduct').fadeOut('fast', function() {
+	    $('#productForm').empty();
+	    $('#addProductButton').html('Ajouter un produit');
+	})
     })
 
     $('#addProductForm').append(addProductLine);
